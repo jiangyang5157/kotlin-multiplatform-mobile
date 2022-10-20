@@ -21,11 +21,6 @@
   - If fragmentA wants to launch fragmentB, just show fragmentB in current routerA, it is no need to start ActivityB then launch fragmentB. There is nothing to stop you from adding any fragment to any router.
 - Routing to Dialog
 
-## Example
-
-There are working examples at:
-- [demo-router](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-router) has simple router tests.
-
 ## Define Route
 A Route that marks classes to be suitable for routing. It can easily be represented by data class, also it should have information that indicates associated fragment. There are built-in interfaces for different usages.
 
@@ -40,7 +35,6 @@ Built-in interface *KeyRoute* holds an unique *Key*.
 
 Built-in interface *FragmentRoute* holds a *fragmentClass*.
 - `interface FragmentRoute : Route`
-
 
 ###### USAGE
 For instance, below 2 different implementations achieve the same propose:
