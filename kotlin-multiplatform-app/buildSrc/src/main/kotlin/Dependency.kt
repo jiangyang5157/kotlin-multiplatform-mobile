@@ -18,7 +18,7 @@ object Config {
 
 object Version {
 
-    const val JetbrainsKotlin = "1.7.10"
+    const val JetbrainsKotlin = "1.7.20"
     const val JetbrainsKotlinx = "1.6.4"
 
     const val AndroidToolsBuild = "7.3.1"

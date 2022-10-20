@@ -17,3 +17,4 @@ rootProject.name = "kotlin-multiplatform-app"
 include(":androidApp")
 include(":shared")
 include(":kit")
+include(":common")
