@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.library'
+    id 'com.android.application'
     id 'kotlin-android'
 }
 
@@ -9,8 +9,19 @@ android {
         compileSdkVersion Config.CompileSdkVersion
         minSdkVersion Config.MinSdkVersion
         targetSdkVersion Config.TargetSdkVersion
+        applicationId "com.gmail.jiangyang5157.demo_compose"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        versionCode Config.VersionCode
+        versionName Config.VersionName
+    }
+
+    compileOptions {
+        sourceCompatibility Config.JavaCompatibility
+        targetCompatibility Config.JavaCompatibility
+    }
+
+    kotlinOptions {
+        jvmTarget = Config.KotlinJvmTarget
     }
 
     buildTypes {
@@ -24,6 +35,19 @@ android {
         abortOnError false
         lintConfig rootProject.file('lint.xml')
         htmlReport true
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Config.KotlinCompilerExtVersion
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
     }
 
     testOptions {
@@ -42,18 +66,18 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dep.Kotlin
-    implementation Dep.Inject
     implementation Dep.Appcompat
     implementation Dep.Material
-    implementation Dep.LifecycleRuntime
-    implementation Dep.CoroutinesAndroid
+    implementation Dep.NavigationCompose
+    implementation Dep.ComposeMaterial
+    implementation Dep.ComposeRuntimeLiveData
+
+    debugImplementation Dep.ComposeUiTestManifest
 
     testImplementation Dep.Junit
 
     androidTestImplementation Dep.AndroidxJunit
     androidTestImplementation Dep.TestRunner
-
-    // Network
-    implementation Dep.Retrofit
-    implementation Dep.RetrofitGson
+    androidTestImplementation Dep.ComposeUiTest
+    androidTestImplementation Dep.ComposeUiTestJunit
 }

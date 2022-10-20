@@ -14,12 +14,15 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kotlin-multiplatform-app"
-include(":androidApp")
 include(":shared")
+
 include(":kit")
 include(":common")
 include(":video")
 include(":adapter")
+include(":widget")
+
+include(":androidApp")
 include(":demo-video")
 include(":demo-adapter")
-include(":widget")
+include(":demo-compose")
