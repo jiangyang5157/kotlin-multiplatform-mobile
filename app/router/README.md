@@ -1,9 +1,7 @@
 # Router
 
-Source: https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/router
-
 ## Hightlight
-- Easy to use API's
+- Easy to use API\'s
 - Highly configurable by *Builder* or *DSL*
 - Built-in solution to support passing data to fragments
 - Built-in solution to avoid fragment transaction exceptions
@@ -297,4 +295,4 @@ fun checkIfLoggedIn() {
 }
 ``` 
 
-Also, you can find 31 routing stack unit tests at [here](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/router/src/test/java/com/gmail/jiangyang5157/android/router/core/RoutingStackElementsInstructionExecutorTest.kt).
+Also, you can find 31 routing stack unit tests at [here](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/router/src/test/java/com/gmail/jiangyang5157/router/core/RoutingStackElementsInstructionExecutorTest.kt).
