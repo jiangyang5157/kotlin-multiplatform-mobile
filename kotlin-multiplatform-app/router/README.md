@@ -1,6 +1,6 @@
 # Router
 
-Source: https://github.com/jiangyang5157/kotlin-android/tree/master/router
+Source: https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/router
 
 ## Hightlight
 - Easy to use API's
@@ -26,16 +26,7 @@ Source: https://github.com/jiangyang5157/kotlin-android/tree/master/router
 ## Example
 
 There are working examples at:
-- [example-router](https://github.com/jiangyang5157/kotlin-android/tree/master/example-router) has simple router tests.
-- [example-router-app](https://github.com/jiangyang5157/kotlin-android/tree/master/example-router-app) is a dummy chat app built with Router.
-
-###### [PNG](https://github.com/jiangyang5157/kotlin-android/blob/master/example-router-app/assets/demo.png)
-
-<img src="https://github.com/jiangyang5157/kotlin-android/blob/master/example-router-app/assets/demo.png"/>
-
-###### [GIF](https://github.com/jiangyang5157/kotlin-android/blob/master/example-router-app/assets/demo.gif)
-
-<img src="https://github.com/jiangyang5157/kotlin-android/blob/master/example-router-app/assets/demo.gif" width=320/>
+- [demo-router](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-router) has simple router tests.
 
 ## Define Route
 A Route that marks classes to be suitable for routing. It can easily be represented by data class, also it should have information that indicates associated fragment. There are built-in interfaces for different usages.
@@ -306,4 +297,4 @@ fun checkIfLoggedIn() {
 }
 ``` 
 
-Also, you can find 31 routing stack unit tests at [here](https://github.com/jiangyang5157/kotlin-android/blob/master/router/src/test/java/com/gmail/jiangyang5157/android/router/core/RoutingStackElementsInstructionExecutorTest.kt).
+Also, you can find 31 routing stack unit tests at [here](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/router/src/test/java/com/gmail/jiangyang5157/android/router/core/RoutingStackElementsInstructionExecutorTest.kt).

@@ -15,9 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "kotlin-multiplatform-app"
 
-include(":shared")
-include(":androidApp")
-
 include(":kit")
 include(":common")
 
@@ -38,4 +35,7 @@ include(":transaction_data_2")
 include(":transaction_presentation_base")
 include(":transaction_presentation_1")
 include(":transaction_presentation_2")
+include(":demo-transaction")
 
+include(":shared")
+include(":androidApp")

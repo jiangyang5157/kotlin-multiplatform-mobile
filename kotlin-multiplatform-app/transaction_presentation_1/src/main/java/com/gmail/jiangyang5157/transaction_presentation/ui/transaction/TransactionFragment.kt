@@ -87,14 +87,14 @@ class TransactionFragment : Fragment() {
             if (money.amount < Money(0).amount) {
                 view.findViewById<TextView>(R.id.tv_money)?.apply {
                     text = "Debit: ${(-money).amount.toPlainString()}"
-                    setTextColor(context.getColor(R.color.debitPrimary))
+                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.debitPrimary))
                 }
                 view.findViewById<TextView>(R.id.tv_gst).text =
                     "GST Included: ${(-money).includedGst().amount.toPlainString()}"
             } else {
                 view.findViewById<TextView>(R.id.tv_money)?.apply {
                     text = "Credit: ${money.amount.toPlainString()}"
-                    setTextColor(context.getColor(R.color.creditPrimary))
+                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.creditPrimary))
                 }
                 view.findViewById<TextView>(R.id.tv_gst).text = null
             }
