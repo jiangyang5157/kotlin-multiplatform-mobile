@@ -1,9 +1,38 @@
-plugins {
-    //trick: for the same plugin versions in all sub-modules
-    id("com.android.application").version("7.3.0").apply(false)
-    id("com.android.library").version("7.3.0").apply(false)
-    kotlin("android").version("1.7.10").apply(false)
-    kotlin("multiplatform").version("1.7.10").apply(false)
+buildscript {
+    repositories {
+        google()
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath(BuildPlugin.Kotlin)
+        classpath(BuildPlugin.Android)
+        classpath(BuildPlugin.Versions)
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    apply<com.github.benmanes.gradle.versions.VersionsPlugin>()
+}
+
+subprojects {
+
+}
+
+tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask> {
+    rejectVersionIf {
+        if (Dep.isStableVersion(currentVersion)) {
+            Dep.isNotStableVersion(candidate.version)
+        } else {
+            false
+        }
+    }
 }
 
 tasks.register("clean", Delete::class) {

@@ -1,23 +1,23 @@
 plugins {
-    id("com.android.application")
     kotlin("android")
+    id("com.android.application")
 }
 
 android {
     namespace = "com.gmail.jiangyang5157.kma.android"
-    compileSdk = 32
+    compileSdk = Config.CompileSdkVersion
     defaultConfig {
         applicationId = "com.gmail.jiangyang5157.kma.android"
-        minSdk = 26
-        targetSdk = 32
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Config.MinSdkVersion
+        targetSdk = Config.TargetSdkVersion
+        versionCode = Config.VersionCode
+        versionName = Config.VersionName
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = Config.KotlinCompilerExtVersion
     }
     packagingOptions {
         resources {
@@ -33,10 +33,10 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
-    implementation("androidx.compose.foundation:foundation:1.2.1")
-    implementation("androidx.compose.material:material:1.2.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation(Dep.ComposeUi)
+    implementation(Dep.ComposeUiTooling)
+    implementation(Dep.ComposeUiToolingPreview)
+    implementation(Dep.ComposeFoundation)
+    implementation(Dep.ComposeMaterial)
+    implementation(Dep.ActivityCompose)
 }

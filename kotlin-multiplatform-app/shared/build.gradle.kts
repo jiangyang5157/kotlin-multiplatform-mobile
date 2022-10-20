@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -48,9 +48,9 @@ kotlin {
 
 android {
     namespace = "com.gmail.jiangyang5157.kma"
-    compileSdk = 32
+    compileSdk = Config.CompileSdkVersion
     defaultConfig {
-        minSdk = 26
-        targetSdk = 32
+        minSdk = Config.MinSdkVersion
+        targetSdk = Config.TargetSdkVersion
     }
 }
