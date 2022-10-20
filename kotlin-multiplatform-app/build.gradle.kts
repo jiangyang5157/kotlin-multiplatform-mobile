@@ -9,6 +9,7 @@ buildscript {
         classpath(BuildPlugin.Kotlin)
         classpath(BuildPlugin.Android)
         classpath(BuildPlugin.Versions)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     }
 }
 
