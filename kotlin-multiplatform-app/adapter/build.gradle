@@ -25,40 +25,16 @@ android {
         lintConfig rootProject.file('lint.xml')
         htmlReport true
     }
-
-    testOptions {
-        managedDevices {
-            devices {
-                googleApi31Pixel4(com.android.build.api.dsl.ManagedVirtualDevice) {
-                    device = "Pixel 4"
-                    apiLevel = 31
-                    systemImageSource = "google"
-                }
-                googleApi31PixelC(com.android.build.api.dsl.ManagedVirtualDevice) {
-                    device = "Pixel C"
-                    apiLevel = 31
-                    systemImageSource = "google"
-                }
-            }
-        }
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dep.Kotlin
-    implementation Dep.Inject
     implementation Dep.Appcompat
-    implementation Dep.Material
-    implementation Dep.LifecycleRuntime
-    implementation Dep.CoroutinesAndroid
+    implementation Dep.Recycleview
 
     testImplementation Dep.Junit
 
     androidTestImplementation Dep.AndroidxJunit
     androidTestImplementation Dep.TestRunner
-
-    // Network
-    implementation Dep.Retrofit
-    implementation Dep.RetrofitGson
 }

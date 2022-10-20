@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+sourceCompatibility = Config.JavaCompatibility
+targetCompatibility = Config.JavaCompatibility
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dep.Kotlin
+    implementation Dep.Gson
+
+    testImplementation Dep.KotlinTestJunit
+}
