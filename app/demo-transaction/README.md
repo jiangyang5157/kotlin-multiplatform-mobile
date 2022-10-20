@@ -65,11 +65,11 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
   - Display transactions in a sorted list
   - Select a transaction will take user to a second page
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/report-dataA-presentationA.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/report-dataA-presentationA.png" width="320"> |
 |:--:|
 | *assets/report-dataA-presentationA* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/report-dataB-presentationA.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/report-dataB-presentationA.png" width="320"> |
 |:--:|
 | *assets/report-dataB-presentationA* |
 
@@ -77,11 +77,11 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
   - Display detailed view of the transaction data
     - 15% included gst calculation for debit transaction
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/transaction-debit-presentationA.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/transaction-debit-presentationA.png" width="320"> |
 |:--:|
 | *assets/transaction-debit-presentationA* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/transaction-credit-presentationA.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/transaction-credit-presentationA.png" width="320"> |
 |:--:|
 | *assets/transaction-credit-presentationA* |
 
@@ -92,11 +92,11 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
     - 15% included gst calculation for debit transaction
     - Divide line for each item
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/report-dataA-presentationB.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/report-dataA-presentationB.png" width="320"> |
 |:--:|
 | *assets/report-dataA-presentationB* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/kotlin-multiplatform-app/demo-transaction/assets/report-dataB-presentationB.png" width="320"> |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/demo-transaction/assets/report-dataB-presentationB.png" width="320"> |
 |:--:|
 | *assets/report-dataB-presentationB* |
 

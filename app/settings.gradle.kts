@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kotlin-multiplatform-app"
+rootProject.name = "app"
 
 include(":kit")
 include(":common")
