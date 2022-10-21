@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.gmail.jiangyang5157.kma.android"
     compileSdk = Config.CompileSdkVersion
+
     defaultConfig {
         applicationId = "com.gmail.jiangyang5157.kma.android"
         minSdk = Config.MinSdkVersion

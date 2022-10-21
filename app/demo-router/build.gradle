@@ -5,7 +5,6 @@ plugins {
 }
 
 android {
-
     defaultConfig {
         compileSdkVersion Config.CompileSdkVersion
         minSdkVersion Config.MinSdkVersion
@@ -14,15 +13,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode Config.VersionCode
         versionName Config.VersionName
-    }
-
-    compileOptions {
-        sourceCompatibility Config.JavaCompatibility
-        targetCompatibility Config.JavaCompatibility
-    }
-
-    kotlinOptions {
-        jvmTarget = Config.KotlinJvmTarget
     }
 
     buildTypes {
@@ -36,6 +26,15 @@ android {
         abortOnError false
         lintConfig rootProject.file('lint.xml')
         htmlReport true
+    }
+
+    compileOptions {
+        sourceCompatibility Config.JavaCompatibility
+        targetCompatibility Config.JavaCompatibility
+    }
+
+    kotlinOptions {
+        jvmTarget = Config.KotlinJvmTarget
     }
 
     buildFeatures {

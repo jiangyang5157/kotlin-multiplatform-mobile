@@ -27,7 +27,6 @@ afterEvaluate {
 }
 
 android {
-
     defaultConfig {
         compileSdkVersion Config.CompileSdkVersion
         minSdkVersion Config.MinSdkVersion
