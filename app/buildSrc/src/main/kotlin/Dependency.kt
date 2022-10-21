@@ -4,13 +4,11 @@ object Config {
 
     const val CompileSdkVersion = 33
     const val TargetSdkVersion = 33
-    const val BuildToolsVersion = "33.0.0"
     const val MinSdkVersion = 23
 
     const val VersionCode = 1
     const val VersionName = "1.0"
 
-    const val JavaCompatibility = "1.8"
     const val KotlinJvmTarget = "1.8"
     const val KotlinCompilerExtVersion = "1.3.2"
 }
