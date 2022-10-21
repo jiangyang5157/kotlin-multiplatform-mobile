@@ -10,7 +10,6 @@ object Config {
     const val VersionCode = 1
     const val VersionName = "1.0"
 
-    val JavaVersion = org.gradle.api.JavaVersion.VERSION_1_8
     const val JavaCompatibility = "1.8"
     const val KotlinJvmTarget = "1.8"
     const val KotlinCompilerExtVersion = "1.3.2"
