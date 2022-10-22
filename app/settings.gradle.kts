@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "app"
 
-include(":kit")
+include(":kit") // kotlin library
 
 include(":common")
 
@@ -32,8 +32,9 @@ include(":widget")
 
 include(":demo-compose")
 
-include(":transaction_domain_base")
+include(":transaction_domain_base") // kotlin library
 include(":transaction_domain_1")
+include(":transaction_domain_2") // kotlin library
 include(":transaction_data_1")
 include(":transaction_data_2")
 include(":transaction_presentation_base")
@@ -41,5 +42,5 @@ include(":transaction_presentation_1")
 include(":transaction_presentation_2")
 include(":demo-transaction")
 
-include(":shared")
-include(":androidApp")
+include(":shared") // kotlin library TODO YangJ: Remove this
+include(":androidApp") // TODO YangJ: Remove this and iosApp
