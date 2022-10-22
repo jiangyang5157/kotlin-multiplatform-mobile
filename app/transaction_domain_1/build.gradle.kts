@@ -56,7 +56,7 @@ dependencies {
 
     // Internal
     implementation(project(":common"))
-    api(project(":transaction_domain"))
+    api(project(":transaction_domain_kt"))
 
     // Database
     implementation(Dep.Room)

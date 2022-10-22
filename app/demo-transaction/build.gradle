@@ -85,7 +85,7 @@ dependencies {
     androidTestImplementation Dep.TestRules
 
     // Internal
-    implementation project(':transaction_domain')
+    implementation project(':transaction_domain_kt')
     dataAImplementation project(':transaction_data_1')
     dataBImplementation project(':transaction_data_2')
     implementation project(':transaction_presentation_base')
