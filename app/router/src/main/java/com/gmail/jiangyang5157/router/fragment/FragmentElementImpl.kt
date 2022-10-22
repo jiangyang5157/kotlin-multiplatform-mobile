@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 internal class FragmentElementImpl<T : Route>(
     private val fragmentRouterConfiguration: FragmentRouterConfiguration<T>,
     private val container: FragmentContainer,
-    private val element: RoutingStack.Element<T>
+    private val element: RoutingStack.Element<T>,
 ) : FragmentElement<T>(),
     FragmentRouterConfiguration<T> by fragmentRouterConfiguration {
 

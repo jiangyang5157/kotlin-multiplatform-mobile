@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 @PublishedApi
 internal class LambdaFragmentMap<T : Key, R : T>(
     private val key: T,
-    private val lambda: R.() -> KClass<out Fragment>?
+    private val lambda: R.() -> KClass<out Fragment>?,
 ) : FragmentMap {
 
     override fun get(key: Key): KClass<out Fragment>? {

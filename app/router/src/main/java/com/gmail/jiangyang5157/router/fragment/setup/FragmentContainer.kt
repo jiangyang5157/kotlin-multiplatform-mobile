@@ -7,5 +7,5 @@ import androidx.fragment.app.FragmentManager
 class FragmentContainer(
     val activity: FragmentActivity,
     val fragmentManager: FragmentManager,
-    @IdRes val id: Int
+    @IdRes val id: Int,
 )

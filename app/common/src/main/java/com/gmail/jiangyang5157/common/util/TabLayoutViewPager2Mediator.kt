@@ -16,7 +16,7 @@ class TabLayoutViewPager2Mediator(
     private val viewPager: ViewPager2,
     private val onConfigureTabCallback: OnConfigureTabCallback,
     private val onSelectTabCallback: OnSelectTabCallback,
-    private val mAutoRefresh: Boolean = true
+    private val mAutoRefresh: Boolean = true,
 ) {
 
     private var viewPagerAdapter: RecyclerView.Adapter<*>? = null

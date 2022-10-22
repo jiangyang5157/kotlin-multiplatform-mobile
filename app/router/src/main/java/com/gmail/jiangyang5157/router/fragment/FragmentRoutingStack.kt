@@ -5,7 +5,7 @@ import com.gmail.jiangyang5157.router.core.RoutingStack
 
 data class FragmentRoutingStack<T : Route>(
     override val elements: List<FragmentElement<T>>,
-    private val factory: FragmentElement.Factory<T>
+    private val factory: FragmentElement.Factory<T>,
 ) : RoutingStack<T> {
 
     override fun with(elements: Iterable<RoutingStack.Element<T>>): FragmentRoutingStack<T> =

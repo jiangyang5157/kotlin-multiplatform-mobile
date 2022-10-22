@@ -10,5 +10,5 @@ import javax.inject.Inject
 class AppExecutor @Inject constructor(
     val mainThread: Executor = MainThreadExecutor(),
     val diskIO: Executor = Executors.newSingleThreadExecutor(),
-    val networkIO: Executor = Executors.newFixedThreadPool(2)
+    val networkIO: Executor = Executors.newFixedThreadPool(2),
 )

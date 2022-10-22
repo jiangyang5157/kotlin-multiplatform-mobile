@@ -8,7 +8,7 @@ import java.lang.reflect.Type
 
 class ApiResponseCallAdapter<T : Any, E : Any>(
     private val responseType: Type,
-    private val errorConverter: Converter<ResponseBody, E>
+    private val errorConverter: Converter<ResponseBody, E>,
 ) : CallAdapter<T, Call<ApiResponse<T, E>>> {
 
     override fun responseType(): Type = responseType

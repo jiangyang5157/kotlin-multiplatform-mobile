@@ -64,8 +64,8 @@ data class TransactionEntity(
 
     @ColumnInfo(name = "importedDate")
     @SerializedName("importedDate")
-    override val importedDate: Date
-) : ITransactionEntity {
+    override val importedDate: Date,
+) : com.gmail.jiangyang5157.transaction_domain_base.entity.TransactionEntity {
 
     class MoneyDoubleJsonSerializer : JsonSerializer<Money>, JsonDeserializer<Money> {
 

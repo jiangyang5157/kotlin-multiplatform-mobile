@@ -2,7 +2,6 @@ package com.gmail.jiangyang5157.transaction_domain.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.gmail.jiangyang5157.transaction_domain.entity.IReportEntity
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -22,5 +21,5 @@ data class ReportEntity(
         entity = TransactionEntity::class
     )
     @SerializedName("transactions")
-    override val transactions: List<TransactionEntity>
-): IReportEntity
+    override val transactions: List<TransactionEntity>,
+): com.gmail.jiangyang5157.transaction_domain_base.entity.ReportEntity

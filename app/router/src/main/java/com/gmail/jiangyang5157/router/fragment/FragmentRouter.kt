@@ -61,7 +61,7 @@ class FragmentRouter<T : Route> internal constructor(
     private val fragmentTransition: FragmentTransition,
     private val fragmentStackPatcher: FragmentStackPatcher,
     fragmentContainerLifecycleFactory: FragmentContainerLifecycle.Factory,
-    routingStackInstruction: RoutingStackInstruction<T>
+    routingStackInstruction: RoutingStackInstruction<T>,
 ) : Router<T>,
     FragmentRouterConfiguration<T> {
 

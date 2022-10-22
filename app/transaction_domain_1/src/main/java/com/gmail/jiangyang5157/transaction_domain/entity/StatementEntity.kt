@@ -3,7 +3,6 @@ package com.gmail.jiangyang5157.transaction_domain.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gmail.jiangyang5157.transaction_domain.entity.IStatementEntity
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
@@ -20,5 +19,5 @@ data class StatementEntity(
     @PrimaryKey
     @ColumnInfo(name = "importedDate")
     @SerializedName("importedDate")
-    override val importedDate: Date
-): IStatementEntity
+    override val importedDate: Date,
+): com.gmail.jiangyang5157.transaction_domain_base.entity.StatementEntity

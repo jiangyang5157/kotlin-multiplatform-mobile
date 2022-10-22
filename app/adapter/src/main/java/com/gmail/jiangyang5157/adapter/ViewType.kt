@@ -6,12 +6,12 @@ data class ViewType<T, D>(
     /** The class of the view data, including potential interaction callbacks */
     val clazz: Class<out T>,
     /** The delegate responsible for view creation and data binding */
-    val delegate: D
+    val delegate: D,
 )
 
 open class ViewTypeRegistry(
     initialCapacity: Int = 0,
-    private val viewTypes: MutableList<ViewType<*, *>> = ArrayList(initialCapacity)
+    private val viewTypes: MutableList<ViewType<*, *>> = ArrayList(initialCapacity),
 ) {
 
     /**

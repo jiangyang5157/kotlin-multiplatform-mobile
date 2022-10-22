@@ -43,7 +43,7 @@ fun AppTheme(
 
 @Composable
 fun LightPhoneTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AppTheme(
         materialColors = LightMaterialColors,
@@ -54,7 +54,7 @@ fun LightPhoneTheme(
 
 @Composable
 fun DarkPhoneTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AppTheme(
         materialColors = DarkMaterialColors,

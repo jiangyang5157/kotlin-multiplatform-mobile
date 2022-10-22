@@ -14,12 +14,12 @@ import com.gmail.jiangyang5157.router.utils.Constant
 
 @Suppress("UNCHECKED_CAST")
 internal fun <T : Route> ParcelableRoutingStackStorage.Companion.createUnsafe(
-    key: String = KEY_ROUTING_STACK
+    key: String = KEY_ROUTING_STACK,
 ): RoutingStackStorage<T> =
     ParcelableRoutingStackStorage<ParcelableRoute>(key) as RoutingStackStorage<T>
 
 class ParcelableRoutingStackStorage<T>(
-    private val key: String = KEY_ROUTING_STACK
+    private val key: String = KEY_ROUTING_STACK,
 ) : RoutingStackStorage<T> where T : Route, T : Parcelable {
 
     override fun RoutingStack<T>.saveTo(outState: Bundle) {

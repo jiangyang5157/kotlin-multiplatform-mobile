@@ -4,5 +4,5 @@ data class SwitchItem(
     val onText: String,
     val offText: String,
     var checked: Boolean = false,
-    val onCheckedChanged: (item: SwitchItem, position: Int, checked: Boolean) -> Unit
+    val onCheckedChanged: (item: SwitchItem, position: Int, checked: Boolean) -> Unit,
 )

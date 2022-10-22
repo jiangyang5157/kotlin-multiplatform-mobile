@@ -14,7 +14,7 @@ internal fun <T : Route> ParcelableFragmentRouteStorage.Companion.createUnsafe()
     ParcelableFragmentRouteStorage<ParcelableRoute>() as FragmentRouteStorage<T>
 
 class ParcelableFragmentRouteStorage<T>(
-    private val bundleKey: String = KEY_ROUTE
+    private val bundleKey: String = KEY_ROUTE,
 ) : FragmentRouteStorage<T> where T : Parcelable, T : Route {
 
     override fun Fragment.attach(route: T) {

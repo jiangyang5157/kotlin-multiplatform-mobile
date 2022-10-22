@@ -21,7 +21,7 @@ import com.gmail.jiangyang5157.kma.Greeting
 @Composable
 fun MyApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
         darkColors(

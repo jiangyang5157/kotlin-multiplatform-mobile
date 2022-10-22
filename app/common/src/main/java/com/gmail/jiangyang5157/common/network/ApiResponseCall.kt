@@ -11,7 +11,7 @@ import java.io.IOException
 
 class ApiResponseCall<T : Any, E : Any>(
     private val delegate: Call<T>,
-    private val errorConverter: Converter<ResponseBody, E>
+    private val errorConverter: Converter<ResponseBody, E>,
 ) : Call<ApiResponse<T, E>> {
 
     override fun enqueue(callback: Callback<ApiResponse<T, E>>) {

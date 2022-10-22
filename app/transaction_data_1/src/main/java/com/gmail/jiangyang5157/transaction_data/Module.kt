@@ -6,9 +6,6 @@ import com.gmail.jiangyang5157.common.network.ApiResponseCallAdapterFactory
 import com.gmail.jiangyang5157.transaction_data.local.ReportDb
 import com.gmail.jiangyang5157.transaction_data.remote.ReportService
 import com.gmail.jiangyang5157.transaction_data.repo.DefaultReportRepository
-import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
-import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
-import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.repo.ReportRepository
 import com.google.gson.GsonBuilder
 import dagger.Binds
@@ -63,5 +60,5 @@ abstract class ReportRepositoryBinding {
 
     @ActivityRetainedScoped
     @Binds
-    abstract fun reportRepository(arg: DefaultReportRepository): ReportRepository<ReportEntity, StatementEntity, TransactionEntity>
+    abstract fun reportRepository(arg: DefaultReportRepository): ReportRepository
 }

@@ -47,7 +47,7 @@ class StateTransitionMap {
 
 class StateMachine constructor(
     private var current: State,
-    private val stateTransitionMap: StateTransitionMap
+    private val stateTransitionMap: StateTransitionMap,
 ) {
 
     fun send(event: Event): Boolean {

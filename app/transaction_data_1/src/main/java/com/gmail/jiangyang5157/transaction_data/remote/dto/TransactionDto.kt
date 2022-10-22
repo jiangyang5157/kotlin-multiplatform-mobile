@@ -41,7 +41,7 @@ data class TransactionDto(
 
     @SerializedName("credit")
     @JsonAdapter(value = TransactionEntity.MoneyDoubleJsonSerializer::class)
-    val credit: Money
+    val credit: Money,
 ) {
 
     /**

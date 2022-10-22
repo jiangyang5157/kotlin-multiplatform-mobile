@@ -15,7 +15,7 @@ import java.util.Locale
 data class Money(
     val amount: BigDecimal,
     val currency: Currency = Currency.getInstance(Locale.getDefault()),
-    val roundingMode: RoundingMode = RoundingMode.HALF_UP
+    val roundingMode: RoundingMode = RoundingMode.HALF_UP,
 ) {
 
     constructor(

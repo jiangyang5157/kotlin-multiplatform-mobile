@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 class DefaultReportRepository @Inject constructor(
     private val memory: ReportInMemory,
-    private val service: ReportService
-) : ReportRepository<ReportEntity, StatementEntity, TransactionEntity> {
+    private val service: ReportService,
+) : ReportRepository {
 
     /**
      * Save into memory cache, no service call support

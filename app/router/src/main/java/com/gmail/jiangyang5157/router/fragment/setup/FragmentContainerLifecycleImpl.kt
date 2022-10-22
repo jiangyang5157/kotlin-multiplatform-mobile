@@ -9,7 +9,7 @@ import com.gmail.jiangyang5157.router.fragment.FragmentRouter
 internal class FragmentContainerLifecycleImpl(
     private val router: FragmentRouter<*>,
     private val attachEvent: Lifecycle.Event,
-    private val detachEvent: Lifecycle.Event
+    private val detachEvent: Lifecycle.Event,
 ) : FragmentContainerLifecycle {
 
     data class Factory(

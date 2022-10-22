@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 
 internal class CompositeFragmentMap(
     private val first: FragmentMap,
-    private val second: FragmentMap
+    private val second: FragmentMap,
 ) : FragmentMap {
 
     override fun get(key: Key): KClass<out Fragment>? = first[key] ?: second[key]

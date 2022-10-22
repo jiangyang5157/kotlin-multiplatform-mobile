@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 
 internal class AsFragmentRouterHost(
-    private val fragment: Fragment
+    private val fragment: Fragment,
 ) : FragmentRouterHost {
 
     override val lifecycle: Lifecycle

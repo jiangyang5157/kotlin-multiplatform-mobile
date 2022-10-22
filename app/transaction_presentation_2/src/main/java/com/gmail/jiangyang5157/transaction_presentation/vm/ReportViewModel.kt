@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val repo: ReportRepository<ReportEntity, StatementEntity, TransactionEntity>
+    private val repo: ReportRepository,
 ) : ViewModel() {
 
     fun getReports(): LiveData<Resource<List<ReportEntity>, String>> {

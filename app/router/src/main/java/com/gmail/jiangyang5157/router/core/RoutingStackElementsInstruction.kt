@@ -117,7 +117,7 @@ fun <T : Route, R> RoutingStackElementsInstructionExecutor<T, R>.pop(): R =
  */
 @RoutingStackDsl
 inline infix fun <T : Route, R> RoutingStackElementsInstructionExecutor<T, R>.popUntilPredicate(
-    crossinline predicate: (RoutingStack.Element<T>) -> Boolean
+    crossinline predicate: (RoutingStack.Element<T>) -> Boolean,
 ): R =
     routingStackElementsInstruction {
         if (isEmpty()) {

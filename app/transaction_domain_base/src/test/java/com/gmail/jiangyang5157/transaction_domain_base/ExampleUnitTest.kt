@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.transaction_domain
+package com.gmail.jiangyang5157.transaction_domain_base
 
 import org.junit.Test
 

@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ParcelableElement<T>(
     override val key: ParcelableKey,
-    override val route: T
+    override val route: T,
 ) : RoutingStack.Element<T>(), Parcelable where T : Route, T : Parcelable
 
 /**

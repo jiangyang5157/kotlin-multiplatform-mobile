@@ -24,7 +24,7 @@ val View.children
 inline fun View.delayOnLifeCycle(
     durationInMillis: Long,
     dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
-    crossinline block: () -> Unit
+    crossinline block: () -> Unit,
 ): Job? = findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
     lifecycleOwner.lifecycle.coroutineScope.launch(dispatcher) {
         delay(durationInMillis)

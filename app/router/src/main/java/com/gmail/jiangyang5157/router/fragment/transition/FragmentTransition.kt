@@ -52,7 +52,7 @@ operator fun FragmentTransition.plus(other: FragmentTransition): FragmentTransit
 
 private class CompositeFragmentTransition(
     private val first: FragmentTransition,
-    private val second: FragmentTransition
+    private val second: FragmentTransition,
 ) : FragmentTransition {
 
     override fun setup(
@@ -83,7 +83,7 @@ internal class ReifiedGenericFragmentTransition<ExitFragment : Fragment, ExitRou
     val enterFragment: KClass<EnterFragment>,
     val exitFragment: KClass<ExitFragment>,
     val enterRoute: KClass<EnterRoute>,
-    val exitRoute: KClass<ExitRoute>
+    val exitRoute: KClass<ExitRoute>,
 ) : GenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute> by transition
 
 @PublishedApi
@@ -98,7 +98,7 @@ GenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>.re
     )
 
 private class ErasedFragmentTransition<ExitFragment : Fragment, ExitRoute : Route, EnterFragment : Fragment, EnterRoute : Route>(
-    private val transition: ReifiedGenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>
+    private val transition: ReifiedGenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>,
 ) : GenericFragmentTransition<Fragment, Route, Fragment, Route> {
 
     override fun setup(
