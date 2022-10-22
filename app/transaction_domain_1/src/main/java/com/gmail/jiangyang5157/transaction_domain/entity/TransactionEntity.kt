@@ -6,8 +6,8 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.Index
 import androidx.room.TypeConverter
-import com.gmail.jiangyang5157.kit.data.Converter
-import com.gmail.jiangyang5157.kit.data.finance.Money
+import com.gmail.jiangyang5157.common.data.Converter
+import com.gmail.jiangyang5157.common.data.finance.Money
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

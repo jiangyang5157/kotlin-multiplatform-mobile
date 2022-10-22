@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.transaction_data.remote
 
-import com.gmail.jiangyang5157.kit.network.ApiResponse
+import com.gmail.jiangyang5157.common.network.ApiResponse
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import retrofit2.http.GET
 

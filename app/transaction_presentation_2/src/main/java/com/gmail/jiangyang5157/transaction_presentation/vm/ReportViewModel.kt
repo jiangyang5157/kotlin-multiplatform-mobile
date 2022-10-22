@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.gmail.jiangyang5157.kit.data.Resource
+import com.gmail.jiangyang5157.common.data.Resource
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity

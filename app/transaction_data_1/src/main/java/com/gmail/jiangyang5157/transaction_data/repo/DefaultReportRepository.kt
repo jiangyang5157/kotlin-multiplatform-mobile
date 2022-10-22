@@ -1,7 +1,7 @@
 package com.gmail.jiangyang5157.transaction_data.repo
 
-import com.gmail.jiangyang5157.kit.network.ApiResponse
-import com.gmail.jiangyang5157.kit.data.Resource
+import com.gmail.jiangyang5157.common.network.ApiResponse
+import com.gmail.jiangyang5157.common.data.Resource
 import com.gmail.jiangyang5157.transaction_data.local.ReportDb
 import com.gmail.jiangyang5157.transaction_data.remote.ReportService
 import com.gmail.jiangyang5157.transaction_data.remote.dto.asEntity

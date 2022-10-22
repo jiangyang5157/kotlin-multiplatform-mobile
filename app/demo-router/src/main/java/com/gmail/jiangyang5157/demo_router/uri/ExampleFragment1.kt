@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gmail.jiangyang5157.demo_router.RouterFragmentGuest
 import com.gmail.jiangyang5157.demo_router.databinding.ExampleFragmentKeyrouteUriBinding
-import com.gmail.jiangyang5157.kit.data.Key
+import com.gmail.jiangyang5157.common.data.Key
 import com.gmail.jiangyang5157.router.core.popUntilPredicate
 import com.gmail.jiangyang5157.router.core.push
 import com.gmail.jiangyang5157.router.core.replaceTopWith

@@ -1,7 +1,7 @@
 package com.gmail.jiangyang5157.router.fragment.mapping
 
 import androidx.fragment.app.Fragment
-import com.gmail.jiangyang5157.kit.data.Key
+import com.gmail.jiangyang5157.common.data.Key
 import com.gmail.jiangyang5157.router.core.KeyRoute
 import com.gmail.jiangyang5157.router.fragment.FragmentElementImpl
 import com.gmail.jiangyang5157.router.fragment.FragmentRoute

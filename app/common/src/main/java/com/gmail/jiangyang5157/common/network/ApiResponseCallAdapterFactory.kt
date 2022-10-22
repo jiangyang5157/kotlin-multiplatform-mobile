@@ -1,6 +1,5 @@
 package com.gmail.jiangyang5157.common.network
 
-import com.gmail.jiangyang5157.kit.network.ApiResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit

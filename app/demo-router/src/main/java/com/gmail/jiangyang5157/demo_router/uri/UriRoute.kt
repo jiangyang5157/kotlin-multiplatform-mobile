@@ -1,7 +1,7 @@
 package com.gmail.jiangyang5157.demo_router.keyroute.uri
 
 import android.net.Uri
-import com.gmail.jiangyang5157.kit.data.Key
+import com.gmail.jiangyang5157.common.data.Key
 import com.gmail.jiangyang5157.router.core.DataRoute
 import com.gmail.jiangyang5157.router.core.KeyRoute
 import com.gmail.jiangyang5157.router.core.ParcelableRoute

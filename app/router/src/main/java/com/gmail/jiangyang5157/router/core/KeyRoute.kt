@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.router.core
 
-import com.gmail.jiangyang5157.kit.data.Key
+import com.gmail.jiangyang5157.common.data.Key
 
 /**
  * [Route] implementation that has [key]

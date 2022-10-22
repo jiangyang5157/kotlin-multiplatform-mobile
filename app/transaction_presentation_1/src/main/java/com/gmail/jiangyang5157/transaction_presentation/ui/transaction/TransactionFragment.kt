@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.gmail.jiangyang5157.common.ext.toast
-import com.gmail.jiangyang5157.kit.data.Resource
-import com.gmail.jiangyang5157.kit.data.finance.Money
-import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_EEEddMMMyyyy
+import com.gmail.jiangyang5157.common.data.Resource
+import com.gmail.jiangyang5157.common.data.finance.Money
+import com.gmail.jiangyang5157.common.utils.RegexUtils.DATE_EEEddMMMyyyy
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
 import com.gmail.jiangyang5157.transaction_presentation.R

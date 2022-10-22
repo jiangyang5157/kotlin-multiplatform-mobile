@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.transaction_domain.repository
 
-import com.gmail.jiangyang5157.kit.data.Resource
+import com.gmail.jiangyang5157.common.data.Resource
 import com.gmail.jiangyang5157.transaction_domain.entity.IReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.IStatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.ITransactionEntity
