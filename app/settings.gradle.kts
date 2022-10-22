@@ -31,6 +31,7 @@ include(":widget")
 
 include(":demo-compose")
 
+include(":transaction_domain_kt")
 include(":transaction_domain")
 include(":transaction_data_1")
 include(":transaction_data_2")

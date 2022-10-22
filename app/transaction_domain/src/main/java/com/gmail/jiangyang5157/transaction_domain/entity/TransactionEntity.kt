@@ -8,6 +8,7 @@ import androidx.room.Index
 import androidx.room.TypeConverter
 import com.gmail.jiangyang5157.kit.data.Converter
 import com.gmail.jiangyang5157.kit.data.finance.Money
+import com.gmail.jiangyang5157.transaction_domain_kt.entity.ITransactionEntity
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -47,25 +48,25 @@ data class TransactionEntity(
 
     @ColumnInfo(name = "id")
     @SerializedName("id")
-    val id: String,
+    override val id: String,
 
     @ColumnInfo(name = "date")
     @SerializedName("date")
-    val date: Date,
+    override val date: Date,
 
     @ColumnInfo(name = "money")
     @SerializedName("money")
     @JsonAdapter(value = MoneyDoubleJsonSerializer::class)
-    val money: Money,
+    override val money: Money,
 
     @ColumnInfo(name = "description")
     @SerializedName("description")
-    val description: String,
+    override val description: String,
 
     @ColumnInfo(name = "importedDate")
     @SerializedName("importedDate")
-    val importedDate: Date
-) {
+    override val importedDate: Date
+) : ITransactionEntity {
 
     class MoneyDoubleJsonSerializer : JsonSerializer<Money>, JsonDeserializer<Money> {
 

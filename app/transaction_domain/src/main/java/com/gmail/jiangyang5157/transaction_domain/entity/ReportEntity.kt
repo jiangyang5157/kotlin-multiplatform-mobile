@@ -2,6 +2,7 @@ package com.gmail.jiangyang5157.transaction_domain.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.gmail.jiangyang5157.transaction_domain_kt.entity.IReportEntity
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -13,7 +14,7 @@ data class ReportEntity(
 
     @Embedded
     @SerializedName("statement")
-    val statement: StatementEntity,
+    override val statement: StatementEntity,
 
     @Relation(
         parentColumn = "importedDate",
@@ -21,5 +22,5 @@ data class ReportEntity(
         entity = TransactionEntity::class
     )
     @SerializedName("transactions")
-    val transactions: List<TransactionEntity>
-)
+    override val transactions: List<TransactionEntity>
+): IReportEntity
