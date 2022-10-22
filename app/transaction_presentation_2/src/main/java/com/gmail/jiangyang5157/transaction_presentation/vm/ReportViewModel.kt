@@ -8,7 +8,7 @@ import com.gmail.jiangyang5157.common.data.Resource
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
-import com.gmail.jiangyang5157.transaction_domain.repository.IReportRepository
+import com.gmail.jiangyang5157.transaction_domain.repo.ReportRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val repo: IReportRepository<ReportEntity, StatementEntity, TransactionEntity>
+    private val repo: ReportRepository<ReportEntity, StatementEntity, TransactionEntity>
 ) : ViewModel() {
 
     fun getReports(): LiveData<Resource<List<ReportEntity>, String>> {
