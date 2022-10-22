@@ -19,7 +19,7 @@ import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
 import com.gmail.jiangyang5157.transaction_presentation.R
 import com.gmail.jiangyang5157.transaction_presentation.vm.ReportViewModel
-import com.gmail.jiangyang5157.transaction_presentation.ext.includedGst
+import com.gmail.jiangyang5157.transaction_presentation_base.ext.includedGst
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
@@ -90,14 +90,14 @@ class TransactionFragment : Fragment() {
             if (money.amount < Money(0).amount) {
                 view.findViewById<TextView>(R.id.tv_money)?.apply {
                     text = "Debit: ${(-money).amount.toPlainString()}"
-                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.debitPrimary))
+                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.debitPrimary))
                 }
                 view.findViewById<TextView>(R.id.tv_gst).text =
                     "GST Included: ${(-money).includedGst().amount.toPlainString()}"
             } else {
                 view.findViewById<TextView>(R.id.tv_money)?.apply {
                     text = "Credit: ${money.amount.toPlainString()}"
-                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.creditPrimary))
+                    setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.creditPrimary))
                 }
                 view.findViewById<TextView>(R.id.tv_gst).text = null
             }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gmail.jiangyang5157.adapter.recycleview.RecycleViewItemDelegate
 import com.gmail.jiangyang5157.common.data.finance.Money
 import com.gmail.jiangyang5157.transaction_presentation.R
-import com.gmail.jiangyang5157.transaction_presentation.ext.includedGst
+import com.gmail.jiangyang5157.transaction_presentation_base.ext.includedGst
 
 class TransactionItemViewBinder :
     RecycleViewItemDelegate<TransactionItem, TransactionItemViewBinder.ViewHolder>() {
@@ -27,7 +27,7 @@ class TransactionItemViewBinder :
         if (item.transaction.money.amount < Money(0).amount) {
             viewHolder.tvMoney.apply {
                 text = "- $${(-item.transaction.money).amount.toPlainString()}"
-                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.debitPrimary))
+                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.debitPrimary))
             }
 
             viewHolder.tvGst.apply {
@@ -38,7 +38,7 @@ class TransactionItemViewBinder :
         } else {
             viewHolder.tvMoney.apply {
                 text = "+ $${item.transaction.money.amount.toPlainString()}"
-                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.creditPrimary))
+                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.creditPrimary))
             }
             viewHolder.tvGst.apply {
                 text = null

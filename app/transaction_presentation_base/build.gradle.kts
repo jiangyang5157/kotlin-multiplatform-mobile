@@ -1,13 +1,10 @@
 plugins {
     id("kotlin-android")
     id("com.android.library")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
-    namespace = "com.gmail.jiangyang5157.transaction_presentation"
+    namespace = "com.gmail.jiangyang5157.transaction_presentation_base"
     compileSdk = Config.CompileSdkVersion
 
     defaultConfig {
@@ -56,20 +53,5 @@ dependencies {
 
     // Internal
     implementation(project(":common"))
-    implementation(project(":adapter"))
     implementation(project(":transaction_domain_1"))
-    implementation(project(":transaction_presentation_base"))
-
-    // Dependency Injection
-    implementation(Dep.DaggerHilt)
-    kapt(Dep.DaggerHiltCompiler)
-    kapt(Dep.HiltCompiler)
-
-    // Navigation
-    implementation(Dep.NavigationFragmentKtx)
-    implementation(Dep.NavigationUiKtx)
-
-    // Lifecycle
-    implementation(Dep.LifecycleVmKtx)
-    implementation(Dep.LifecycleLiveDataKtx)
 }

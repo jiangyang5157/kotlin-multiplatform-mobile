@@ -58,7 +58,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":adapter"))
     implementation(project(":transaction_domain_1"))
-    implementation(project(":transaction_presentation"))
+    implementation(project(":transaction_presentation_base"))
 
     // Dependency Injection
     implementation(Dep.DaggerHilt)

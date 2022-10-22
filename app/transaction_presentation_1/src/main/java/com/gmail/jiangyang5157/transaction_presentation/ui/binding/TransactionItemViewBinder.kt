@@ -26,10 +26,10 @@ class TransactionItemViewBinder :
         viewHolder.tvMoney.apply {
             if (item.transaction.money.amount < Money(0).amount) {
                 text = "- $${(-item.transaction.money).amount.toPlainString()}"
-                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.debitPrimary))
+                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.debitPrimary))
             } else {
                 text = "+ $${item.transaction.money.amount.toPlainString()}"
-                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation.R.color.creditPrimary))
+                setTextColor(context.getColor(com.gmail.jiangyang5157.transaction_presentation_base.R.color.creditPrimary))
             }
         }
     }
