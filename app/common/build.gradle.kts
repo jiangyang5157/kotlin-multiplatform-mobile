@@ -84,6 +84,9 @@ dependencies {
     androidTestImplementation(Dep.AndroidxJunit)
     androidTestImplementation(Dep.TestRunner)
 
+    // Internal
+    implementation(project(":kit-kt"))
+
     // Network
     implementation(Dep.Retrofit)
     implementation(Dep.RetrofitGson)

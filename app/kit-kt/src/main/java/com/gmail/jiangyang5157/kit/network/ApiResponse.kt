@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.common.network
+package com.gmail.jiangyang5157.kit.network
 
 import java.io.IOException
 

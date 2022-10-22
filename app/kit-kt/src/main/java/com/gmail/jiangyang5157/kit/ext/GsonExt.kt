@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.common.ext
+package com.gmail.jiangyang5157.kit.ext
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

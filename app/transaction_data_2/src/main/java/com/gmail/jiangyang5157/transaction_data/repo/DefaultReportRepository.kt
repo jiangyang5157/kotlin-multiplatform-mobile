@@ -2,7 +2,7 @@ package com.gmail.jiangyang5157.transaction_data.repo
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.gmail.jiangyang5157.common.network.ApiResponse
+import com.gmail.jiangyang5157.kit.network.ApiResponse
 import com.gmail.jiangyang5157.kit.data.Resource
 import com.gmail.jiangyang5157.transaction_data.local.ReportInMemory
 import com.gmail.jiangyang5157.transaction_data.remote.ReportService
