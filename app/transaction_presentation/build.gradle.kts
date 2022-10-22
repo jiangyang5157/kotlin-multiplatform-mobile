@@ -1,9 +1,6 @@
 plugins {
     id("kotlin-android")
     id("com.android.library")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -56,20 +53,5 @@ dependencies {
 
     // Internal
     implementation(project(":common"))
-    implementation(project(":adapter"))
     implementation(project(":transaction_domain_1"))
-    implementation(project(":transaction_presentation"))
-
-    // Dependency Injection
-    implementation(Dep.DaggerHilt)
-    kapt(Dep.DaggerHiltCompiler)
-    kapt(Dep.HiltCompiler)
-
-    // Navigation
-    implementation(Dep.NavigationFragmentKtx)
-    implementation(Dep.NavigationUiKtx)
-
-    // Lifecycle
-    implementation(Dep.LifecycleVmKtx)
-    implementation(Dep.LifecycleLiveDataKtx)
 }

@@ -23,7 +23,7 @@ import com.gmail.jiangyang5157.transaction_presentation.ui.binding.DateItem
 import com.gmail.jiangyang5157.transaction_presentation.ui.binding.TransactionItem
 import com.gmail.jiangyang5157.transaction_presentation.ui.transaction.TransactionRecycleView
 import com.gmail.jiangyang5157.transaction_presentation.vm.ReportViewModel
-import com.gmail.jiangyang5157.transaction_presentation_base.ext.isSameDayAs
+import com.gmail.jiangyang5157.transaction_presentation.ext.isSameDayAs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
