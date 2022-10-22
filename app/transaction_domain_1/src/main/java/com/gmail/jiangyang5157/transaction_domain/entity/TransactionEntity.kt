@@ -8,7 +8,6 @@ import androidx.room.Index
 import androidx.room.TypeConverter
 import com.gmail.jiangyang5157.kit.data.Converter
 import com.gmail.jiangyang5157.kit.data.finance.Money
-import com.gmail.jiangyang5157.transaction_domain.entity.ITransactionEntity
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

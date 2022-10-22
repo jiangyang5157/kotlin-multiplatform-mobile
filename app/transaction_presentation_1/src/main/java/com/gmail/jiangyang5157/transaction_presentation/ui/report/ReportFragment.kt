@@ -15,9 +15,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gmail.jiangyang5157.common.ext.toast
 import com.gmail.jiangyang5157.kit.data.Resource
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_yyyyMMdd_HHmmss
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_yyyy_MM_dd_HH_mm_ss
 import com.gmail.jiangyang5157.transaction_presentation.R
 import com.gmail.jiangyang5157.transaction_presentation.ui.binding.DateItem
 import com.gmail.jiangyang5157.transaction_presentation.ui.binding.TransactionItem
@@ -132,7 +132,7 @@ class ReportFragment : Fragment() {
         currentReport?.run {
             (activity as? AppCompatActivity)?.supportActionBar?.let {
                 it.title = "Report"
-                it.subtitle = "Received at ${statement.importedDate.asString(REGEX_DATE_yyyy_MM_dd_HH_mm_ss)}"
+                it.subtitle = "Received at ${statement.importedDate.asString(DATE_yyyyMMdd_HHmmss)}"
             }
             val transactionItems = arrayListOf<Any>()
             var currentDateItem: DateItem? = null

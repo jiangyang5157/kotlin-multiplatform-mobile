@@ -14,9 +14,9 @@ import androidx.navigation.fragment.navArgs
 import com.gmail.jiangyang5157.common.ext.toast
 import com.gmail.jiangyang5157.kit.data.Resource
 import com.gmail.jiangyang5157.kit.data.finance.Money
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_EEEddMMMyyyy
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_EEE_dd_MMM_yyyy_HH_mm_ss_zzz
 import com.gmail.jiangyang5157.transaction_presentation.R
 import com.gmail.jiangyang5157.transaction_presentation.vm.ReportViewModel
 import com.gmail.jiangyang5157.transaction_presentation_base.ext.includedGst
@@ -48,7 +48,11 @@ class TransactionFragment : Fragment() {
         setupTransaction(view, args.transactionId, Date(args.transactionImportedDate))
     }
 
-    private fun setupTransaction(view: View, transactionId: String, transactionIdImportedDate: Date) {
+    private fun setupTransaction(
+        view: View,
+        transactionId: String,
+        transactionIdImportedDate: Date
+    ) {
         reportViewModel.getTransaction(transactionId, transactionIdImportedDate)
             .observe(
                 viewLifecycleOwner,
@@ -59,7 +63,10 @@ class TransactionFragment : Fragment() {
                             setupTransaction(view, transactionId, resource.data)
                         }
                         is Resource.Loading -> {
-                            Log.d("####", "getTransaction Resource.Loading pre-populate data=${resource.data}")
+                            Log.d(
+                                "####",
+                                "getTransaction Resource.Loading pre-populate data=${resource.data}"
+                            )
                             setupTransaction(view, transactionId, resource.data)
                         }
                         is Resource.Failed -> {
@@ -76,11 +83,7 @@ class TransactionFragment : Fragment() {
             view.findViewById<TextView>(R.id.tv_id).text =
                 "Transaction ID: $transactionId"
             view.findViewById<TextView>(R.id.tv_date).text =
-                "Transaction Date: ${
-                date.asString(
-                    REGEX_DATE_EEE_dd_MMM_yyyy_HH_mm_ss_zzz
-                )
-                }"
+                "Transaction Date: ${date.asString(DATE_EEEddMMMyyyy)}"
             view.findViewById<TextView>(R.id.tv_description).text =
                 "Transaction Description: $description"
 

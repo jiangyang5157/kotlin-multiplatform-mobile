@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.transaction_presentation_base.ext
 
-import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_EEE_dd_MMM_yyyy
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_EEEddMMMyyyy
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -11,7 +11,7 @@ fun Date.isSameDayAs(other: Date?): Boolean {
         false
     } else {
         try {
-            val pattern = REGEX_DATE_EEE_dd_MMM_yyyy
+            val pattern = DATE_EEEddMMMyyyy
             SimpleDateFormat(pattern, Locale.getDefault()).format(this)
                 .equals(SimpleDateFormat(pattern, Locale.getDefault()).format(other))
         } catch (e: ParseException) {

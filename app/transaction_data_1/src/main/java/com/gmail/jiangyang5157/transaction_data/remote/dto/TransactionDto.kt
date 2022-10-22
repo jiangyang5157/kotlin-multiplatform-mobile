@@ -1,10 +1,10 @@
 package com.gmail.jiangyang5157.transaction_data.remote.dto
 
 import com.gmail.jiangyang5157.kit.data.finance.Money
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_yyyyMMddTHHmmssXXX
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asDate
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_yyyy_MM_dd_T_HH_mm_ss_XXX
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -75,7 +75,7 @@ data class TransactionDto(
 
     class DateStringJsonSerializer : JsonSerializer<Date>, JsonDeserializer<Date> {
 
-        private val pattern: String = REGEX_DATE_yyyy_MM_dd_T_HH_mm_ss_XXX
+        private val pattern: String = DATE_yyyyMMddTHHmmssXXX
 
         @Throws(IllegalArgumentException::class)
         override fun serialize(

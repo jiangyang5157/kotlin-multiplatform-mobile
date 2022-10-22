@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.jiangyang5157.adapter.recycleview.RecycleViewItemDelegate
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_EEEddMMMyyyy
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_EEE_dd_MMM_yyyy
 import com.gmail.jiangyang5157.transaction_presentation.R
 
 class DateItemViewBinder :
@@ -19,7 +19,7 @@ class DateItemViewBinder :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: DateItem) {
-        viewHolder.tvDate.text = "${item.date.asString(REGEX_DATE_EEE_dd_MMM_yyyy)}"
+        viewHolder.tvDate.text = "${item.date.asString(DATE_EEEddMMMyyyy)}"
     }
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup): ViewHolder {
