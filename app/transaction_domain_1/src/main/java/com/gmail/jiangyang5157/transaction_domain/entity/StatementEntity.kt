@@ -3,7 +3,7 @@ package com.gmail.jiangyang5157.transaction_domain.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.IStatementEntity
+import com.gmail.jiangyang5157.transaction_domain.entity.IStatementEntity
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 

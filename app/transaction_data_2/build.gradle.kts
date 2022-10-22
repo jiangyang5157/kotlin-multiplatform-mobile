@@ -57,7 +57,7 @@ dependencies {
     // Internal
     implementation(project(":kit"))
     implementation(project(":common"))
-    implementation(project(":transaction_domain"))
+    implementation(project(":transaction_domain_1"))
 
     // Network
     implementation(Dep.Retrofit)

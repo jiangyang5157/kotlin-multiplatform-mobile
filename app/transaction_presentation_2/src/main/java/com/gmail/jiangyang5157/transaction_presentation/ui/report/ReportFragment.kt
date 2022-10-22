@@ -17,7 +17,7 @@ import com.gmail.jiangyang5157.common.ext.toast
 import com.gmail.jiangyang5157.kit.data.Resource
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.REGEX_DATE_yyyy_MM_dd_HH_mm_ss
+import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_yyyy_MM_dd_HH_mm_ss
 import com.gmail.jiangyang5157.transaction_presentation.R
 import com.gmail.jiangyang5157.transaction_presentation.ui.binding.DateItem
 import com.gmail.jiangyang5157.transaction_presentation.ui.binding.TransactionItem

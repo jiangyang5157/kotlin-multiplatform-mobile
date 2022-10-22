@@ -2,7 +2,7 @@ package com.gmail.jiangyang5157.transaction_domain.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.IReportEntity
+import com.gmail.jiangyang5157.transaction_domain.entity.IReportEntity
 import com.google.gson.annotations.SerializedName
 
 /**

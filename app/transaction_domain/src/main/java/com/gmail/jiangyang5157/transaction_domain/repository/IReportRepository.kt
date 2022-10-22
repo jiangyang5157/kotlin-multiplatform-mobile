@@ -1,9 +1,9 @@
-package com.gmail.jiangyang5157.transaction_domain_kt.repository
+package com.gmail.jiangyang5157.transaction_domain.repository
 
 import com.gmail.jiangyang5157.kit.data.Resource
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.IReportEntity
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.IStatementEntity
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.ITransactionEntity
+import com.gmail.jiangyang5157.transaction_domain.entity.IReportEntity
+import com.gmail.jiangyang5157.transaction_domain.entity.IStatementEntity
+import com.gmail.jiangyang5157.transaction_domain.entity.ITransactionEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 

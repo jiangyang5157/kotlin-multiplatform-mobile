@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.transaction_domain_kt.entity
+package com.gmail.jiangyang5157.transaction_domain.entity
 
 import com.gmail.jiangyang5157.kit.data.finance.Money
 import java.util.Date

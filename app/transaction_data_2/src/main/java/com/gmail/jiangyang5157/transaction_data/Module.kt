@@ -7,7 +7,7 @@ import com.gmail.jiangyang5157.transaction_data.repo.DefaultReportRepository
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
-import com.gmail.jiangyang5157.transaction_domain_kt.repository.IReportRepository
+import com.gmail.jiangyang5157.transaction_domain.repository.IReportRepository
 import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module

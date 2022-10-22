@@ -1,1 +1,1 @@
-Android library
+Kotlin library

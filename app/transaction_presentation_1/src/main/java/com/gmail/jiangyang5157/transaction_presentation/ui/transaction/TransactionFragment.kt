@@ -16,7 +16,7 @@ import com.gmail.jiangyang5157.kit.data.Resource
 import com.gmail.jiangyang5157.kit.data.finance.Money
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
-import com.gmail.jiangyang5157.transaction_domain_kt.entity.REGEX_DATE_EEE_dd_MMM_yyyy_HH_mm_ss_zzz
+import com.gmail.jiangyang5157.transaction_domain.entity.REGEX_DATE_EEE_dd_MMM_yyyy_HH_mm_ss_zzz
 import com.gmail.jiangyang5157.transaction_presentation.R
 import com.gmail.jiangyang5157.transaction_presentation.vm.ReportViewModel
 import com.gmail.jiangyang5157.transaction_presentation_base.ext.includedGst

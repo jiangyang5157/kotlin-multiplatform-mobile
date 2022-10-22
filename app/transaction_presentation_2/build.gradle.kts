@@ -58,7 +58,7 @@ dependencies {
     implementation(project(":kit"))
     implementation(project(":common"))
     implementation(project(":adapter"))
-    implementation(project(":transaction_domain"))
+    implementation(project(":transaction_domain_1"))
     implementation(project(":transaction_presentation_base"))
 
     // Dependency Injection
