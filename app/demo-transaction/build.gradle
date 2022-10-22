@@ -11,7 +11,7 @@ android {
         minSdkVersion Config.MinSdkVersion
         targetSdkVersion Config.TargetSdkVersion
         applicationId "com.gmail.jiangyang5157.demo_transaction"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.gmail.jiangyang5157.demo_transaction.HiltTestRunner"
         versionCode Config.VersionCode
         versionName Config.VersionName
 

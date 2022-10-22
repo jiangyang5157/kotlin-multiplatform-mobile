@@ -8,9 +8,10 @@ android {
     compileSdk = Config.CompileSdkVersion
 
     defaultConfig {
-        applicationId = "com.gmail.jiangyang5157.kma.android"
         minSdk = Config.MinSdkVersion
         targetSdk = Config.TargetSdkVersion
+        applicationId = "com.gmail.jiangyang5157.kma.android"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = Config.VersionCode
         versionName = Config.VersionName
     }
