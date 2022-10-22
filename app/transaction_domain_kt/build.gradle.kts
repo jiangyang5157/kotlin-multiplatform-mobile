@@ -13,6 +13,8 @@ dependencies {
     implementation(Dep.Kotlin)
     implementation(Dep.CoroutinesCore)
 
+    testImplementation(Dep.KotlinTestJunit)
+
     // Internal
     implementation(project(":common-kt"))
 }
