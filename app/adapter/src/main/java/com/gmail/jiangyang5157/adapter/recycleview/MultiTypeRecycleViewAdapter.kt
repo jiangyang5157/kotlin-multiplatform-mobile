@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.jiangyang5157.adapter.ViewType
 import com.gmail.jiangyang5157.adapter.ViewTypeRegistry
-import java.util.Collections
+import java.util.*
 import kotlin.reflect.KClass
 
 open class MultiTypeRecycleViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -88,7 +88,7 @@ open class MultiTypeRecycleViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
     ): RecycleViewItemDelegate<Any, RecyclerView.ViewHolder> {
         @Suppress("UNCHECKED_CAST")
         return getItemDelegateByItemViewType(viewHolder.itemViewType).delegate
-            as RecycleViewItemDelegate<Any, RecyclerView.ViewHolder>
+                as RecycleViewItemDelegate<Any, RecyclerView.ViewHolder>
     }
 
     private fun getItemDelegateByItemViewType(itemViewType: Int): ViewType<Any, RecycleViewItemDelegate<Any, *>> {

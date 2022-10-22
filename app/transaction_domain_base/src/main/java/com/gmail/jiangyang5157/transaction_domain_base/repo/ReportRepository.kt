@@ -5,7 +5,7 @@ import com.gmail.jiangyang5157.transaction_domain_base.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain_base.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain_base.entity.TransactionEntity
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
+import java.util.*
 
 interface ReportRepository<Report : ReportEntity, Statement : StatementEntity, Transaction : TransactionEntity> {
 

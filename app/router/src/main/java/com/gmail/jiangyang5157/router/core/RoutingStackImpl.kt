@@ -15,7 +15,9 @@ internal data class RoutingStackImpl<T : Route>(
         }
 
     init {
-        check(elements.groupBy(RoutingStack.Element<*>::key).none { (_, routes) -> routes.size > 1 }) {
+        check(
+            elements.groupBy(RoutingStack.Element<*>::key)
+                .none { (_, routes) -> routes.size > 1 }) {
             "RoutingStack cannot contain entries with the same key twice."
         }
     }

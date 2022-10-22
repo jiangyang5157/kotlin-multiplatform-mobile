@@ -2,9 +2,7 @@ package com.gmail.jiangyang5157.common.util
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_DRAGGING
-import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
-import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_SETTLING
+import androidx.viewpager2.widget.ViewPager2.*
 import com.google.android.material.tabs.TabLayout
 import java.lang.ref.WeakReference
 
@@ -127,7 +125,7 @@ class TabLayoutViewPager2Mediator(
      * A [ViewPager2.OnPageChangeCallback] class which contains the necessary calls back to the provided [TabLayout]
      * so that the tab position is kept in sync.
      */
-    private class TabLayoutOnPageChangeCallback internal constructor(tabLayout: TabLayout) :
+    private class TabLayoutOnPageChangeCallback(tabLayout: TabLayout) :
         ViewPager2.OnPageChangeCallback() {
         private val tabLayoutRef: WeakReference<TabLayout> = WeakReference(tabLayout)
         private var prevScrollState: Int = 0
@@ -177,7 +175,7 @@ class TabLayoutViewPager2Mediator(
      * A [TabLayout.OnTabSelectedListener] class which contains the necessary calls back to the provided [ViewPager2]
      * so that the tab position is kept in sync.
      */
-    private class ViewPagerOnTabSelectedListener internal constructor(
+    private class ViewPagerOnTabSelectedListener(
         private val viewPager: ViewPager2,
         private val selectTabCallback: OnSelectTabCallback
     ) : TabLayout.OnTabSelectedListener {
@@ -196,7 +194,7 @@ class TabLayoutViewPager2Mediator(
         }
     }
 
-    private inner class PagerAdapterObserver internal constructor() :
+    private inner class PagerAdapterObserver :
         RecyclerView.AdapterDataObserver() {
 
         override fun onChanged() {

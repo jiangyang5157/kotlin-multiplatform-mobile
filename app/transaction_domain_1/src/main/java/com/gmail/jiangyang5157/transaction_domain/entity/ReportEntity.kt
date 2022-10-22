@@ -22,4 +22,4 @@ data class ReportEntity(
     )
     @SerializedName("transactions")
     override val transactions: List<TransactionEntity>,
-): com.gmail.jiangyang5157.transaction_domain_base.entity.ReportEntity
+) : com.gmail.jiangyang5157.transaction_domain_base.entity.ReportEntity

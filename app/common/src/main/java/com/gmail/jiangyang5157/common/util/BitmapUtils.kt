@@ -62,7 +62,12 @@ object BitmapUtils {
 
         val roundBitmap = Bitmap.createBitmap(bitmapSquare, bitmapSquare, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(roundBitmap)
-        canvas.drawBitmap(bitmap, (bitmapSquare - bitmapWidth).toFloat(), (bitmapSquare - bitmapHeight).toFloat(), null)
+        canvas.drawBitmap(
+            bitmap,
+            (bitmapSquare - bitmapWidth).toFloat(),
+            (bitmapSquare - bitmapHeight).toFloat(),
+            null
+        )
 
         val roundBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, roundBitmap)
         roundBitmapDrawable.cornerRadius = bitmapRadius.toFloat()

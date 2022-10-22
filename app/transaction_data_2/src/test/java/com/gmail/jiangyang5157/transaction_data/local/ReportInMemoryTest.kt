@@ -5,7 +5,7 @@ import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.Date
+import java.util.*
 
 class ReportInMemoryTest {
 

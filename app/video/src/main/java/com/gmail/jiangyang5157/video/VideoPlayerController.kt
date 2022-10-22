@@ -8,7 +8,6 @@ import android.os.HandlerThread
 import android.util.Log
 import android.view.Surface
 import android.view.TextureView
-import java.lang.IllegalStateException
 
 /**
  * Use [MediaPlayer] to play video within [VideoTextureView]

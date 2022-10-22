@@ -3,12 +3,7 @@ package com.gmail.jiangyang5157.router.fragment
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import com.gmail.jiangyang5157.router.core.ParcelableRoute
-import com.gmail.jiangyang5157.router.core.ParcelableRoutingStack
-import com.gmail.jiangyang5157.router.core.Route
-import com.gmail.jiangyang5157.router.core.RoutingStack
-import com.gmail.jiangyang5157.router.core.parcelable
-import com.gmail.jiangyang5157.router.core.routes
+import com.gmail.jiangyang5157.router.core.*
 import com.gmail.jiangyang5157.router.fragment.setup.RoutingStackStorage
 import com.gmail.jiangyang5157.router.utils.Constant
 

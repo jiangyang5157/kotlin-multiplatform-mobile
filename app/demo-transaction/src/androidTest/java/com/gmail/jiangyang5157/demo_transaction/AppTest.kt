@@ -37,13 +37,6 @@ class AppTest {
     }
 
     @Test
-    fun test_transaction_flow() {
-        // #### TODO removed this and add ui automations
-        Log.d("####", "test_transaction_flow")
-        Thread.sleep(2000)
-    }
-
-    @Test
     fun test_sleep_1() {
         Log.d("####", "test_sleep_1")
         Thread.sleep(1000)

@@ -2,8 +2,7 @@ package com.gmail.jiangyang5157.kit.data.finance
 
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.util.Currency
-import java.util.Locale
+import java.util.*
 
 /**
  * Created by Yang Jiang on January 22, 2019
@@ -23,32 +22,32 @@ data class Money(
         currency: Currency = Currency.getInstance(Locale.getDefault()),
         roundingMode: RoundingMode = RoundingMode.HALF_UP
     ) :
-        this(BigDecimal.valueOf(amount, currency.defaultFractionDigits), currency, roundingMode)
+            this(BigDecimal.valueOf(amount, currency.defaultFractionDigits), currency, roundingMode)
 
     constructor(
         amount: Long,
         currencyCode: String,
         roundingMode: RoundingMode = RoundingMode.HALF_UP
     ) :
-        this(amount, Currency.getInstance(currencyCode), roundingMode)
+            this(amount, Currency.getInstance(currencyCode), roundingMode)
 
     constructor(
         amount: Double,
         currency: Currency = Currency.getInstance(Locale.getDefault()),
         roundingMode: RoundingMode = RoundingMode.HALF_UP
     ) :
-        this(
-            BigDecimal.valueOf(amount).setScale(currency.defaultFractionDigits, roundingMode),
-            currency,
-            roundingMode
-        )
+            this(
+                BigDecimal.valueOf(amount).setScale(currency.defaultFractionDigits, roundingMode),
+                currency,
+                roundingMode
+            )
 
     constructor(
         amount: Double,
         currencyCode: String,
         roundingMode: RoundingMode = RoundingMode.HALF_UP
     ) :
-        this(amount, Currency.getInstance(currencyCode), roundingMode)
+            this(amount, Currency.getInstance(currencyCode), roundingMode)
 
     operator fun unaryMinus(): Money =
         Money(

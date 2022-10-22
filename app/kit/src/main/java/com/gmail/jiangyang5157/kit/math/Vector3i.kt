@@ -14,16 +14,23 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
     operator fun unaryMinus(): Vector3i = Vector3i(-x, -y, -z)
     operator fun plus(other: Vector3i): Vector3i = Vector3i(x + other.x, y + other.y, z + other.z)
     operator fun plus(int: Int): Vector3i = Vector3i(x + int, y + int, z + int)
-    operator fun plus(double: Double): Vector3i = Vector3i((x + double).toInt(), (y + double).toInt(), (z + double).toInt())
+    operator fun plus(double: Double): Vector3i =
+        Vector3i((x + double).toInt(), (y + double).toInt(), (z + double).toInt())
+
     operator fun minus(other: Vector3i): Vector3i = Vector3i(x - other.x, y - other.y, z - other.z)
     operator fun minus(int: Int): Vector3i = Vector3i(x - int, y - int, z - int)
-    operator fun minus(double: Double): Vector3i = Vector3i((x - double).toInt(), (y - double).toInt(), (z - double).toInt())
+    operator fun minus(double: Double): Vector3i =
+        Vector3i((x - double).toInt(), (y - double).toInt(), (z - double).toInt())
+
     operator fun times(other: Vector3i): Vector3i = Vector3i(x * other.x, y * other.y, z * other.z)
     operator fun times(int: Int): Vector3i = Vector3i(x * int, y * int, z * int)
-    operator fun times(double: Double): Vector3i = Vector3i((x * double).toInt(), (y * double).toInt(), (z * double).toInt())
+    operator fun times(double: Double): Vector3i =
+        Vector3i((x * double).toInt(), (y * double).toInt(), (z * double).toInt())
+
     operator fun div(other: Vector3i): Vector3i = Vector3i(x / other.x, y / other.y, z / other.z)
     operator fun div(int: Int): Vector3i = Vector3i(x / int, y / int, z / int)
-    operator fun div(double: Double): Vector3i = Vector3i((x / double).toInt(), (y / double).toInt(), (z / double).toInt())
+    operator fun div(double: Double): Vector3i =
+        Vector3i((x / double).toInt(), (y / double).toInt(), (z / double).toInt())
 
     override val length: Double
         get() = sqrt(this.dot(this))
@@ -31,7 +38,9 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
     override val normalize: Vector3i
         get() = this / length
 
-    override fun dot(other: Vector3<Int>): Double = (x * other.x + y * other.y + z * other.z).toDouble()
+    override fun dot(other: Vector3<Int>): Double =
+        (x * other.x + y * other.y + z * other.z).toDouble()
+
     override fun cross(other: Vector3<Int>): Vector3i = Vector3i(
         y * other.z - z * other.y,
         z * other.x - x * other.z,

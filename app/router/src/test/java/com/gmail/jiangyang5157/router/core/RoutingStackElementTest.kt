@@ -1,11 +1,7 @@
 package com.gmail.jiangyang5157.router.core
 
 import com.gmail.jiangyang5157.kit.data.Key
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class RoutingStackElementTest {
 

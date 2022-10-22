@@ -18,13 +18,13 @@ class TransactionRecycleView : RecyclerView {
     }
 
     constructor(context: Context) :
-        super(context)
+            super(context)
 
     constructor(context: Context, attrs: AttributeSet?) :
-        super(context, attrs)
+            super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, @AttrRes defStyleAttr: Int) :
-        super(context, attrs, defStyleAttr)
+            super(context, attrs, defStyleAttr)
 
     init {
         adapter = recycleViewAdapter

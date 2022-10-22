@@ -11,16 +11,23 @@ data class Vector2i(override val x: Int, override val y: Int) : Vector2<Int> {
     operator fun unaryMinus(): Vector2i = Vector2i(-x, -y)
     operator fun plus(other: Vector2i): Vector2i = Vector2i(x + other.x, y + other.y)
     operator fun plus(int: Int): Vector2i = Vector2i(x + int, y + int)
-    operator fun plus(double: Double): Vector2i = Vector2i((x + double).toInt(), (y + double).toInt())
+    operator fun plus(double: Double): Vector2i =
+        Vector2i((x + double).toInt(), (y + double).toInt())
+
     operator fun minus(other: Vector2i): Vector2i = Vector2i(x - other.x, y - other.y)
     operator fun minus(int: Int): Vector2i = Vector2i(x - int, y - int)
-    operator fun minus(double: Double): Vector2i = Vector2i((x - double).toInt(), (y - double).toInt())
+    operator fun minus(double: Double): Vector2i =
+        Vector2i((x - double).toInt(), (y - double).toInt())
+
     operator fun times(other: Vector2i): Vector2i = Vector2i(x * other.x, y * other.y)
     operator fun times(int: Int): Vector2i = Vector2i(x * int, y * int)
-    operator fun times(double: Double): Vector2i = Vector2i((x * double).toInt(), (y * double).toInt())
+    operator fun times(double: Double): Vector2i =
+        Vector2i((x * double).toInt(), (y * double).toInt())
+
     operator fun div(other: Vector2i): Vector2i = Vector2i(x / other.x, y / other.y)
     operator fun div(int: Int): Vector2i = Vector2i(x / int, y / int)
-    operator fun div(double: Double): Vector2i = Vector2i((x / double).toInt(), (y / double).toInt())
+    operator fun div(double: Double): Vector2i =
+        Vector2i((x / double).toInt(), (y / double).toInt())
 
     override val length: Double
         get() = Math.sqrt(this.dot(this))

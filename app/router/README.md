@@ -1,6 +1,7 @@
 # Router
 
 ## Hightlight
+
 - Easy to use API\'s
 - Highly configurable by *Builder* or *DSL*
 - Built-in solution to support passing data to fragments
@@ -9,34 +10,48 @@
 - AndroidX support
 
 ## What It Can Do
+
 - Flexible routing with fragments in one region of the screen within one Activity
 - Easy solution configuration for transitions/animations and particular scenarios
 - Survives configuration changes
 - Can restore the "routing stack" after process death
 
 ## What It Can't Do
+
 - Similarly to *androidx.navigation*, this router is scope-in one Activity
-  - Activity is designed to take full screen, on the contrary fragment is fit in a region of the screen and it requires to be hosted by a specific Activity
-  - Activity launch mode is varied, and implementation to "show" Activity(`Intent`) and fragment(`FragmentManager`) are different.
-  - If fragmentA wants to launch fragmentB, just show fragmentB in current routerA, it is no need to start ActivityB then launch fragmentB. There is nothing to stop you from adding any fragment to any router.
+    - Activity is designed to take full screen, on the contrary fragment is fit in a region of the
+      screen and it requires to be hosted by a specific Activity
+    - Activity launch mode is varied, and implementation to "show" Activity(`Intent`) and
+      fragment(`FragmentManager`) are different.
+    - If fragmentA wants to launch fragmentB, just show fragmentB in current routerA, it is no need
+      to start ActivityB then launch fragmentB. There is nothing to stop you from adding any
+      fragment to any router.
 - Routing to Dialog
 
 ## Define Route
-A Route that marks classes to be suitable for routing. It can easily be represented by data class, also it should have information that indicates associated fragment. There are built-in interfaces for different usages.
+
+A Route that marks classes to be suitable for routing. It can easily be represented by data class,
+also it should have information that indicates associated fragment. There are built-in interfaces
+for different usages.
 
 Built-in interface *ParcelableRoute* is for a route data management involved *parcelization*.
-- `interface ParcelableRoute : Route, Parcelable` 
+
+- `interface ParcelableRoute : Route, Parcelable`
 
 Built-in interface *DataRoute* is for routing with any *data*.
+
 - `interface DataRoute<T> : Route`
 
 Built-in interface *KeyRoute* holds an unique *Key*.
+
 - `interface KeyRoute : Route`
 
 Built-in interface *FragmentRoute* holds a *fragmentClass*.
+
 - `interface FragmentRoute : Route`
 
 ###### USAGE
+
 For instance, below 2 different implementations achieve the same propose:
 
 - e.g. 1
@@ -80,7 +95,8 @@ router push UriRoute("myscheme://mydomain/contact_list?contacts=${Gson().toJson(
 
 Disadvantage of "e.g. 1" is the awareness of concrete route class.
 
-Disadvantage of "e.g. 2" is a configuration of fragment mapping is required during router initialization.
+Disadvantage of "e.g. 2" is a configuration of fragment mapping is required during router
+initialization.
 
 i.e.
 
@@ -95,6 +111,7 @@ FragmentRouter {
 ```
 
 ## Initialize Router
+
 A *FragmentRouter* targets fragments. It has both `FragmentRouterBuilder` and `DSL` support.
 
 i.e.
@@ -113,34 +130,45 @@ val router: FragmentRouter<UriRoute> =
 ```
 
 ##### USAGE
+
 - `transition`
-  - Define default transitions and any particular transitions
-  - Optional
+    - Define default transitions and any particular transitions
+    - Optional
 - `fragment`
-  - Define fragment mapping
-  - Not required for *FragmentRoute* solution, as it already has fragmentClass information
-  - Required for *KeyRoute* solution, we provide "*Key* -> fragmentClass" mapping here
+    - Define fragment mapping
+    - Not required for *FragmentRoute* solution, as it already has fragmentClass information
+    - Required for *KeyRoute* solution, we provide "*Key* -> fragmentClass" mapping here
 - `stackInitialization`
-  - Setup router actions/instructions that will be executed once *router.setup* is ready. e.g. "`router push MainRoute`"
-  - Optional
+    - Setup router actions/instructions that will be executed once *router.setup* is ready.
+      e.g. "`router push MainRoute`"
+    - Optional
 - `containerLifecycle`
-  - Define when to attach/detach to/from fragment container. Accepting *androidx.lifecycle.Lifecycle.Event* value
-  - Optional, default is *ON_RESUME/ON_PAUSE*
+    - Define when to attach/detach to/from fragment container. Accepting *
+      androidx.lifecycle.Lifecycle.Event* value
+    - Optional, default is *ON_RESUME/ON_PAUSE*
 - `stackStorage`
-  - Provide custom solution to restore routing stack in configuration changes or process death scenarios. e.g. save/restore routing stack to/from prefs/xml/database
-  - Optional, when *ParcelableRoute* being used. Default is save/restore routing stack through *Bundle*
-  - Only required when *ParcelableRoute* is not being used, since the default solution is only applicable to work with parcelable data.
+    - Provide custom solution to restore routing stack in configuration changes or process death
+      scenarios. e.g. save/restore routing stack to/from prefs/xml/database
+    - Optional, when *ParcelableRoute* being used. Default is save/restore routing stack through *
+      Bundle*
+    - Only required when *ParcelableRoute* is not being used, since the default solution is only
+      applicable to work with parcelable data.
 - `routeStorage`
-  - Provide custom solution for route data management. e.g. attach/get route data to/from prefs/viewModel
-  - Optional, when *ParcelableRoute* being used. Default is attach/get router through *Bundle*
-  - Only required when *ParcelableRoute* is not being used, since the default solution is only applicable to work with parcelable data.
+    - Provide custom solution for route data management. e.g. attach/get route data to/from
+      prefs/viewModel
+    - Optional, when *ParcelableRoute* being used. Default is attach/get router through *Bundle*
+    - Only required when *ParcelableRoute* is not being used, since the default solution is only
+      applicable to work with parcelable data.
 - `stackPatcher`
-  - Provide custom solution for how exactly routing stack work with the *androidx.fragment.app.FragmentManager*
-  - Optional
+    - Provide custom solution for how exactly routing stack work with the *
+      androidx.fragment.app.FragmentManager*
+    - Optional
 
 ## Fragment Transitions
 
-In order to support animations (fragment transitions) during routing, you just need to implement `FragmentTransition` or `GenericFragmentTransition` as many as you want, then register them into router builder.
+In order to support animations (fragment transitions) during routing, you just need to
+implement `FragmentTransition` or `GenericFragmentTransition` as many as you want, then register
+them into router builder.
 
 ```java
 FragmentRouter {
@@ -153,6 +181,7 @@ FragmentRouter {
 ```
 
 ###### USAGE
+
 e.g. Define a default animation for fragment transactions
 
 ```java
@@ -208,7 +237,8 @@ class LoginToLoginProcessingTransition : GenericFragmentTransition<LoginFragment
 
 ## Setup Router
 
-A *FragmentRouter* needs a *ViewGroup* to place the fragments in. A router can be setup from either `RouterFragmentActivity` or `RouterFragment`. It is common to do this in Activity.
+A *FragmentRouter* needs a *ViewGroup* to place the fragments in. A router can be setup from
+either `RouterFragmentActivity` or `RouterFragment`. It is common to do this in Activity.
 
 ```java
 class MainActivity : AppCompatActivity(), RouterFragmentActivity {
@@ -289,4 +319,6 @@ fun checkIfLoggedIn() {
 }
 ``` 
 
-Also, you can find 31 routing stack unit tests at [here](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/router/src/test/java/com/gmail/jiangyang5157/router/core/RoutingStackElementsInstructionExecutorTest.kt).
+Also, you can find 31 routing stack unit tests
+at [here](https://github.com/jiangyang5157/kotlin-multiplatform-mobile/tree/master/app/router/src/test/java/com/gmail/jiangyang5157/router/core/RoutingStackElementsInstructionExecutorTest.kt)
+.

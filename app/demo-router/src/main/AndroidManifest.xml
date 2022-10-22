@@ -27,17 +27,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".keyroute.uri.ExampleActivity"
+            android:name=".uri.ExampleActivity"
             android:label="keyroute.uri.ExampleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".keyroute.uri.ExampleCustomRouteStorageActivity"
+            android:name=".uri.ExampleCustomRouteStorageActivity"
             android:label="keyroute.uri.ExampleCustomRouteStorageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".keyroute.uri.ExampleCustomStackStorageActivity"
+            android:name=".uri.ExampleCustomStackStorageActivity"
             android:label="keyroute.uri.ExampleCustomStackStorageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 

@@ -6,20 +6,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.gmail.jiangyang5157.adapter.recycleview.ItemTouchHelperCallback
 import com.gmail.jiangyang5157.adapter.recycleview.MultiTypeRecycleViewAdapter
 import com.gmail.jiangyang5157.demo_adapter.databinding.ActivityRecycleviewBinding
-import com.gmail.jiangyang5157.demo_adapter.item.ChevronItem
-import com.gmail.jiangyang5157.demo_adapter.item.ImageItem
-import com.gmail.jiangyang5157.demo_adapter.item.SwitchItem
-import com.gmail.jiangyang5157.demo_adapter.item.TextItem
-import com.gmail.jiangyang5157.demo_adapter.item.TwoButtonsItem
-import com.gmail.jiangyang5157.demo_adapter.recycleview.ChevronItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.recycleview.ImageItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.recycleview.SwitchItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.recycleview.TextItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.recycleview.TwoButtonsDelegate
+import com.gmail.jiangyang5157.demo_adapter.item.*
+import com.gmail.jiangyang5157.demo_adapter.recycleview.*
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class RecycleViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

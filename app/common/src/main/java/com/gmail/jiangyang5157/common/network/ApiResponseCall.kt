@@ -77,7 +77,8 @@ class ApiResponseCall<T : Any, E : Any>(
 
     override fun timeout(): Timeout = delegate.timeout()
 
-    override fun clone(): Call<ApiResponse<T, E>> = ApiResponseCall(delegate.clone(), errorConverter)
+    override fun clone(): Call<ApiResponse<T, E>> =
+        ApiResponseCall(delegate.clone(), errorConverter)
 
     override fun execute(): Response<ApiResponse<T, E>> {
         throw UnsupportedOperationException("ApiResponseCall doesn't support execute")

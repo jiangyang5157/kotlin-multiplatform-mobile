@@ -4,8 +4,8 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 /**
-* Created by Yang Jiang on June 30, 2017
-*/
+ * Created by Yang Jiang on June 30, 2017
+ */
 class EdgeTest {
 
     @Test

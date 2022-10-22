@@ -39,7 +39,10 @@ class FrameThread(fps: Int, private val callback: Callback) : Thread() {
 
     override fun run() {
         while (true) {
-            while (checkStatus(STATUS_RUNNING) && (checkStatus(STATUS_PAUSED) || !checkStatus(STATUS_FOCUSED))) {
+            while (checkStatus(STATUS_RUNNING) && (checkStatus(STATUS_PAUSED) || !checkStatus(
+                    STATUS_FOCUSED
+                ))
+            ) {
                 if (checkStatus(STATUS_REFRESH)) {
                     off(STATUS_REFRESH)
                     break

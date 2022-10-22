@@ -6,7 +6,8 @@ import kotlin.math.sqrt
 /**
  * Created by Yang Jiang on June 27, 2017
  */
-data class Vector3d(override val x: Double, override val y: Double, override val z: Double) : Vector3<Double> {
+data class Vector3d(override val x: Double, override val y: Double, override val z: Double) :
+    Vector3<Double> {
 
     constructor() : this(0.0, 0.0, 0.0)
     constructor(double: Double) : this(double, double, double)

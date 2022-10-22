@@ -2,18 +2,14 @@ package com.gmail.jiangyang5157.demo_video
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.gmail.jiangyang5157.video.VideoPlayerController
 import com.gmail.jiangyang5157.video.VideoPlayerController.Companion.STATE_COMPLETED
 import com.gmail.jiangyang5157.video.VideoPlayerController.Companion.STATE_ERROR
@@ -24,8 +20,7 @@ import com.gmail.jiangyang5157.video.VideoPlayerController.Companion.STATE_PREPA
 import com.gmail.jiangyang5157.video.VideoPlayerController.Companion.STATE_PREPARING
 import com.gmail.jiangyang5157.video.VideoTextureView
 import com.squareup.picasso.Picasso
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {

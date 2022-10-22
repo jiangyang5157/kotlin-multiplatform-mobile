@@ -74,7 +74,7 @@ private class CompositeFragmentTransition(
  */
 @PublishedApi
 internal fun <ExitFragment : Fragment, ExitRoute : Route, EnterFragment : Fragment, EnterRoute : Route>
-ReifiedGenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>.erased(): GenericFragmentTransition<Fragment, Route, Fragment, Route> =
+        ReifiedGenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>.erased(): GenericFragmentTransition<Fragment, Route, Fragment, Route> =
     ErasedFragmentTransition(this)
 
 @PublishedApi
@@ -88,7 +88,7 @@ internal class ReifiedGenericFragmentTransition<ExitFragment : Fragment, ExitRou
 
 @PublishedApi
 internal inline fun <reified ExitFragment : Fragment, reified ExitRoute : Route, reified EnterFragment : Fragment, reified EnterRoute : Route>
-GenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>.reified() =
+        GenericFragmentTransition<ExitFragment, ExitRoute, EnterFragment, EnterRoute>.reified() =
     ReifiedGenericFragmentTransition(
         transition = this,
         enterFragment = EnterFragment::class,

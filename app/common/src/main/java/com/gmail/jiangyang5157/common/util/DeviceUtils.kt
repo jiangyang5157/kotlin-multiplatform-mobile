@@ -15,12 +15,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.text.DecimalFormat
 
 /**
@@ -33,6 +28,7 @@ object DeviceUtils {
     private const val DEBUG_ENABLE_LOG = false
 
     private const val DOCUMENTS_DIR = "documents"
+
     // configured android:authorities in AndroidManifest (https://developer.android.com/reference/android/support/v4/content/FileProvider)
     private const val AUTHORITY = "YOUR_AUTHORITY.provider"
     private const val HIDDEN_PREFIX = "."
@@ -264,12 +260,12 @@ object DeviceUtils {
             Log.d(
                 "TAG",
                 "Authority: " + uri.authority +
-                    ", Fragment: " + uri.fragment +
-                    ", Port: " + uri.port +
-                    ", Query: " + uri.query +
-                    ", Scheme: " + uri.scheme +
-                    ", Host: " + uri.host +
-                    ", Segments: " + uri.pathSegments.toString()
+                        ", Fragment: " + uri.fragment +
+                        ", Port: " + uri.port +
+                        ", Query: " + uri.query +
+                        ", Scheme: " + uri.scheme +
+                        ", Host: " + uri.host +
+                        ", Segments: " + uri.pathSegments.toString()
 
             )
         }
@@ -474,9 +470,9 @@ object DeviceUtils {
             // Text file
             intent.setDataAndType(uri, "text/plain")
         } else if ((
-            url.contains(".3gp") || url.contains(".mpg") || url.contains(".mpeg") ||
-                url.contains(".mpe") || url.contains(".mp4") || url.contains(".avi")
-            )
+                    url.contains(".3gp") || url.contains(".mpg") || url.contains(".mpeg") ||
+                            url.contains(".mpe") || url.contains(".mp4") || url.contains(".avi")
+                    )
         ) {
             // Video files
             intent.setDataAndType(uri, "video/*")

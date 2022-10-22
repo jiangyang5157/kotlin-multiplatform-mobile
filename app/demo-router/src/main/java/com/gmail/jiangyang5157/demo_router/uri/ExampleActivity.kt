@@ -6,7 +6,6 @@ import com.gmail.jiangyang5157.demo_router.Dependency
 import com.gmail.jiangyang5157.demo_router.R
 import com.gmail.jiangyang5157.demo_router.RouterFragmentActivityHost
 import com.gmail.jiangyang5157.demo_router.databinding.ExampleActivityRouterBinding
-import com.gmail.jiangyang5157.demo_router.uri.UriRoute
 import com.gmail.jiangyang5157.router.core.clear
 import com.gmail.jiangyang5157.router.core.push
 import com.gmail.jiangyang5157.router.fragment.FragmentRouter

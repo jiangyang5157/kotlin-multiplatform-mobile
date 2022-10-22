@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
-
 plugins {
     id("kotlin-android")
     id("com.android.library")
@@ -45,8 +43,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android.txt"),
-                    file("proguard-rules.pro")
+                getDefaultProguardFile("proguard-android.txt"),
+                file("proguard-rules.pro")
             )
         }
     }

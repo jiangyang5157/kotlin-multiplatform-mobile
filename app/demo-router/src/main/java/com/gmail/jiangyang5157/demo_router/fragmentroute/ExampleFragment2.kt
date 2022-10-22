@@ -41,7 +41,7 @@ class ExampleFragment2 :
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvInfo.text = "ExampleFragment2\n\n" +
-            "# route=${route.data}\n"
+                "# route=${route.data}\n"
 
         binding.btn1.setOnClickListener {
             router push ExampleRoute1(

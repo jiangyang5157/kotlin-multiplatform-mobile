@@ -16,7 +16,12 @@ object FragmentStackPatcherImpl : FragmentStackPatcher {
         newStack: FragmentRoutingStack<*>
     ) {
         container.fragmentManager.beginTransaction().disallowAddToBackStack().apply {
-            patchTopElement(transition = transition, container = container, oldStack = oldStack, newStack = newStack)
+            patchTopElement(
+                transition = transition,
+                container = container,
+                oldStack = oldStack,
+                newStack = newStack
+            )
             patchRemovedElements(container = container, oldStack = oldStack, newStack = newStack)
             commitNowAllowingStateLoss()
         }

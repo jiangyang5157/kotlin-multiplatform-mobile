@@ -5,11 +5,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 fun View.flatViewHierarchy(): List<View> {
     return listOf(this).plus(children.flatMap { it.flatViewHierarchy() })

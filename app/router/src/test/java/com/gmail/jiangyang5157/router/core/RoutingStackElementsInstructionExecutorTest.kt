@@ -283,7 +283,8 @@ class RoutingStackElementsInstructionExecutorTest {
                 RouteImpl1(1),
                 RouteImpl1(2)
             )
-        val newStack = stack.popUntilPredicate { element -> element.route == RouteImpl1(1) } // 0, 1, 2, 1
+        val newStack =
+            stack.popUntilPredicate { element -> element.route == RouteImpl1(1) } // 0, 1, 2, 1
         assertEquals(5, stack.elements.size)
         assertEquals(4, newStack.elements.size)
         assertEquals(RouteImpl1(0), newStack.elements[0].route)
@@ -302,7 +303,8 @@ class RoutingStackElementsInstructionExecutorTest {
                 RouteImpl1(1),
                 RouteImpl1(2)
             )
-        val newStack = stack.popUntilPredicate { element -> element.route == RouteImpl1(2) } // 0, 1, 2, 1, 2
+        val newStack =
+            stack.popUntilPredicate { element -> element.route == RouteImpl1(2) } // 0, 1, 2, 1, 2
         assertEquals(5, stack.elements.size)
         assertEquals(5, newStack.elements.size)
         assertEquals(RouteImpl1(0), newStack.elements[0].route)
@@ -323,7 +325,8 @@ class RoutingStackElementsInstructionExecutorTest {
                 RouteImpl1(1),
                 RouteImpl1(2)
             )
-        val newStack = stack.popUntilPredicate { element -> element.key == stack.elements[1].key } // 0, 1
+        val newStack =
+            stack.popUntilPredicate { element -> element.key == stack.elements[1].key } // 0, 1
         assertEquals(5, stack.elements.size)
         assertEquals(2, newStack.elements.size)
         assertEquals(RouteImpl1(0), newStack.elements[0].route)

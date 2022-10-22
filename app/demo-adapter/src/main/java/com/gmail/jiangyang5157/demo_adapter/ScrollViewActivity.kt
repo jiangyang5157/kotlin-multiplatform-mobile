@@ -5,22 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gmail.jiangyang5157.adapter.viewgroup.MultiTypeLinearLayoutManager
 import com.gmail.jiangyang5157.adapter.viewgroup.MultiTypeViewGroupAdapter
 import com.gmail.jiangyang5157.demo_adapter.databinding.ActivityScrollviewBinding
-import com.gmail.jiangyang5157.demo_adapter.item.ChevronItem
-import com.gmail.jiangyang5157.demo_adapter.item.ImageItem
-import com.gmail.jiangyang5157.demo_adapter.item.SwitchItem
-import com.gmail.jiangyang5157.demo_adapter.item.TextItem
-import com.gmail.jiangyang5157.demo_adapter.item.TwoButtonsItem
-import com.gmail.jiangyang5157.demo_adapter.item.VideoItem
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.ChevronItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.ImageItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.SwitchItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.TextItemDelegate
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.TwoButtonsDelegate
-import com.gmail.jiangyang5157.demo_adapter.viewgroup.VideoItemDelegate
+import com.gmail.jiangyang5157.demo_adapter.item.*
+import com.gmail.jiangyang5157.demo_adapter.viewgroup.*
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class ScrollViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

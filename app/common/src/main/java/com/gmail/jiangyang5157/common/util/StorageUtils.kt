@@ -24,7 +24,8 @@ object StorageUtils {
     /**
      * Return true if external storage is available for read and write
      */
-    val isExternalStorageWritable: Boolean = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
+    val isExternalStorageWritable: Boolean =
+        Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
 
     /**
      *  Return true if external storage is available to at least read
@@ -48,7 +49,8 @@ object StorageUtils {
             BYTE_SYMBOL -> ret = fileLength.toFloat().toDouble()
             KB_SYMBOL -> ret = (fileLength.toFloat() / UNIT_STORAGE).toDouble()
             MB_SYMBOL -> ret = (fileLength.toFloat() / (UNIT_STORAGE * UNIT_STORAGE)).toDouble()
-            GB_SYMBOL -> ret = (fileLength.toFloat() / (UNIT_STORAGE * UNIT_STORAGE * UNIT_STORAGE)).toDouble()
+            GB_SYMBOL -> ret =
+                (fileLength.toFloat() / (UNIT_STORAGE * UNIT_STORAGE * UNIT_STORAGE)).toDouble()
         }
         val scale = 2
         val roundingMode = BigDecimal.ROUND_UP

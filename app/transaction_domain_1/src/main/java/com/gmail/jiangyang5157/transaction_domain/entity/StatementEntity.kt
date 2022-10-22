@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.Date
+import java.util.*
 
 /**
  * This is Room supported entity.
@@ -20,4 +20,4 @@ data class StatementEntity(
     @ColumnInfo(name = "importedDate")
     @SerializedName("importedDate")
     override val importedDate: Date,
-): com.gmail.jiangyang5157.transaction_domain_base.entity.StatementEntity
+) : com.gmail.jiangyang5157.transaction_domain_base.entity.StatementEntity

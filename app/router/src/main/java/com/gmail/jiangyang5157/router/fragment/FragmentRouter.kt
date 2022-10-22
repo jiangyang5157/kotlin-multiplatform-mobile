@@ -4,16 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.fragment.app.Fragment
-import com.gmail.jiangyang5157.router.core.Route
-import com.gmail.jiangyang5157.router.core.Router
-import com.gmail.jiangyang5157.router.core.RoutingStack
+import com.gmail.jiangyang5157.router.core.*
 import com.gmail.jiangyang5157.router.core.RoutingStack.Factory.empty
-import com.gmail.jiangyang5157.router.core.RoutingStackInstruction
-import com.gmail.jiangyang5157.router.core.emptyRouterInstruction
-import com.gmail.jiangyang5157.router.core.mainThread
-import com.gmail.jiangyang5157.router.core.plus
-import com.gmail.jiangyang5157.router.core.requireMainThread
-import com.gmail.jiangyang5157.router.core.routes
 import com.gmail.jiangyang5157.router.fragment.mapping.FragmentMap
 import com.gmail.jiangyang5157.router.fragment.setup.FragmentContainer
 import com.gmail.jiangyang5157.router.fragment.setup.FragmentContainerLifecycle

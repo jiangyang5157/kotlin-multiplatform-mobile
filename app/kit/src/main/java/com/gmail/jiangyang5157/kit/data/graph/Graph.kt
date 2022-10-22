@@ -22,10 +22,10 @@ open class Graph<T> {
 
     override fun toString(): String {
         return "Graph(\n" +
-            "\t\tnodes=$nodes,\n" +
-            "\t\tsourcesMap=$sourcesMap,\n" +
-            "\t\ttargetsMap=$targetsMap\n" +
-            ")"
+                "\t\tnodes=$nodes,\n" +
+                "\t\tsourcesMap=$sourcesMap,\n" +
+                "\t\ttargetsMap=$targetsMap\n" +
+                ")"
     }
 
     fun getNode(id: T): Node<T>? {

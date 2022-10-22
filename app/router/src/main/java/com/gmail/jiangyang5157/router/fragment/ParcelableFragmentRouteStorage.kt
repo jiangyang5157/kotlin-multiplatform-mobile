@@ -10,7 +10,7 @@ import com.gmail.jiangyang5157.router.fragment.setup.FragmentRouteStorage
 
 @Suppress("UNCHECKED_CAST")
 internal fun <T : Route> ParcelableFragmentRouteStorage.Companion.createUnsafe():
-    FragmentRouteStorage<T> =
+        FragmentRouteStorage<T> =
     ParcelableFragmentRouteStorage<ParcelableRoute>() as FragmentRouteStorage<T>
 
 class ParcelableFragmentRouteStorage<T>(

@@ -43,8 +43,8 @@ class ExampleFragment1 :
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvInfo.text = "ExampleFragment1\n\n" +
-            "# route=${route.data}\n\n" +
-            "# param1=${route.query("param1")}\n"
+                "# route=${route.data}\n\n" +
+                "# param1=${route.query("param1")}\n"
 
         binding.btn1.setOnClickListener {
             router push UriRoute(

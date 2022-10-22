@@ -1,6 +1,7 @@
 # demo-transactions
 
-Simple application that will fetch a list of transactions from an api endpoint and present the data to user.
+Simple application that will fetch a list of transactions from an api endpoint and present the data
+to user.
 
 ## Build variants
 
@@ -9,7 +10,8 @@ Simple application that will fetch a list of transactions from an api endpoint a
 - `dataApresentationB<Debug/Release>`
 - `dataBpresentationB<Debug/Release>`
 
-Project contains two *flavorDimensions* and four *productFlavors*, and they can be used to build different versions of app based on which `data` and `presentation` layer app going to take.
+Project contains two *flavorDimensions* and four *productFlavors*, and they can be used to build
+different versions of app based on which `data` and `presentation` layer app going to take.
 
 #### `dataA`
 
@@ -18,6 +20,7 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
 - Consuming API: https://60df9ae9abbdd9001722d437.mockapi.io/api/v1/transactions1
 
 *Example of model signature*
+
 ```json
 [
     {
@@ -44,6 +47,7 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
 - Consuming API: https://60df9ae9abbdd9001722d437.mockapi.io/api/v1/transactions2
 
 *Example of model signature*
+
 ```json
 [
     {
@@ -62,47 +66,44 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
 ```
 
 #### `presentationA`
+
 - Take module `transaction_presentation_1`
 - First page
-  - Display transactions in a sorted list
-  - Select a transaction will take user to a second page
+    - Display transactions in a sorted list
+    - Select a transaction will take user to a second page
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataA-presentationA.png" width="320"> |
-|:--:|
-| *assets/report-dataA-presentationA* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataA-presentationA.png" width="320">
+| |:--:| | *assets/report-dataA-presentationA* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataB-presentationA.png" width="320"> |
-|:--:|
-| *assets/report-dataB-presentationA* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataB-presentationA.png" width="320">
+| |:--:| | *assets/report-dataB-presentationA* |
 
 - Second page
-  - Display detailed view of the transaction data
-    - 15% included gst calculation for debit transaction
+    - Display detailed view of the transaction data
+        - 15% included gst calculation for debit transaction
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/transaction-debit-presentationA.png" width="320"> |
-|:--:|
-| *assets/transaction-debit-presentationA* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/transaction-debit-presentationA.png" width="320">
+| |:--:| | *assets/transaction-debit-presentationA* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/transaction-credit-presentationA.png" width="320"> |
-|:--:|
-| *assets/transaction-credit-presentationA* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/transaction-credit-presentationA.png" width="320">
+| |:--:| | *assets/transaction-credit-presentationA* |
 
 #### `presentationB`
+
 - Take module `transaction_presentation_2`
 - Frist page
-  - Display transactions in a sorted list
-    - 15% included gst calculation for debit transaction
-    - Divide line for each item
+    - Display transactions in a sorted list
+        - 15% included gst calculation for debit transaction
+        - Divide line for each item
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataA-presentationB.png" width="320"> |
-|:--:|
-| *assets/report-dataA-presentationB* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataA-presentationB.png" width="320">
+| |:--:| | *assets/report-dataA-presentationB* |
 
-| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataB-presentationB.png" width="320"> |
-|:--:|
-| *assets/report-dataB-presentationB* |
+| <img src="https://github.com/jiangyang5157/kotlin-multiplatform-mobile/blob/master/app/demo-transaction/assets/report-dataB-presentationB.png" width="320">
+| |:--:| | *assets/report-dataB-presentationB* |
 
 ## Tech Stack
+
 - Clean Architecture
 - Layer Modularization
 - MVVM

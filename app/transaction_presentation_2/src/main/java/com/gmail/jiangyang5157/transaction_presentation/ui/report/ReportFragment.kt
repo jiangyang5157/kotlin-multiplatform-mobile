@@ -3,12 +3,7 @@ package com.gmail.jiangyang5157.transaction_presentation.ui.report
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -123,7 +118,10 @@ class ReportFragment : Fragment() {
             }
     }
 
-    private fun setupReport(transactionRecycleView: TransactionRecycleView?, reports: List<ReportEntity>?) {
+    private fun setupReport(
+        transactionRecycleView: TransactionRecycleView?,
+        reports: List<ReportEntity>?
+    ) {
         reports?.sortedByDescending { it.statement.importedDate }?.run {
             currentReport = if (isEmpty()) {
                 null
