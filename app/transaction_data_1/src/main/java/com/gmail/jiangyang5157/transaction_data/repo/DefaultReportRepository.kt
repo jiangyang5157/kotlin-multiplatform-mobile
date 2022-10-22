@@ -8,7 +8,7 @@ import com.gmail.jiangyang5157.transaction_data.remote.dto.asEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.ReportEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
-import com.gmail.jiangyang5157.transaction_domain.repository.ReportRepository
+import com.gmail.jiangyang5157.transaction_domain_kt.repository.IReportRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.Date
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class DefaultReportRepository @Inject constructor(
     private val db: ReportDb,
     private val service: ReportService
-) : ReportRepository {
+) : IReportRepository<ReportEntity, StatementEntity, TransactionEntity> {
 
     /**
      * Save into database, no service call support

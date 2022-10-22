@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.jiangyang5157.adapter.recycleview.RecycleViewItemDelegate
-import com.gmail.jiangyang5157.transaction_domain.entity.DateStringConverter.Companion.REGEX_DATE_EEE_dd_MMM_yyyy
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
+import com.gmail.jiangyang5157.transaction_domain_kt.entity.REGEX_DATE_EEE_dd_MMM_yyyy
 import com.gmail.jiangyang5157.transaction_presentation.R
 
 class DateItemViewBinder :

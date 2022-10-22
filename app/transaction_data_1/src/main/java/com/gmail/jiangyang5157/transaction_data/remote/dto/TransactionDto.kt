@@ -1,10 +1,10 @@
 package com.gmail.jiangyang5157.transaction_data.remote.dto
 
 import com.gmail.jiangyang5157.kit.data.finance.Money
-import com.gmail.jiangyang5157.transaction_domain.entity.DateStringConverter.Companion.REGEX_DATE_yyyy_MM_dd_T_HH_mm_ss_XXX
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asDate
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
+import com.gmail.jiangyang5157.transaction_domain_kt.entity.REGEX_DATE_yyyy_MM_dd_T_HH_mm_ss_XXX
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

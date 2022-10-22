@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.transaction_presentation_base.ext
 
-import com.gmail.jiangyang5157.transaction_domain.entity.DateStringConverter.Companion.REGEX_DATE_EEE_dd_MMM_yyyy
+import com.gmail.jiangyang5157.transaction_domain_kt.entity.REGEX_DATE_EEE_dd_MMM_yyyy
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
