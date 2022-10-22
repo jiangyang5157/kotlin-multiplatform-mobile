@@ -6,8 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.Index
 import androidx.room.TypeConverter
-import com.gmail.jiangyang5157.common.data.Converter
-import com.gmail.jiangyang5157.common.data.finance.Money
+import com.gmail.jiangyang5157.kit.data.finance.Money
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -91,7 +90,7 @@ data class TransactionEntity(
     }
 }
 
-class MoneyDoubleConverter : Converter<Money, Double> {
+class MoneyDoubleConverter : com.gmail.jiangyang5157.kit.data.Converter<Money, Double> {
 
     @TypeConverter
     override fun backward(b: Double?): Money? = b?.let { Money(it) }
@@ -100,7 +99,7 @@ class MoneyDoubleConverter : Converter<Money, Double> {
     override fun forward(a: Money?): Double? = a?.amount?.toDouble()
 }
 
-class DateLongConverter : Converter<Date, Long> {
+class DateLongConverter : com.gmail.jiangyang5157.kit.data.Converter<Date, Long> {
 
     @TypeConverter
     override fun backward(b: Long?): Date? = b?.let { Date(it) }
@@ -113,7 +112,8 @@ fun Date.asString(pattern: String) = DateStringConverter(pattern).forward(this)
 
 fun String.asDate(pattern: String) = DateStringConverter(pattern).backward(this)
 
-class DateStringConverter(private val pattern: String) : Converter<Date, String> {
+class DateStringConverter(private val pattern: String) :
+    com.gmail.jiangyang5157.kit.data.Converter<Date, String> {
 
     override fun backward(b: String?): Date? =
         b?.let {

@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.transaction_data.local
 
-import com.gmail.jiangyang5157.common.data.finance.Money
+import com.gmail.jiangyang5157.kit.data.finance.Money
 import com.gmail.jiangyang5157.transaction_domain.entity.StatementEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import org.junit.Assert.assertEquals

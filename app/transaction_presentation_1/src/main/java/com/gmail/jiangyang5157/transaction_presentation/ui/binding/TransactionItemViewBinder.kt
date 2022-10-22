@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.jiangyang5157.adapter.recycleview.RecycleViewItemDelegate
-import com.gmail.jiangyang5157.common.data.finance.Money
+import com.gmail.jiangyang5157.kit.data.finance.Money
 import com.gmail.jiangyang5157.transaction_presentation.R
 
 class TransactionItemViewBinder :

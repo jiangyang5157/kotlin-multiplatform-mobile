@@ -6,8 +6,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.gmail.jiangyang5157.common.render.FrameThread
-import com.gmail.jiangyang5157.common.render.Renderable
+import com.gmail.jiangyang5157.kit.render.FrameThread
+import com.gmail.jiangyang5157.kit.render.Renderable
 
 /**
  * Created by Yang Jiang on July 18, 2017

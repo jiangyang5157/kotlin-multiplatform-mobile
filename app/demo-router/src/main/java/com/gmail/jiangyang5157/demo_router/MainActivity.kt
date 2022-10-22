@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    com.gmail.jiangyang5157.demo_router.keyroute.uri.ExampleActivity::class.java
+                    com.gmail.jiangyang5157.demo_router.uri.ExampleActivity::class.java
                 )
             )
         }
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    com.gmail.jiangyang5157.demo_router.keyroute.uri.ExampleCustomRouteStorageActivity::class.java
+                    com.gmail.jiangyang5157.demo_router.uri.ExampleCustomRouteStorageActivity::class.java
                 )
             )
         }
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    com.gmail.jiangyang5157.demo_router.keyroute.uri.ExampleCustomStackStorageActivity::class.java
+                    com.gmail.jiangyang5157.demo_router.uri.ExampleCustomStackStorageActivity::class.java
                 )
             )
         }

@@ -1,6 +1,6 @@
 package com.gmail.jiangyang5157.router.core
 
-import com.gmail.jiangyang5157.common.data.Key
+import com.gmail.jiangyang5157.kit.data.Key
 
 /**
  * The default implementation of [RoutingStack.Element]

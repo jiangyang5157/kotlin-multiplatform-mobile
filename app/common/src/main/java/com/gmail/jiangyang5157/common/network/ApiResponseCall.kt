@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.common.network
 
+import com.gmail.jiangyang5157.kit.network.ApiResponse
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout

@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.demo_router.keyroute.uri
+package com.gmail.jiangyang5157.demo_router.uri
 
 import androidx.fragment.app.Fragment
 import com.gmail.jiangyang5157.router.core.Route

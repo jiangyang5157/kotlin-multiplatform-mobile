@@ -1,7 +1,7 @@
 package com.gmail.jiangyang5157.transaction_data.remote.dto
 
-import com.gmail.jiangyang5157.common.data.finance.Money
-import com.gmail.jiangyang5157.common.utils.RegexUtils.DATE_yyyyMMddTHHmmssXXX
+import com.gmail.jiangyang5157.kit.data.finance.Money
+import com.gmail.jiangyang5157.kit.utils.RegexUtils.DATE_yyyyMMddTHHmmssXXX
 import com.gmail.jiangyang5157.transaction_domain.entity.TransactionEntity
 import com.gmail.jiangyang5157.transaction_domain.entity.asDate
 import com.gmail.jiangyang5157.transaction_domain.entity.asString
@@ -48,7 +48,7 @@ data class TransactionDto(
      * Convert between Transaction service model and Transaction transaction_feature model
      */
     class Converter :
-        com.gmail.jiangyang5157.common.data.Converter<TransactionDto, TransactionEntity> {
+        com.gmail.jiangyang5157.kit.data.Converter<TransactionDto, TransactionEntity> {
 
         override fun backward(b: TransactionEntity?): TransactionDto? =
             b?.let {

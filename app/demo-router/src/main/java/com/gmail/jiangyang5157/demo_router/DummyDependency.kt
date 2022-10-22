@@ -1,13 +1,9 @@
 package com.gmail.jiangyang5157.demo_router
 
 import com.gmail.jiangyang5157.demo_router.fragmentroute.ExampleRoute
-import com.gmail.jiangyang5157.demo_router.keyroute.uri.CustomRouteStorage
-import com.gmail.jiangyang5157.demo_router.keyroute.uri.CustomStackStorage
-import com.gmail.jiangyang5157.demo_router.keyroute.uri.ExampleFragment1
-import com.gmail.jiangyang5157.demo_router.keyroute.uri.ExampleFragment2
-import com.gmail.jiangyang5157.demo_router.keyroute.uri.UriRoute
 import com.gmail.jiangyang5157.demo_router.transition.DefaultFragmentTransition
-import com.gmail.jiangyang5157.common.data.Key
+import com.gmail.jiangyang5157.demo_router.uri.*
+import com.gmail.jiangyang5157.kit.data.Key
 import com.gmail.jiangyang5157.router.core.MultiRouter
 import com.gmail.jiangyang5157.router.core.Route
 import com.gmail.jiangyang5157.router.core.Router

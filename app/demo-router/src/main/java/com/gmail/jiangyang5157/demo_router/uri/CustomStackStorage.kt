@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.demo_router.keyroute.uri
+package com.gmail.jiangyang5157.demo_router.uri
 
 import android.os.Bundle
 import android.os.Parcelable
