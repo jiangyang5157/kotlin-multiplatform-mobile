@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.common.data
+package com.gmail.jiangyang5157.kit.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

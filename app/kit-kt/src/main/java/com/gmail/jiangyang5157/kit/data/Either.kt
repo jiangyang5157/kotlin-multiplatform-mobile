@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.common.data
+package com.gmail.jiangyang5157.kit.data
 
 /**
  * Represents a value of one of two possible types (a disjoint union).
