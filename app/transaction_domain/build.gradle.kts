@@ -14,5 +14,5 @@ dependencies {
     implementation(Dep.CoroutinesCore)
 
     // Internal
-    implementation(project(":kit-kt"))
+    implementation(project(":common-kt"))
 }

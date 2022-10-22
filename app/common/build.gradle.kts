@@ -85,7 +85,7 @@ dependencies {
     androidTestImplementation(Dep.TestRunner)
 
     // Internal
-    implementation(project(":kit-kt"))
+    implementation(project(":common-kt"))
 
     // Network
     implementation(Dep.Retrofit)
