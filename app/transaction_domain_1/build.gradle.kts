@@ -55,7 +55,6 @@ dependencies {
     androidTestImplementation(Dep.EspressoCore)
 
     // Internal
-    implementation(project(":common-kt"))
     implementation(project(":common"))
     api(project(":transaction_domain"))
 

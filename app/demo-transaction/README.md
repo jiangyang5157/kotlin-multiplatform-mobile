@@ -16,8 +16,9 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
 - Take module `transaction_data_1`
 - Persistent the latest data stored in database
 - Consuming API: https://60df9ae9abbdd9001722d437.mockapi.io/api/v1/transactions1
+
+*Example of model signature*
 ```json
-// Example of model signature
 [
     {
         "id":"1",
@@ -41,8 +42,9 @@ Project contains two *flavorDimensions* and four *productFlavors*, and they can 
 - Take module `transaction_data_2`
 - The latest data cache in-memory
 - Consuming API: https://60df9ae9abbdd9001722d437.mockapi.io/api/v1/transactions2
+
+*Example of model signature*
 ```json
-// Example of model signature
 [
     {
         "id":"1",

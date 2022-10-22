@@ -78,7 +78,6 @@ dependencies {
     androidTestImplementation(Dep.CoroutinesTest)
 
     // Internal
-    implementation(project(":common-kt"))
     implementation(project(":common"))
     implementation(project(":transaction_domain_1"))
 
