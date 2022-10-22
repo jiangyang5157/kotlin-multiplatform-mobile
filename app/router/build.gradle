@@ -62,7 +62,7 @@ dependencies {
 
     androidTestImplementation Dep.AndroidxJunit
     androidTestImplementation Dep.TestRunner
+    implementation project(':kit')
 
     // Internal
-    implementation project(':common-kt')
 }

@@ -68,5 +68,5 @@ dependencies {
     androidTestImplementation(Dep.TestRunner)
 
     // Internal
-    implementation(project(":common-kt"))
+    implementation(project(":kit"))
 }

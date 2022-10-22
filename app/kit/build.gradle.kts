@@ -13,7 +13,7 @@ publishing {
         }
         create<MavenPublication>("maven") {
             groupId = "com.gmail.jiangyang5157"
-            artifactId = "common-kt"
+            artifactId = "kit"
             version = "1.0"
 
             from(components["java"])

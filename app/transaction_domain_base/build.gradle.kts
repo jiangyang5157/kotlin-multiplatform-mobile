@@ -16,5 +16,5 @@ dependencies {
     testImplementation(Dep.KotlinTestJunit)
 
     // Internal
-    implementation(project(":common-kt"))
+    implementation(project(":kit"))
 }

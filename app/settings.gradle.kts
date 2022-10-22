@@ -15,7 +15,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "app"
 
-include(":common-kt")
+include(":kit")
+
 include(":common")
 
 include(":adapter")
