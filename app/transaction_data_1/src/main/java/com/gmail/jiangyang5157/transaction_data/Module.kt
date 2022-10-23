@@ -32,7 +32,7 @@ object LocalDataProvider {
     ): ReportDb {
         return Room.databaseBuilder(
             context,
-            ReportDb::class.java, "report-db"
+            ReportDb::class.java, "ReportDb"
         ).build()
     }
 }
