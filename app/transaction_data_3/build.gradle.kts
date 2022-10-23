@@ -15,6 +15,11 @@ dependencies {
 
     testImplementation(Dep.KotlinTestJunit)
 
+    implementation(Dep.KotlinxDatetime)
+
+    // Database
+    implementation(Dep.SqlDelightRuntime)
+
     // Internal
     implementation(project(":kit"))
     implementation(project(":transaction_domain_2"))

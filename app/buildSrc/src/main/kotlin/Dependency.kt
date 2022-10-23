@@ -17,6 +17,7 @@ object Version {
 
     const val JetbrainsKotlin = "1.7.20"
     const val JetbrainsKotlinx = "1.6.4"
+    const val JetbrainsKotlinxDateTime = "0.4.0"
 
     const val AndroidToolsBuild = "7.3.1"
     const val AndroidSupport = "28.0.0"
@@ -42,6 +43,7 @@ object Version {
 
     const val SquareUpRetrofit2 = "2.9.0"
     const val SquareUpPicasso = "2.71828"
+    const val SquareUpSqlDelightRuntime = "1.5.3"
 
     const val Junit = "4.13.2"
 
@@ -72,12 +74,15 @@ object Dep {
 
     const val Kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Version.JetbrainsKotlin}"
     const val KotlinTestJunit = "org.jetbrains.kotlin:kotlin-test-junit:${Version.JetbrainsKotlin}"
+
     const val CoroutinesAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.JetbrainsKotlinx}"
     const val CoroutinesCore =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.JetbrainsKotlinx}"
     const val CoroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.JetbrainsKotlinx}"
+    const val KotlinxDatetime =
+        "org.jetbrains.kotlinx:kotlinx-datetime:${Version.JetbrainsKotlinxDateTime}"
 
     const val ComposeUi = "androidx.compose.ui:ui:${Version.AndroidxCompose}"
     const val ComposeUiTooling = "androidx.compose.ui:ui-tooling:${Version.AndroidxCompose}"
@@ -145,8 +150,9 @@ object Dep {
 
     const val Retrofit = "com.squareup.retrofit2:retrofit:${Version.SquareUpRetrofit2}"
     const val RetrofitGson = "com.squareup.retrofit2:converter-gson:${Version.SquareUpRetrofit2}"
-
     const val Picasso = "com.squareup.picasso:picasso:${Version.SquareUpPicasso}"
+    const val SqlDelightRuntime =
+        "com.squareup.sqldelight:runtime:${Version.SquareUpSqlDelightRuntime}"
 
     const val Inject = "javax.inject:javax.inject:${Version.JavaxInject}"
 
