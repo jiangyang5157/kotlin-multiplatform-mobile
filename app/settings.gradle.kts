@@ -37,6 +37,7 @@ include(":transaction_domain_1")
 include(":transaction_domain_2") // kotlin library
 include(":transaction_data_1")
 include(":transaction_data_2")
+include(":transaction_data_3") // kotlin library
 include(":transaction_presentation_base")
 include(":transaction_presentation_1")
 include(":transaction_presentation_2")

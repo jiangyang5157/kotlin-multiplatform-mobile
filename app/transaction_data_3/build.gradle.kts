@@ -17,5 +17,5 @@ dependencies {
 
     // Internal
     implementation(project(":kit"))
-    implementation(project(":transaction_domain_base"))
+    implementation(project(":transaction_domain_2"))
 }
