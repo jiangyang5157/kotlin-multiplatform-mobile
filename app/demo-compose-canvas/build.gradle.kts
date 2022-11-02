@@ -79,6 +79,7 @@ dependencies {
     implementation(Dep.NavigationCompose)
     implementation(Dep.ComposeMaterial)
     implementation(Dep.ComposeRuntimeLiveData)
+    implementation(Dep.ComposeUiText)
 
     debugImplementation(Dep.ComposeUiTestManifest)
 
@@ -88,4 +89,7 @@ dependencies {
     androidTestImplementation(Dep.TestRunner)
     androidTestImplementation(Dep.ComposeUiTest)
     androidTestImplementation(Dep.ComposeUiTestJunit)
+
+    // Internal
+    implementation(project(":kit"))
 }

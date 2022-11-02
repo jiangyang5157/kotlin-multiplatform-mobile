@@ -30,7 +30,7 @@ object Version {
     const val AndroidxHilt = "1.0.0"
     const val AndroidxNavigation = "2.5.2"
     const val AndroidxRoom = "2.4.3"
-    const val AndroidxCompose = "1.2.1"
+    const val AndroidxCompose = "1.3.0"
     const val AndroidxArchCore = "2.1.0"
     const val AndroidxLifecycle = "2.5.1"
     const val AndroidxTest = "1.4.0"
@@ -85,6 +85,7 @@ object Dep {
         "org.jetbrains.kotlinx:kotlinx-datetime:${Version.JetbrainsKotlinxDateTime}"
 
     const val ComposeUi = "androidx.compose.ui:ui:${Version.AndroidxCompose}"
+    const val ComposeUiText = "androidx.compose.ui:ui-text:${Version.AndroidxCompose}"
     const val ComposeUiTooling = "androidx.compose.ui:ui-tooling:${Version.AndroidxCompose}"
     const val ComposeUiToolingPreview =
         "androidx.compose.ui:ui-tooling-preview:${Version.AndroidxCompose}"
