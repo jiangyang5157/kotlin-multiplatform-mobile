@@ -18,7 +18,6 @@ import com.gmail.jiangyang5157.demo_compose.theme.DarkPhoneTheme
 import com.gmail.jiangyang5157.demo_compose.theme.Dimension_Medium
 import com.gmail.jiangyang5157.demo_compose.theme.LightPhoneTheme
 
-
 @Composable
 fun ThemeCard(viewModel: MainViewModel) {
     val isDarkMode by viewModel.isDarkMode.observeAsState(false)
