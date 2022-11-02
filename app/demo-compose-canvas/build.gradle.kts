@@ -79,6 +79,7 @@ dependencies {
     implementation(Dep.NavigationCompose)
     implementation(Dep.ComposeMaterial)
     implementation(Dep.ComposeRuntimeLiveData)
+    implementation(Dep.ComposeUi)
     implementation(Dep.ComposeUiText)
 
     debugImplementation(Dep.ComposeUiTestManifest)
