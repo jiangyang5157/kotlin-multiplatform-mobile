@@ -448,16 +448,16 @@ class MainActivity : ComponentActivity() {
     }
 
     /*
-    0 0
-    9 9
-    99 99
-    999 999
-    9999 9k
-    99999 99k
-    999999 999k
-    9999999 9m
-    99999999 99m
-    999999999 999m
+    0 $0
+    9 $9
+    99 $99
+    999 $999
+    9999 $9k
+    99999 $99k
+    999999 $999k
+    9999999 $9m
+    99999999 $99m
+    999999999 $999m
      */
     /**
      * Build money abbr string, and ignore remainders when it comes to thousands and millions.
