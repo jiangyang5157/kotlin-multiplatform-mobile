@@ -114,7 +114,10 @@ class MainActivity : ComponentActivity() {
         val secondaryFactor = 4
         val primaryDivisor = factor2Divisor(roundUpMaxMoney, primaryFactor)
         val secondaryDivisor = factor2Divisor(roundUpMaxMoney, secondaryFactor)
-        Log.d("####", "Prepare divisors $primaryDivisor (primary) and $secondaryDivisor from factors $primaryFactor (primary) and $secondaryFactor")
+        Log.d(
+            "####",
+            "Prepare divisors $primaryDivisor (primary) and $secondaryDivisor from factors $primaryFactor (primary) and $secondaryFactor"
+        )
 
         val moneyToDivision = roundUpToDivision(roundUpMaxMoney, primaryDivisor, secondaryDivisor)
         val highest = moneyToDivision.first
@@ -123,8 +126,8 @@ class MainActivity : ComponentActivity() {
 
         val scaleList = buildScaleList(highest, factory)
         val scaleMoneyList = scaleList.map { buildMoneyAbbr(it) }
-        Log.d("####","Build scale list $scaleList")
-        Log.d("Build scale money list $scaleMoneyList")
+        Log.d("####", "Build scale list $scaleList")
+        Log.d("####", "Build scale money list $scaleMoneyList")
 
         val yTexts = scaleMoneyList.map {
             textMeasurer.measure(
