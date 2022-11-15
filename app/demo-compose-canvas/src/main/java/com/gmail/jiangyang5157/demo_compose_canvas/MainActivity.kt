@@ -81,12 +81,12 @@ class MainActivity : ComponentActivity() {
                     ),
                 ),
                 listOf(
-                    Item("FIR", 1000.0, 1500.0),
-                    Item("SEC", 100.0, 150.0),
-                    Item("THR", 2000.0, 2499.9),
-                    Item("FOU", 500.0, 500.0),
-                    Item("FIV", 200.0, 200.0),
-                    Item("SIX", 200.0, 200.0),
+                    Item("APR", 1000.0, 1500.0),
+                    Item("MAY", 100.0, 150.0),
+                    Item("JUN", 2000.0, 2499.9),
+                    Item("JUL", 500.0, 500.0),
+                    Item("AUG", 4999.0, 200.0),
+                    Item("SEP", 200.0, 200.0),
                 ),
                 textMeasurer,
             )
@@ -104,14 +104,27 @@ class MainActivity : ComponentActivity() {
     ) {
         Log.d("####", "drawGraphHorizontalCenter rect=$rect")
 
+        // https://pl.kotl.in/isin149pF
+
         val maxMoney = items.maxByOrNull { it.maxOfMoney }?.maxOfMoney ?: 0.0
-        val roundUpMoney = roundUpMoney(maxMoney)
-        val moneyToDivision = roundUpToDivision(roundUpMoney, 3, 4)
+        val roundUpMaxMoney = roundUpMoney(maxMoney)
+        Log.d("####", "Round up $maxMoney to $roundUpMaxMoney")
+
+        val primaryFactor = 3
+        val secondaryFactor = 4
+        val primaryDivisor = factor2Divisor(roundUpMaxMoney, primaryFactor)
+        val secondaryDivisor = factor2Divisor(roundUpMaxMoney, secondaryFactor)
+        Log.d("####", "Prepare divisors $primaryDivisor (primary) and $secondaryDivisor from factors $primaryFactor (primary) and $secondaryFactor")
+
+        val moneyToDivision = roundUpToDivision(roundUpMaxMoney, primaryDivisor, secondaryDivisor)
         val highest = moneyToDivision.first
-        val divisor = moneyToDivision.second
-        val scaleList = buildScaleList(highest, divisor)
+        val factory = divisor2Factor(highest, moneyToDivision.second)
+        Log.d("####", "Round up $roundUpMaxMoney to $highest by chosen factory $factory")
+
+        val scaleList = buildScaleList(highest, factory)
         val scaleMoneyList = scaleList.map { buildMoneyAbbr(it) }
-        Log.d("####", "highest=$highest divisor=$divisor scaleMoneyList=$scaleMoneyList")
+        Log.d("####","Build scale list $scaleList")
+        Log.d("Build scale money list $scaleMoneyList")
 
         val yTexts = scaleMoneyList.map {
             textMeasurer.measure(
@@ -456,6 +469,56 @@ class MainActivity : ComponentActivity() {
     }
 
     /*
+    1,2 2
+    10,2 2
+    100,2 20
+    1000,2 200
+    10000,2 2000
+    100000,2 2000
+    1000000,2 2000
+    10000000,2 2000000
+    100000000,2 2000000
+     */
+    fun factor2Divisor(money: Int, factor: Int): Int {
+        if (money < 0) throw IllegalArgumentException("Money should be not less than 0")
+        if (factor <= 0) throw IllegalArgumentException("Factor should be greater than 0")
+
+        return when {
+            money >= 0 && money <= 10 -> factor
+            money > 10 && money <= 100 -> factor * 10
+            money > 100 && money <= 1000 -> factor * 100
+            money > 1000 && money <= 1000000 -> factor * 1000
+            money > 1000000 && money <= 1000000000 -> factor * 1000000
+            else -> throw IllegalArgumentException("Money should be in range [0, 1,000,000,000]")
+        }
+    }
+
+    /*
+    1,2 2
+    10,2 2
+    100,20 2
+    1000,200 2
+    10000,2000 2
+    100000,2000 2
+    1000000,2000 2
+    10000000,2000000 2
+    100000000,2000000 2
+     */
+    fun divisor2Factor(money: Int, divisor: Int): Int {
+        if (money < 0) throw IllegalArgumentException("Money should be not less than 0")
+        if (divisor <= 0) throw IllegalArgumentException("divisor should be greater than 0")
+
+        return when {
+            money >= 0 && money <= 10 -> divisor
+            money > 10 && money <= 100 -> divisor / 10
+            money > 100 && money <= 1000 -> divisor / 100
+            money > 1000 && money <= 1000000 -> divisor / 1000
+            money > 1000000 && money <= 1000000000 -> divisor / 1000000
+            else -> throw IllegalArgumentException("Money should be in range [0, 1,000,000,000]")
+        }
+    }
+
+    /*
     0,1 0
     0,2 0
     5,1 5
@@ -463,6 +526,12 @@ class MainActivity : ComponentActivity() {
     5,3 6
     5,4 8
     5,5 5
+    4999,2 5000
+    5000,2 5000
+    5001,2 5002
+    4999,2000 6000
+    5000,2000 6000
+    5001,2000 6000
      */
     /**
      * Round up number and make it divisible by the divisor.
@@ -485,8 +554,10 @@ class MainActivity : ComponentActivity() {
     5,3,2 (6, 3)
     5,3,4 (6, 3)
     5,4,3 (6, 3)
-    55,20,30 (60, 20)
-    55,30,20 (60, 30)
+    5000,2,3 (5000, 2)
+    5000,3,2 (5000, 2)
+    5000,2000,3000 (6000, 2000)
+    5000,3000,2000 (6000, 3000)
      */
     /**
      * Round up number and make it divisible by either primary or secondary.
@@ -511,17 +582,21 @@ class MainActivity : ComponentActivity() {
     }
 
     /*
+   	6,2 [0, 3, 6]
     6,3 [0, 2, 4, 6]
+    60,2 [0, 30, 60]
     60,3 [0, 20, 40, 60]
+    2000,2 [0, 1000, 2000]
+    3000,2 [0, 1500, 3000]
     3000,3 [0, 1000, 2000, 3000]
      */
-    fun buildScaleList(money: Int, divisor: Int): List<Int> {
+    fun buildScaleList(money: Int, factor: Int): List<Int> {
         if (money < 0) throw IllegalArgumentException("Money should be not less than 0")
 
         return if (money == 0) {
             listOf(0, 1, 2)
         } else {
-            val step = money / divisor
+            val step = money / factor
             IntRange(0, money).step(step).toList()
         }
     }
