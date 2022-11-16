@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -106,9 +107,9 @@ class MainActivity : ComponentActivity() {
                     Item("APR", 1000.0, 1500.0),
                     Item("MAY", 100.0, 150.0),
                     Item("JUN", 2000.0, 2499.9),
-                    Item("JUL", 500.0, 500.0),
-                    Item("AUG", 4999.0, 200.0),
-                    Item("SEP", 200.0, 200.0),
+                    Item("JUL", 1500.0, 3500.0),
+                    Item("AUG", 4999.0, 2200.0),
+                    Item("SEP", 3200.0, 900.0),
                 )
             )
         }
@@ -297,6 +298,8 @@ class MainActivity : ComponentActivity() {
                 items,
                 scaleList
             )
+
+            // TODO item selection
         }
     }
 
@@ -328,7 +331,39 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            val itemWidth = (rect.right - rect.left) / items.size
+            val valueWidth = 8.dp
+            val valuePadding = 4.dp
 
+            val maxScale = scaleList.maxOf { it }
+            val ratio = rect.height / maxScale
+
+            items.forEachIndexed { index, item ->
+                val height1 = item.value1.toFloat() * ratio
+                val height2 = item.value2.toFloat() * ratio
+                drawRect(
+                    color = color1,
+                    topLeft = Offset(
+                        x = rect.left + itemWidth * index + itemWidth / 2 - valuePadding.toPx() / 2 - valueWidth.toPx(),
+                        y = rect.bottom - height1,
+                    ),
+                    size = Size(
+                        width = valueWidth.toPx(),
+                        height = height1,
+                    ),
+                )
+                drawRect(
+                    color = color2,
+                    topLeft = Offset(
+                        x = rect.left + itemWidth * index + itemWidth / 2 + valuePadding.toPx() / 2,
+                        y = rect.bottom - height2,
+                    ),
+                    size = Size(
+                        width = valueWidth.toPx(),
+                        height = height2,
+                    ),
+                )
+            }
         }
     }
 
