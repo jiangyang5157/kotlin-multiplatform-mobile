@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
@@ -427,6 +428,7 @@ class MainActivity : ComponentActivity() {
         drawScope.run {
             val textPadding = 8.dp
             val boxCornerRadius = 8.dp
+            val arrayCornerRadius = 2.dp
             val arrayHeight = 8.dp
             val arrayWidth = 16.dp
 
@@ -445,8 +447,8 @@ class MainActivity : ComponentActivity() {
             )
             val arrayPath = Path().apply {
                 moveTo(arrayRect.center.x, arrayRect.bottom)
-                lineTo(arrayRect.topRight.x, arrayRect.topRight.y)
-                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y)
+                lineTo(arrayRect.topRight.x, arrayRect.topRight.y - arrayCornerRadius.toPx())
+                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y - arrayCornerRadius.toPx())
                 close()
             }
 
@@ -477,11 +479,17 @@ class MainActivity : ComponentActivity() {
                 topLeft = boxTopLeft,
                 size = Size(width = boxWidth, height = boxHeight),
             )
-            drawOutline(
-                outline = Outline.Generic(arrayPath),
-                color = Color.Cyan,
-                alpha = 0.2f,
-            )
+            drawIntoCanvas { canvas ->
+                canvas.drawOutline(
+                    outline = Outline.Generic(arrayPath),
+                    paint = Paint().apply {
+                        color = Color.Cyan
+                        alpha = 0.2f
+                        pathEffect = PathEffect.cornerPathEffect(arrayCornerRadius.toPx())
+                    }
+                )
+            }
+            Log.d("####", "rect.maxDimension=${rect.maxDimension}")
             drawText(
                 textLayoutResult = symbolTextLayoutResult,
                 color = symbolColor,
