@@ -60,64 +60,45 @@ class MainActivity : ComponentActivity() {
                 .fillMaxSize()
                 .background(color = Color.LightGray),
         ) {
-
             val graphRect = this.size.toRect()
-            val contentHorizontalPadding = 8.dp
-            val contentVerticalPadding = 4.dp
+            val padding = 8.dp
+            val indicatorHeight = 24.dp
 
-            val indicatorTextStyle = TextStyle(fontSize = 16.sp)
+            val androidIndicatorText = "Android"
             val androidIndicatorColor = Color.Red
-            val androidIndicatorText = textMeasurer.measure(
-                text = AnnotatedString("Android"),
-                style = indicatorTextStyle
-            )
+            val iosIndicatorText = "iOS"
             val iosIndicatorColor = Color.Blue
-            val iosIndicatorText = textMeasurer.measure(
-                text = AnnotatedString("iOS"),
-                style = indicatorTextStyle
-            )
+
             val indicatorRect = Rect(
                 topLeft = Offset(
                     graphRect.left,
-                    graphRect.bottom - androidIndicatorText.size.height
+                    graphRect.bottom - indicatorHeight.toPx() - padding.toPx()
                 ),
-                bottomRight = Offset(graphRect.right, graphRect.bottom),
+                bottomRight = Offset(graphRect.right, graphRect.bottom - padding.toPx()),
             )
             val contentRect = Rect(
                 topLeft = Offset(
-                    graphRect.left + contentHorizontalPadding.toPx(),
-                    graphRect.top + contentVerticalPadding.toPx(),
+                    graphRect.left + padding.toPx(),
+                    graphRect.top + padding.toPx(),
                 ),
                 bottomRight = Offset(
-                    graphRect.right - contentHorizontalPadding.toPx(),
-                    indicatorRect.top - contentVerticalPadding.toPx(),
+                    graphRect.right - padding.toPx(),
+                    indicatorRect.top - padding.toPx(),
                 ),
             )
 
-            // debug
-            drawLine(
-                color = Color.Black,
-                start = Offset(graphRect.center.x, graphRect.top),
-                end = Offset(graphRect.center.x, graphRect.size.height),
-            )
-            // debug
-            drawLine(
-                color = Color.Black,
-                start = Offset(graphRect.left, graphRect.center.y),
-                end = Offset(graphRect.size.width, graphRect.center.y),
-            )
-
-            drawIndicators(
+            drawTwoIndicators(
                 this,
+                textMeasurer,
                 indicatorRect,
                 androidIndicatorText,
                 androidIndicatorColor,
                 iosIndicatorText,
                 iosIndicatorColor,
             )
-
             drawContent(
                 this,
+                textMeasurer,
                 contentRect,
                 androidIndicatorColor,
                 iosIndicatorColor,
@@ -128,69 +109,79 @@ class MainActivity : ComponentActivity() {
                     Item("JUL", 500.0, 500.0),
                     Item("AUG", 4999.0, 200.0),
                     Item("SEP", 200.0, 200.0),
-                ),
-                textMeasurer,
+                )
             )
         }
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawIndicators(
+    private fun drawTwoIndicators(
         drawScope: DrawScope,
+        textMeasurer: TextMeasurer,
         rect: Rect,
-        androidIndicatorText: TextLayoutResult,
-        androidIndicatorColor: Color,
-        iosIndicatorText: TextLayoutResult,
-        iosIndicatorColor: Color,
+        text1: CharSequence,
+        color1: Color,
+        text2: CharSequence,
+        color2: Color,
     ) {
+        val textStyle = TextStyle(fontSize = 16.sp)
+        val textLayoutResult1 = textMeasurer.measure(
+            text = AnnotatedString(text1.toString()),
+            style = textStyle
+        )
+        val textLayoutResult2 = textMeasurer.measure(
+            text = AnnotatedString(text2.toString()),
+            style = textStyle
+        )
+
         drawScope.run {
             // debug
             drawRect(
-                color = Color.Yellow,
+                color = Color.Cyan,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
                 size = rect.size,
             )
 
             val iconTextPadding = 8.dp
-            val indicatorBetweenPadding = 32.dp
-            val textWidth = maxOf(androidIndicatorText.size.width, iosIndicatorText.size.width)
-            val textHeight = androidIndicatorText.size.height
+            val indicatorPadding = 32.dp
+            val textWidth = maxOf(textLayoutResult1.size.width, textLayoutResult2.size.width)
+            val textHeight = textLayoutResult1.size.height
             val iconRadius = textHeight * 0.4f
             val indicatorWidth = iconRadius * 2 + iconTextPadding.toPx() + textWidth
 
-            val androidIndicatorOffset = Offset(
-                x = rect.center.x - indicatorBetweenPadding.toPx() / 2 - indicatorWidth,
+            val indicatorOffset1 = Offset(
+                x = rect.center.x - indicatorPadding.toPx() / 2 - indicatorWidth,
                 y = rect.top
             )
-            val iosIndicatorOffset = Offset(
-                x = rect.center.x + indicatorBetweenPadding.toPx() / 2,
+            val indicatorOffset2 = Offset(
+                x = rect.center.x + indicatorPadding.toPx() / 2,
                 y = rect.top
             )
 
             drawCircle(
-                color = androidIndicatorColor,
+                color = color1,
                 radius = iconRadius,
-                center = Offset(androidIndicatorOffset.x + iconRadius, rect.center.y),
+                center = Offset(indicatorOffset1.x + iconRadius, rect.center.y),
             )
             drawText(
-                textLayoutResult = androidIndicatorText,
+                textLayoutResult = textLayoutResult1,
                 color = Color.Black,
                 topLeft = Offset(
-                    x = androidIndicatorOffset.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    x = indicatorOffset1.x + iconRadius * 2 + iconTextPadding.toPx(),
                     y = rect.center.y - textHeight / 2
                 ),
             )
             drawCircle(
-                color = iosIndicatorColor,
+                color = color2,
                 radius = iconRadius,
-                center = Offset(iosIndicatorOffset.x + iconRadius, rect.center.y),
+                center = Offset(indicatorOffset2.x + iconRadius, rect.center.y),
             )
             drawText(
-                textLayoutResult = iosIndicatorText,
+                textLayoutResult = textLayoutResult2,
                 color = Color.Black,
                 topLeft = Offset(
-                    x = iosIndicatorOffset.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    x = indicatorOffset2.x + iconRadius * 2 + iconTextPadding.toPx(),
                     y = rect.center.y - textHeight / 2,
                 ),
             )
@@ -200,17 +191,15 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalTextApi::class)
     private fun drawContent(
         drawScope: DrawScope,
+        textMeasurer: TextMeasurer,
         rect: Rect,
         androidIndicatorColor: Color,
         iosIndicatorColor: Color,
         items: List<Item>,
-        textMeasurer: TextMeasurer,
-        labelStyle: TextStyle = TextStyle(fontSize = 16.sp),
-        valueStyle: TextStyle = TextStyle(fontSize = 24.sp),
     ) {
+        if (items.isEmpty()) return
 
-
-        val maxMoney = items.maxByOrNull { it.maxValue }?.maxValue ?: 0.0
+        val maxMoney = items.maxByOrNull { it.maxValue }?.maxValue ?: throw RuntimeException()
         val roundUpMaxMoney = roundUpMoney(maxMoney)
         Log.d("####", "Round up $maxMoney to $roundUpMaxMoney")
 
@@ -233,117 +222,126 @@ class MainActivity : ComponentActivity() {
         Log.d("####", "Build scale list $scaleList")
         Log.d("####", "Build scale money list $scaleMoneyList")
 
-        val yTexts = scaleMoneyList.map {
-            textMeasurer.measure(
-                text = AnnotatedString(it),
-                style = labelStyle
+        drawScope.run {
+            val axisTextStyle = TextStyle(fontSize = 16.sp)
+            val scaleTextLayoutResults = scaleMoneyList.map {
+                textMeasurer.measure(
+                    text = AnnotatedString(it),
+                    style = axisTextStyle
+                )
+            }
+            val labelTextLayoutResults = items.map {
+                textMeasurer.measure(
+                    text = AnnotatedString(it.label),
+                    style = axisTextStyle
+                )
+            }
+
+            val padding = 8.dp
+            val focusHeight = 48.dp
+            val focusTop = rect.top
+            val focusRight = rect.right
+            val labelRight = rect.right
+            val dataRight = rect.right
+            val scaleLeft = rect.left
+            val labelBottom = rect.bottom
+
+            val focusBottom = focusTop + focusHeight.toPx()
+            val scaleTop = focusBottom + padding.toPx()
+            val dataTop = scaleTop
+
+            val scaleWidth =
+                scaleTextLayoutResults.maxByOrNull { it.size.width }?.size?.width
+                    ?: throw RuntimeException()
+            val scaleRight = scaleLeft + scaleWidth
+            val focusLeft = scaleRight + padding.toPx()
+            val labelLeft = scaleRight + padding.toPx()
+            val dataLeft = scaleRight + padding.toPx()
+
+            val axisTextHeight = labelTextLayoutResults.first().size.height
+            val labelTop = labelBottom - axisTextHeight
+            val scaleBottom = labelTop - padding.toPx()
+            val dataBottom = scaleBottom
+
+            drawFocus(
+                this,
+                Rect(
+                    topLeft = Offset(focusLeft, focusTop),
+                    bottomRight = Offset(focusRight, focusBottom),
+                ),
+            )
+            drawLabel(
+                this,
+                Rect(
+                    topLeft = Offset(labelLeft, labelTop),
+                    bottomRight = Offset(labelRight, labelBottom),
+                ),
+                labelTextLayoutResults,
+            )
+            drawScale(
+                this,
+                Rect(
+                    topLeft = Offset(scaleLeft, scaleTop),
+                    bottomRight = Offset(scaleRight, scaleBottom),
+                ),
+                scaleTextLayoutResults,
+            )
+            drawData(
+                this,
+                Rect(
+                    topLeft = Offset(dataLeft, dataTop),
+                    bottomRight = Offset(dataRight, dataBottom),
+                ),
+                androidIndicatorColor,
+                iosIndicatorColor,
+                items,
+                scaleList
             )
         }
-        val xTexts = items.map {
-            textMeasurer.measure(
-                text = AnnotatedString(it.name),
-                style = labelStyle
-            )
-        }
+    }
 
-        val yAxisItemTextHeight = yTexts.first().size.height
-        val xAxisItemTextHeight = xTexts.first().size.height
-
-        val yAxisItemTextMaxWidth = yTexts.maxByOrNull { it.size.width }?.size?.width ?: 0
-
-        val yAxisLeft = rect.left
-        val yAxisRight = yAxisLeft + yAxisItemTextMaxWidth
-        val yAxisTop = rect.top
-        val yAxisBottom = rect.bottom - xAxisItemTextHeight - yAxisItemTextHeight
-
-        val xAxisLeft = yAxisRight
-        val xAxisRight = rect.right
-        val xAxisBottom = rect.bottom
-        val xAxisTop = xAxisBottom - xAxisItemTextHeight
-
-        val yAxisHeight = yAxisTop - yAxisBottom
-        val yAxisItemHeight = yAxisHeight / yTexts.size
+    private fun drawData(
+        drawScope: DrawScope,
+        rect: Rect,
+        color1: Color,
+        color2: Color,
+        items: List<Item>,
+        scaleList: List<Int>,
+    ) {
+        if (scaleList.size < 2) throw IllegalArgumentException("Scale size should not less than 2")
 
         drawScope.run {
             // debug
             drawRect(
-                color = Color.Yellow,
+                color = Color.Cyan,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
                 size = rect.size,
             )
 
-            drawAxisX(
-                this,
-                Rect(
-                    topLeft = Offset(xAxisLeft, xAxisTop),
-                    bottomRight = Offset(xAxisRight, xAxisBottom),
-                ),
-                xTexts,
-            )
-
-            drawAxisY(
-                this,
-                Rect(
-                    topLeft = Offset(yAxisLeft, yAxisTop),
-                    bottomRight = Offset(yAxisRight, yAxisBottom),
-                ),
-                yTexts,
-            )
-
-            drawAxis(
-                this,
-                Rect(
-                    topLeft = Offset(
-                        yAxisRight + xAxisItemTextHeight / 2,
-                        yAxisTop - yAxisItemHeight + xAxisItemTextHeight / 2,
-                    ),
-                    bottomRight = Offset(
-                        xAxisRight,
-                        xAxisTop - xAxisItemTextHeight / 2,
-                    ),
+            val scaleStep = rect.size.height / (scaleList.size - 1)
+            scaleList.forEachIndexed { index, _ ->
+                drawLine(
+                    color = Color.Black,
+                    start = Offset(rect.left, rect.bottom - index * scaleStep),
+                    end = Offset(rect.right, rect.bottom - index * scaleStep),
                 )
-            )
+            }
 
-            drawValue(
-                this,
-                Rect(
-                    topLeft = Offset(
-                        yAxisRight + xAxisItemTextHeight / 2,
-                        yAxisTop,
-                    ),
-                    bottomRight = Offset(
-                        xAxisRight,
-                        yAxisTop - yAxisItemHeight + xAxisItemTextHeight / 2,
-                    ),
-                )
-            )
+
         }
     }
 
-    private fun drawAxis(
+    private fun drawFocus(
         drawScope: DrawScope,
         rect: Rect,
     ) {
-        drawScope.run {
-            // debug
-            drawRect(
-                color = Color.Red,
-                alpha = 0.2f,
-                topLeft = rect.topLeft,
-                size = rect.size,
-            )
-        }
-    }
+        val textStyle = TextStyle(fontSize = 24.sp)
 
-    private fun drawValue(
-        drawScope: DrawScope,
-        rect: Rect,
-    ) {
         drawScope.run {
             // debug
             drawRect(
-                color = Color.Green,
+                color = Color.Cyan,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
                 size = rect.size,
@@ -352,21 +350,29 @@ class MainActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawAxisX(
+    private fun drawLabel(
         drawScope: DrawScope,
         rect: Rect,
-        items: List<TextLayoutResult>,
+        labelTexts: List<TextLayoutResult>,
     ) {
-        val width = rect.right - rect.left
-        val itemWidth = width / items.size
+        val itemWidth = (rect.right - rect.left) / labelTexts.size
 
         drawScope.run {
-            items.forEachIndexed { index, textLayoutResult ->
+            // debug
+            drawRect(
+                color = Color.Cyan,
+                alpha = 0.2f,
+                topLeft = rect.topLeft,
+                size = rect.size,
+            )
+
+            labelTexts.forEachIndexed { index, textLayoutResult ->
+                val widthDiff = itemWidth - textLayoutResult.size.width
                 drawText(
                     textLayoutResult = textLayoutResult,
                     color = Color.Black,
                     topLeft = Offset(
-                        rect.left + index * itemWidth + (itemWidth - textLayoutResult.size.width) / 2,
+                        rect.left + index * itemWidth + widthDiff / 2,
                         rect.top
                     ),
                 )
@@ -375,23 +381,35 @@ class MainActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawAxisY(
+    private fun drawScale(
         drawScope: DrawScope,
         rect: Rect,
-        items: List<TextLayoutResult>,
+        scaleTexts: List<TextLayoutResult>,
     ) {
-        val height = rect.top - rect.bottom
-        val itemHeight = height / items.size
-        val itemWidth = items.maxByOrNull { it.size.width }?.size?.width ?: throw RuntimeException()
+        if (scaleTexts.size < 2) throw IllegalArgumentException("Scale size should not less than 2")
+
+        val itemHeight = (rect.top - rect.bottom) / (scaleTexts.size - 1)
+        val itemWidth =
+            scaleTexts.maxByOrNull { it.size.width }?.size?.width ?: throw RuntimeException()
+        val axisTextHeight = scaleTexts.first().size.height
 
         drawScope.run {
-            items.forEachIndexed { index, textLayoutResult ->
+            // debug
+            drawRect(
+                color = Color.Cyan,
+                alpha = 0.2f,
+                topLeft = rect.topLeft,
+                size = rect.size,
+            )
+
+            scaleTexts.forEachIndexed { index, textLayoutResult ->
+                val widthDiff = itemWidth - textLayoutResult.size.width
                 drawText(
                     textLayoutResult = textLayoutResult,
                     color = Color.Black,
                     topLeft = Offset(
-                        rect.left + (itemWidth - textLayoutResult.size.width),
-                        rect.bottom + index * itemHeight,
+                        rect.left + widthDiff,
+                        rect.bottom + itemHeight * index - axisTextHeight / 2,
                     ),
                 )
             }
@@ -634,11 +652,11 @@ class MainActivity : ComponentActivity() {
     }
 
     data class Item(
-        val name: String,
-        val androidValue: Double,
-        val iosValue: Double,
+        val label: String,
+        val value1: Double,
+        val value2: Double,
     ) {
-        val maxValue = maxOf(androidValue, iosValue)
-        val diff = androidValue - iosValue
+        val maxValue = maxOf(value1, value2)
+        val diff = value1 - value2
     }
 }
