@@ -165,7 +165,7 @@ class MainActivity : ComponentActivity() {
             val indicatorPadding = 32.dp
             val textWidth = maxOf(textLayoutResult1.size.width, textLayoutResult2.size.width)
             val textHeight = textLayoutResult1.size.height
-            val iconRadius = textHeight * 0.4f
+            val iconRadius = textHeight * 0.3f
             val indicatorWidth = iconRadius * 2 + iconTextPadding.toPx() + textWidth
 
             val indicatorOffset1 = Offset(
@@ -263,6 +263,8 @@ class MainActivity : ComponentActivity() {
             val dataRight = rect.right
             val scaleLeft = rect.left
             val labelBottom = rect.bottom
+            val axisTextHeight = labelTextLayoutResults.first().size.height
+            val labelHeight = axisTextHeight
 
             val focusBottom = focusTop + focusHeight.toPx()
             val scaleTop = focusBottom + padding.toPx()
@@ -278,8 +280,7 @@ class MainActivity : ComponentActivity() {
             val focusRight = dataRight
             val labelRight = dataRight
 
-            val axisTextHeight = labelTextLayoutResults.first().size.height
-            val labelTop = labelBottom - axisTextHeight
+            val labelTop = labelBottom - labelHeight
             val scaleBottom = labelTop - padding.toPx()
             val dataBottom = scaleBottom
 
@@ -368,6 +369,7 @@ class MainActivity : ComponentActivity() {
             val itemWidth = (rect.right - rect.left) / itemRects.size
             val valueWidth = 8.dp
             val valuePadding = 4.dp
+            val valueCornerRadius = 2.dp
 
             val maxScale = scaleList.maxOf { it }
             val ratio = rect.height / maxScale
@@ -375,27 +377,47 @@ class MainActivity : ComponentActivity() {
             itemRects.forEachIndexed { index, itemRect ->
                 val height1 = itemRect.item.value1.toFloat() * ratio
                 val height2 = itemRect.item.value2.toFloat() * ratio
-                drawRect(
+                drawPath(
+                    path = Path().apply {
+                        addRoundRect(
+                            RoundRect(
+                                rect = Rect(
+                                    offset = Offset(
+                                        x = rect.left + itemWidth * index + itemWidth / 2 - valuePadding.toPx() / 2 - valueWidth.toPx(),
+                                        y = rect.bottom - height1,
+                                    ),
+                                    size = Size(
+                                        width = valueWidth.toPx(),
+                                        height = height1,
+                                    ),
+                                ),
+                                topLeft = CornerRadius(valueCornerRadius.toPx()),
+                                topRight = CornerRadius(valueCornerRadius.toPx()),
+                            )
+                        )
+                    },
                     color = color1,
-                    topLeft = Offset(
-                        x = rect.left + itemWidth * index + itemWidth / 2 - valuePadding.toPx() / 2 - valueWidth.toPx(),
-                        y = rect.bottom - height1,
-                    ),
-                    size = Size(
-                        width = valueWidth.toPx(),
-                        height = height1,
-                    ),
                 )
-                drawRect(
+                drawPath(
+                    path = Path().apply {
+                        addRoundRect(
+                            RoundRect(
+                                rect = Rect(
+                                    offset = Offset(
+                                        x = rect.left + itemWidth * index + itemWidth / 2 + valuePadding.toPx() / 2,
+                                        y = rect.bottom - height2,
+                                    ),
+                                    size = Size(
+                                        width = valueWidth.toPx(),
+                                        height = height2,
+                                    ),
+                                ),
+                                topLeft = CornerRadius(valueCornerRadius.toPx()),
+                                topRight = CornerRadius(valueCornerRadius.toPx()),
+                            )
+                        )
+                    },
                     color = color2,
-                    topLeft = Offset(
-                        x = rect.left + itemWidth * index + itemWidth / 2 + valuePadding.toPx() / 2,
-                        y = rect.bottom - height2,
-                    ),
-                    size = Size(
-                        width = valueWidth.toPx(),
-                        height = height2,
-                    ),
                 )
             }
         }
@@ -510,6 +532,7 @@ class MainActivity : ComponentActivity() {
         labelTexts: List<TextLayoutResult>,
     ) {
         val itemWidth = (rect.right - rect.left) / labelTexts.size
+        val indicatorSize = 3.dp
 
         drawScope.run {
             // debug
@@ -528,6 +551,18 @@ class MainActivity : ComponentActivity() {
                     topLeft = Offset(
                         rect.left + index * itemWidth + widthDiff / 2,
                         rect.top
+                    ),
+                )
+                drawRoundRect(
+                    color = Color.Red,
+                    cornerRadius = CornerRadius(indicatorSize.toPx()),
+                    topLeft = Offset(
+                        rect.left + index * itemWidth + widthDiff / 2,
+                        rect.top + textLayoutResult.size.height
+                    ),
+                    size = Size(
+                        width = textLayoutResult.size.width.toFloat(),
+                        height = indicatorSize.toPx()
                     ),
                 )
             }
