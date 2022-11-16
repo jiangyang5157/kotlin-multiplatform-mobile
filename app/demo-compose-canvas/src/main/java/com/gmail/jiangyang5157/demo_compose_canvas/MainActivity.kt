@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.abs
 import kotlin.math.ceil
 
 class MainActivity : ComponentActivity() {
@@ -409,9 +410,9 @@ class MainActivity : ComponentActivity() {
         val item = focusedItemRect?.item ?: return
         val itemRect = focusedItemRect.rect ?: return
 
-        val diff = item.diff
-        val symbol = if (diff >= 0) "+" else "-"
-        val symbolColor = if (diff >= 0) Color.Green else Color.Red
+        val symbol = if (item.diff >= 0) "+" else "-"
+        val symbolColor = if (item.diff >= 0) Color.Green else Color.Red
+        val diff = abs(item.diff)
 
         val textStyle = TextStyle(fontSize = 20.sp)
         val symbolTextLayoutResult = textMeasurer.measure(
@@ -432,9 +433,32 @@ class MainActivity : ComponentActivity() {
             val textHeight = symbolTextLayoutResult.size.height
             val textWidth = symbolTextLayoutResult.size.width + diffTextLayoutResult.size.width
 
-            val boxTopLeft = rect.topLeft // TODO
+            val arrayRect = Rect(
+                topLeft = Offset(
+                    itemRect.center.x - arrayWidth.toPx() / 2,
+                    rect.bottom - arrayHeight.toPx(),
+                ),
+                bottomRight = Offset(
+                    itemRect.center.x + arrayWidth.toPx() / 2,
+                    rect.bottom,
+                ),
+            )
+            val arrayPath = Path().apply {
+                moveTo(arrayRect.center.x, arrayRect.bottom)
+                lineTo(arrayRect.topRight.x, arrayRect.topRight.y)
+                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y)
+                close()
+            }
+
             val boxHeight = rect.height - arrayHeight.toPx()
             val boxWidth = textWidth + textPadding.toPx() + textPadding.toPx()
+
+            var boxLeft = itemRect.center.x - boxWidth / 2
+            if (boxWidth < rect.right - rect.left) {
+                boxLeft = maxOf(boxLeft, rect.left)
+                boxLeft = minOf(boxLeft, rect.right - boxWidth)
+            }
+            val boxTopLeft = rect.topLeft.copy(x = boxLeft)
 
             val symbolTopLeft = Offset(
                 x = boxTopLeft.x + textPadding.toPx(),
@@ -453,23 +477,6 @@ class MainActivity : ComponentActivity() {
                 topLeft = boxTopLeft,
                 size = Size(width = boxWidth, height = boxHeight),
             )
-
-            val arrayRect = Rect(
-                topLeft = Offset(
-                    itemRect.center.x - arrayWidth.toPx() / 2,
-                    rect.bottom - arrayHeight.toPx(),
-                ),
-                bottomRight = Offset(
-                    itemRect.center.x + arrayWidth.toPx() / 2,
-                    rect.bottom,
-                ),
-            )
-            val arrayPath = Path().apply {
-                moveTo(arrayRect.center.x, arrayRect.bottom)
-                lineTo(arrayRect.topRight.x, arrayRect.topRight.y)
-                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y)
-                close()
-            }
             drawOutline(
                 outline = Outline.Generic(arrayPath),
                 color = Color.Cyan,
