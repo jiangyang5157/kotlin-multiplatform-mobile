@@ -1,15 +1,19 @@
 package com.gmail.jiangyang5157.demo_compose_canvas
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -17,6 +21,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
@@ -51,16 +56,40 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val items = listOf(
+        Item("APR", 1000.0, 1500.0),
+        Item("MAY", 100.0, 150.0),
+        Item("JUN", 2000.0, 2499.9),
+        Item("JUL", 1500.0, 3500.0),
+        Item("AUG", 4999.0, 2200.0),
+        Item("SEP", 3200.0, 900.0),
+    )
+    private val itemRects = items.map { ItemRect(it) }
+    private var focusedItem: Item? = null
+
     @OptIn(ExperimentalTextApi::class)
     @Composable
     private fun Graph() {
         val textMeasurer = rememberTextMeasurer()
+//        var currentItem = remember { focusedItem }
 
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.LightGray),
+                .background(color = Color.LightGray)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { tapOffset ->
+                            val tapItem =
+                                itemRects.firstOrNull { it.rect?.contains(tapOffset) == true }?.item
+                            focusedItem = tapItem
+                            Log.d("####", "focusedItem=$focusedItem")
+                        }
+                    )
+                }
+
         ) {
+            Log.d("####", "Canvas")
             val graphRect = this.size.toRect()
             val padding = 8.dp
             val indicatorHeight = 24.dp
@@ -103,14 +132,7 @@ class MainActivity : ComponentActivity() {
                 contentRect,
                 androidIndicatorColor,
                 iosIndicatorColor,
-                listOf(
-                    Item("APR", 1000.0, 1500.0),
-                    Item("MAY", 100.0, 150.0),
-                    Item("JUN", 2000.0, 2499.9),
-                    Item("JUL", 1500.0, 3500.0),
-                    Item("AUG", 4999.0, 2200.0),
-                    Item("SEP", 3200.0, 900.0),
-                )
+                itemRects,
             )
         }
     }
@@ -196,11 +218,12 @@ class MainActivity : ComponentActivity() {
         rect: Rect,
         androidIndicatorColor: Color,
         iosIndicatorColor: Color,
-        items: List<Item>,
+        itemRects: List<ItemRect>,
     ) {
-        if (items.isEmpty()) return
+        if (itemRects.isEmpty()) return
 
-        val maxMoney = items.maxByOrNull { it.maxValue }?.maxValue ?: throw RuntimeException()
+        val maxMoney =
+            itemRects.maxByOrNull { it.item.maxValue }?.item?.maxValue ?: throw RuntimeException()
         val roundUpMaxMoney = roundUpMoney(maxMoney)
         Log.d("####", "Round up $maxMoney to $roundUpMaxMoney")
 
@@ -231,9 +254,9 @@ class MainActivity : ComponentActivity() {
                     style = axisTextStyle
                 )
             }
-            val labelTextLayoutResults = items.map {
+            val labelTextLayoutResults = itemRects.map {
                 textMeasurer.measure(
-                    text = AnnotatedString(it.label),
+                    text = AnnotatedString(it.item.label),
                     style = axisTextStyle
                 )
             }
@@ -241,8 +264,6 @@ class MainActivity : ComponentActivity() {
             val padding = 8.dp
             val focusHeight = 48.dp
             val focusTop = rect.top
-            val focusRight = rect.right
-            val labelRight = rect.right
             val dataRight = rect.right
             val scaleLeft = rect.left
             val labelBottom = rect.bottom
@@ -255,29 +276,39 @@ class MainActivity : ComponentActivity() {
                 scaleTextLayoutResults.maxByOrNull { it.size.width }?.size?.width
                     ?: throw RuntimeException()
             val scaleRight = scaleLeft + scaleWidth
-            val focusLeft = scaleRight + padding.toPx()
-            val labelLeft = scaleRight + padding.toPx()
             val dataLeft = scaleRight + padding.toPx()
+            val focusLeft = dataLeft
+            val labelLeft = dataLeft
+            val focusRight = dataRight
+            val labelRight = dataRight
 
             val axisTextHeight = labelTextLayoutResults.first().size.height
             val labelTop = labelBottom - axisTextHeight
             val scaleBottom = labelTop - padding.toPx()
             val dataBottom = scaleBottom
 
+            val itemRectWidth = (dataRight - dataLeft) / itemRects.size
+            val itemRectHeight = labelBottom - dataTop
+            itemRects.forEachIndexed { index, itemRect ->
+                itemRect.rect = Rect(
+                    offset = Offset(
+                        x = dataLeft + itemRectWidth * index,
+                        y = dataTop,
+                    ),
+                    size = Size(
+                        width = itemRectWidth,
+                        height = itemRectHeight,
+                    ),
+                )
+            }
+
             drawFocus(
                 this,
+                textMeasurer,
                 Rect(
                     topLeft = Offset(focusLeft, focusTop),
                     bottomRight = Offset(focusRight, focusBottom),
                 ),
-            )
-            drawLabel(
-                this,
-                Rect(
-                    topLeft = Offset(labelLeft, labelTop),
-                    bottomRight = Offset(labelRight, labelBottom),
-                ),
-                labelTextLayoutResults,
             )
             drawScale(
                 this,
@@ -287,6 +318,14 @@ class MainActivity : ComponentActivity() {
                 ),
                 scaleTextLayoutResults,
             )
+            drawLabel(
+                this,
+                Rect(
+                    topLeft = Offset(labelLeft, labelTop),
+                    bottomRight = Offset(labelRight, labelBottom),
+                ),
+                labelTextLayoutResults,
+            )
             drawData(
                 this,
                 Rect(
@@ -295,11 +334,9 @@ class MainActivity : ComponentActivity() {
                 ),
                 androidIndicatorColor,
                 iosIndicatorColor,
-                items,
+                itemRects,
                 scaleList
             )
-
-            // TODO item selection
         }
     }
 
@@ -308,7 +345,7 @@ class MainActivity : ComponentActivity() {
         rect: Rect,
         color1: Color,
         color2: Color,
-        items: List<Item>,
+        itemRects: List<ItemRect>,
         scaleList: List<Int>,
     ) {
         if (scaleList.size < 2) throw IllegalArgumentException("Scale size should not less than 2")
@@ -331,16 +368,16 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            val itemWidth = (rect.right - rect.left) / items.size
+            val itemWidth = (rect.right - rect.left) / itemRects.size
             val valueWidth = 8.dp
             val valuePadding = 4.dp
 
             val maxScale = scaleList.maxOf { it }
             val ratio = rect.height / maxScale
 
-            items.forEachIndexed { index, item ->
-                val height1 = item.value1.toFloat() * ratio
-                val height2 = item.value2.toFloat() * ratio
+            itemRects.forEachIndexed { index, itemRect ->
+                val height1 = itemRect.item.value1.toFloat() * ratio
+                val height2 = itemRect.item.value2.toFloat() * ratio
                 drawRect(
                     color = color1,
                     topLeft = Offset(
@@ -367,11 +404,36 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalTextApi::class)
     private fun drawFocus(
         drawScope: DrawScope,
+        textMeasurer: TextMeasurer,
         rect: Rect,
     ) {
+        Log.d("####", "drawFocus focusedItem=$focusedItem")
+        val item = focusedItem ?: return
+
+        val diff = item.diff
+        val symbol = if (diff >= 0) "+" else "-"
+        val symbolColor = if (diff >= 0) Color.Green else Color.Red
+
         val textStyle = TextStyle(fontSize = 24.sp)
+        val symbolTextLayoutResult = textMeasurer.measure(
+            text = AnnotatedString(symbol),
+            style = textStyle
+        )
+        val diffTextLayoutResult = textMeasurer.measure(
+            text = AnnotatedString("$${diff}"),
+            style = textStyle
+        )
+        val symbolOffset = Offset(
+            x = rect.left,
+            y = rect.center.y,
+        )
+        val diffOffset = Offset(
+            x = symbolOffset.x + symbolTextLayoutResult.size.width,
+            y = symbolOffset.y,
+        )
 
         drawScope.run {
             // debug
@@ -380,6 +442,17 @@ class MainActivity : ComponentActivity() {
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
                 size = rect.size,
+            )
+
+            drawText(
+                textLayoutResult = symbolTextLayoutResult,
+                color = symbolColor,
+                topLeft = symbolOffset,
+            )
+            drawText(
+                textLayoutResult = diffTextLayoutResult,
+                color = Color.Black,
+                topLeft = diffOffset,
             )
         }
     }
@@ -451,7 +524,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // https://pl.kotl.in/isin149pF
+    // https://pl.kotl.in/YMZMNTLlv
 
     /*
     0.00 0
@@ -694,4 +767,9 @@ class MainActivity : ComponentActivity() {
         val maxValue = maxOf(value1, value2)
         val diff = value1 - value2
     }
+
+    data class ItemRect(
+        val item: Item,
+        var rect: Rect? = null,
+    )
 }
