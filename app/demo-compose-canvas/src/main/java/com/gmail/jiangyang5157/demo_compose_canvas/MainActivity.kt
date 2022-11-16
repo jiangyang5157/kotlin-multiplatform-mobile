@@ -5,19 +5,19 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.ceil
@@ -31,10 +31,19 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.activity_main)
         findViewById<ComposeView>(R.id.composeView).setContent {
             MaterialTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Center,
-                ) {
+                Column {
+                    Row {
+                        Button(onClick = {
+                            // TODO YangJ
+                        }) {
+                            Text(text = "Prev")
+                        }
+                        Button(onClick = {
+                            // TODO YangJ
+                        }) {
+                            Text(text = "Next")
+                        }
+                    }
                     Graph()
                 }
             }
@@ -52,34 +61,66 @@ class MainActivity : ComponentActivity() {
                 .background(color = Color.LightGray),
         ) {
 
-            drawLine(
-                color = Color.Black,
-                start = Offset(center.x, 0f),
-                end = Offset(center.x, size.height),
+            val graphRect = this.size.toRect()
+            val contentHorizontalPadding = 8.dp
+            val contentVerticalPadding = 4.dp
+
+            val indicatorTextStyle = TextStyle(fontSize = 16.sp)
+            val androidIndicatorColor = Color.Red
+            val androidIndicatorText = textMeasurer.measure(
+                text = AnnotatedString("Android"),
+                style = indicatorTextStyle
             )
-            drawLine(
-                color = Color.Black,
-                start = Offset(0f, center.y),
-                end = Offset(size.width, center.y),
+            val iosIndicatorColor = Color.Blue
+            val iosIndicatorText = textMeasurer.measure(
+                text = AnnotatedString("iOS"),
+                style = indicatorTextStyle
+            )
+            val indicatorRect = Rect(
+                topLeft = Offset(
+                    graphRect.left,
+                    graphRect.bottom - androidIndicatorText.size.height
+                ),
+                bottomRight = Offset(graphRect.right, graphRect.bottom),
+            )
+            val contentRect = Rect(
+                topLeft = Offset(
+                    graphRect.left + contentHorizontalPadding.toPx(),
+                    graphRect.top + contentVerticalPadding.toPx(),
+                ),
+                bottomRight = Offset(
+                    graphRect.right - contentHorizontalPadding.toPx(),
+                    indicatorRect.top - contentVerticalPadding.toPx(),
+                ),
             )
 
-            drawIndicatorsHorizontalCenter(
-                this,
-                Rect(
-                    topLeft = Offset(0f, size.height - 30.dp.toPx()),
-                    bottomRight = Offset(size.width, size.height),
-                ),
-                textMeasurer,
+            // debug
+            drawLine(
+                color = Color.Black,
+                start = Offset(graphRect.center.x, graphRect.top),
+                end = Offset(graphRect.center.x, graphRect.size.height),
             )
-            drawContentHorizontalCenter(
+            // debug
+            drawLine(
+                color = Color.Black,
+                start = Offset(graphRect.left, graphRect.center.y),
+                end = Offset(graphRect.size.width, graphRect.center.y),
+            )
+
+            drawIndicators(
                 this,
-                Rect(
-                    topLeft = Offset(16.dp.toPx(), 0f),
-                    bottomRight = Offset(
-                        size.width - 16.dp.toPx(),
-                        size.height - 30.dp.toPx()
-                    ),
-                ),
+                indicatorRect,
+                androidIndicatorText,
+                androidIndicatorColor,
+                iosIndicatorText,
+                iosIndicatorColor,
+            )
+
+            drawContent(
+                this,
+                contentRect,
+                androidIndicatorColor,
+                iosIndicatorColor,
                 listOf(
                     Item("APR", 1000.0, 1500.0),
                     Item("MAY", 100.0, 150.0),
@@ -94,19 +135,82 @@ class MainActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawContentHorizontalCenter(
+    private fun drawIndicators(
         drawScope: DrawScope,
         rect: Rect,
+        androidIndicatorText: TextLayoutResult,
+        androidIndicatorColor: Color,
+        iosIndicatorText: TextLayoutResult,
+        iosIndicatorColor: Color,
+    ) {
+        drawScope.run {
+            // debug
+            drawRect(
+                color = Color.Yellow,
+                alpha = 0.2f,
+                topLeft = rect.topLeft,
+                size = rect.size,
+            )
+
+            val iconTextPadding = 8.dp
+            val indicatorBetweenPadding = 32.dp
+            val textWidth = maxOf(androidIndicatorText.size.width, iosIndicatorText.size.width)
+            val textHeight = androidIndicatorText.size.height
+            val iconRadius = textHeight * 0.4f
+            val indicatorWidth = iconRadius * 2 + iconTextPadding.toPx() + textWidth
+
+            val androidIndicatorOffset = Offset(
+                x = rect.center.x - indicatorBetweenPadding.toPx() / 2 - indicatorWidth,
+                y = rect.top
+            )
+            val iosIndicatorOffset = Offset(
+                x = rect.center.x + indicatorBetweenPadding.toPx() / 2,
+                y = rect.top
+            )
+
+            drawCircle(
+                color = androidIndicatorColor,
+                radius = iconRadius,
+                center = Offset(androidIndicatorOffset.x + iconRadius, rect.center.y),
+            )
+            drawText(
+                textLayoutResult = androidIndicatorText,
+                color = Color.Black,
+                topLeft = Offset(
+                    x = androidIndicatorOffset.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    y = rect.center.y - textHeight / 2
+                ),
+            )
+            drawCircle(
+                color = iosIndicatorColor,
+                radius = iconRadius,
+                center = Offset(iosIndicatorOffset.x + iconRadius, rect.center.y),
+            )
+            drawText(
+                textLayoutResult = iosIndicatorText,
+                color = Color.Black,
+                topLeft = Offset(
+                    x = iosIndicatorOffset.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    y = rect.center.y - textHeight / 2,
+                ),
+            )
+        }
+    }
+
+    @OptIn(ExperimentalTextApi::class)
+    private fun drawContent(
+        drawScope: DrawScope,
+        rect: Rect,
+        androidIndicatorColor: Color,
+        iosIndicatorColor: Color,
         items: List<Item>,
         textMeasurer: TextMeasurer,
         labelStyle: TextStyle = TextStyle(fontSize = 16.sp),
         valueStyle: TextStyle = TextStyle(fontSize = 24.sp),
     ) {
-        Log.d("####", "drawGraphHorizontalCenter rect=$rect")
 
-        // https://pl.kotl.in/isin149pF
 
-        val maxMoney = items.maxByOrNull { it.maxOfMoney }?.maxOfMoney ?: 0.0
+        val maxMoney = items.maxByOrNull { it.maxValue }?.maxValue ?: 0.0
         val roundUpMaxMoney = roundUpMoney(maxMoney)
         Log.d("####", "Round up $maxMoney to $roundUpMaxMoney")
 
@@ -160,10 +264,9 @@ class MainActivity : ComponentActivity() {
         val yAxisHeight = yAxisTop - yAxisBottom
         val yAxisItemHeight = yAxisHeight / yTexts.size
 
-
         drawScope.run {
+            // debug
             drawRect(
-                // draw background
                 color = Color.Yellow,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
@@ -223,8 +326,8 @@ class MainActivity : ComponentActivity() {
         rect: Rect,
     ) {
         drawScope.run {
+            // debug
             drawRect(
-                // draw background
                 color = Color.Red,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
@@ -238,8 +341,8 @@ class MainActivity : ComponentActivity() {
         rect: Rect,
     ) {
         drawScope.run {
+            // debug
             drawRect(
-                // draw background
                 color = Color.Green,
                 alpha = 0.2f,
                 topLeft = rect.topLeft,
@@ -295,81 +398,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalTextApi::class)
-    private fun drawIndicatorsHorizontalCenter(
-        drawScope: DrawScope,
-        rect: Rect,
-        textMeasurer: TextMeasurer,
-        textStyle: TextStyle = TextStyle(fontSize = 16.sp),
-        iconTextPadding: Dp = 6.dp,
-        padding: Dp = 30.dp,
-    ) {
-        Log.d("####", "drawIndicatorsHorizontalCenter rect=$rect")
-
-        val text1 = textMeasurer.measure(
-            text = AnnotatedString("Money In"),
-            style = textStyle
-        )
-        val text2 = textMeasurer.measure(
-            text = AnnotatedString("Money Out"),
-            style = textStyle
-        )
-
-        drawScope.run {
-            val textWidth = maxOf(text1.size.width, text2.size.width)
-            val textHeight = text1.size.height
-            val iconRadius = textHeight * 0.3f
-            val indicatorWidth = iconRadius * 2 + iconTextPadding.toPx() + textWidth
-
-            val indicator1Offset = Offset(
-                x = rect.center.x - indicatorWidth - padding.toPx() / 2,
-                y = rect.center.y,
-            )
-            val text1Offset = Offset(
-                x = indicator1Offset.x + iconRadius * 2 + iconTextPadding.toPx(),
-                y = rect.center.y - textHeight / 2
-            )
-
-            val indicator2Offset = Offset(
-                x = rect.center.x + padding.toPx() / 2,
-                y = rect.center.y,
-            )
-            val text2Offset = Offset(
-                x = indicator2Offset.x + iconRadius * 2 + iconTextPadding.toPx(),
-                y = rect.center.y - textHeight / 2,
-            )
-
-            drawRect(
-                // draw background
-                color = Color.LightGray,
-                alpha = 0.2f,
-                topLeft = rect.topLeft,
-                size = rect.size,
-            )
-
-            drawCircle(
-                color = Color.Red,
-                radius = iconRadius,
-                center = Offset(indicator1Offset.x + iconRadius, indicator1Offset.y),
-            )
-            drawText(
-                textLayoutResult = text1,
-                color = Color.Black,
-                topLeft = text1Offset,
-            )
-
-            drawCircle(
-                color = Color.Blue,
-                radius = iconRadius,
-                center = Offset(indicator2Offset.x + iconRadius, indicator2Offset.y),
-            )
-            drawText(
-                textLayoutResult = text2,
-                color = Color.Black,
-                topLeft = text2Offset,
-            )
-        }
-    }
+    // https://pl.kotl.in/isin149pF
 
     /*
     0.00 0
@@ -606,10 +635,10 @@ class MainActivity : ComponentActivity() {
 
     data class Item(
         val name: String,
-        val moneyIn: Double,
-        val moneyOut: Double,
+        val androidValue: Double,
+        val iosValue: Double,
     ) {
-        val maxOfMoney = maxOf(moneyIn, moneyOut)
-        val balance = moneyIn - moneyOut
+        val maxValue = maxOf(androidValue, iosValue)
+        val diff = androidValue - iosValue
     }
 }
