@@ -236,7 +236,10 @@ class MainActivity : ComponentActivity() {
         val moneyToDivision = roundUpToDivision(roundUpMaxMoney, primaryDivisor, secondaryDivisor)
         val highest = moneyToDivision.first
         val factory = divisor2Factor(highest, moneyToDivision.second)
-        Log.d("####", "Round up $roundUpMaxMoney to $highest by chosen division ${moneyToDivision.second} factory $factory")
+        Log.d(
+            "####",
+            "Round up $roundUpMaxMoney to $highest by chosen division ${moneyToDivision.second} factory $factory"
+        )
 
         val scaleList = buildScaleList(highest, factory)
         val scaleMoneyList = scaleList.map { buildMoneyAbbr(it) }
@@ -606,7 +609,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // https://pl.kotl.in/bv_6jXjQb
+    // https://pl.kotl.in/1Dj1dxkeE
 
     /*
     0.00 0
@@ -702,8 +705,16 @@ class MainActivity : ComponentActivity() {
     fun buildMoneyAbbr(money: Int): String {
         return when {
             money >= 0 && money < 1000 -> "$$money"
-            money >= 1000 && money < 1000000 -> "$${money / 1000.0}k"
-            money >= 1000000 && money <= 1000000000 -> "$${money / 1000000.0}m"
+            money >= 1000 && money < 1000000 -> if (money % 1000 == 0) {
+                "$${money / 1000}k"
+            } else {
+                "$${money / 1000.0}k"
+            }
+            money >= 1000000 && money <= 1000000000 -> if (money % 1000000 == 0) {
+                "$${money / 1000000}k"
+            } else {
+                "$${money / 1000000.0}k"
+            }
             else -> throw IllegalArgumentException("Money should be in range [0, 1,000,000,000]")
         }
     }
@@ -750,10 +761,26 @@ class MainActivity : ComponentActivity() {
 
         return when {
             money >= 0 && money <= 10 -> divisor
-            money > 10 && money <= 100 -> if (divisor > 10) { divisor / 10 } else { divisor }
-            money > 100 && money <= 1000 -> if (divisor > 100) { divisor / 100 } else { divisor / 10 }
-            money > 1000 && money <= 1000000 -> if (divisor > 1000) { divisor / 1000 } else { divisor / 100 }
-            money > 1000000 && money <= 1000000000 -> if (divisor > 1000000) { divisor / 1000000 } else { divisor / 1000 }
+            money > 10 && money <= 100 -> if (divisor > 10) {
+                divisor / 10
+            } else {
+                divisor
+            }
+            money > 100 && money <= 1000 -> if (divisor > 100) {
+                divisor / 100
+            } else {
+                divisor / 10
+            }
+            money > 1000 && money <= 1000000 -> if (divisor > 1000) {
+                divisor / 1000
+            } else {
+                divisor / 100
+            }
+            money > 1000000 && money <= 1000000000 -> if (divisor > 1000000) {
+                divisor / 1000000
+            } else {
+                divisor / 1000
+            }
             else -> throw IllegalArgumentException("Money should be in range [0, 1,000,000,000]")
         }
     }
