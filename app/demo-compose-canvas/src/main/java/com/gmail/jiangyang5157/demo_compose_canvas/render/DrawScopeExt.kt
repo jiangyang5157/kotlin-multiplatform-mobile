@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
@@ -74,7 +75,10 @@ fun DrawScope.drawCircleRect(
     blendMode: BlendMode = DrawScope.DefaultBlendMode,
 ) {
 
-    var center = rect.center
+    var center = Offset(
+        x = rect.left + radius,
+        y = rect.top + radius
+    )
     val xSpace = rect.size.width - radius * 2
     val ySpace = rect.size.height - radius * 2
 
@@ -100,7 +104,7 @@ fun DrawScope.drawCircleRect(
     drawCircle(
         color = color,
         radius = radius,
-        center = rect.center,
+        center = center,
         alpha = alpha,
         style = style,
         colorFilter = colorFilter,
