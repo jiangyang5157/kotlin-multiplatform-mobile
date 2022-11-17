@@ -87,6 +87,7 @@ class MainActivity : ComponentActivity() {
 
         ) {
             val graphRect = this.size.toRect()
+
             val padding = 8.dp
             val indicatorHeight = 24.dp
 
@@ -95,7 +96,10 @@ class MainActivity : ComponentActivity() {
                     graphRect.left + 64.dp.toPx(),
                     graphRect.bottom - indicatorHeight.toPx() - padding.toPx()
                 ),
-                bottomRight = Offset(graphRect.right - 64.dp.toPx(), graphRect.bottom - padding.toPx()),
+                bottomRight = Offset(
+                    graphRect.right - 64.dp.toPx(),
+                    graphRect.bottom - padding.toPx(),
+                ),
             )
             val contentRect = Rect(
                 topLeft = Offset(
@@ -108,11 +112,24 @@ class MainActivity : ComponentActivity() {
                 ),
             )
 
-            drawTwoIndicators(
-                this,
-                textMeasurer,
-                indicatorRect,
+            // debug
+            drawRect(
+                color = Color.Cyan,
+                alpha = 0.2f,
+                topLeft = indicatorRect.topLeft,
+                size = indicatorRect.size,
             )
+
+            drawGraphLabel(
+                textMeasurer = textMeasurer,
+                listOf(
+                    Pair(Color.Red, "12345"),
+                    Pair(Color.Blue, "67890"),
+                ),
+                rect = indicatorRect,
+                orientation = DrawOrientation.Horizontal,
+            )
+
             drawContent(
                 this,
                 textMeasurer,
@@ -121,33 +138,6 @@ class MainActivity : ComponentActivity() {
                 Color.Blue,
                 itemRects,
                 focusedItemRect,
-            )
-        }
-    }
-
-    @OptIn(ExperimentalTextApi::class)
-    private fun drawTwoIndicators(
-        drawScope: DrawScope,
-        textMeasurer: TextMeasurer,
-        rect: Rect,
-    ) {
-        drawScope.run {
-            // debug
-            drawRect(
-                color = Color.Cyan,
-                alpha = 0.2f,
-                topLeft = rect.topLeft,
-                size = rect.size,
-            )
-
-            drawGraphLabel(
-                textMeasurer = textMeasurer,
-                listOf(
-                    Pair(Color.Red, "Android"),
-                    Pair(Color.Blue, "iOS"),
-                ),
-                rect = rect,
-                orientation = DrawOrientation.Horizontal,
             )
         }
     }
