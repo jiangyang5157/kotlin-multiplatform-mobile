@@ -21,6 +21,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity
+import com.gmail.jiangyang5157.demo_compose_canvas.render.drawTextRect
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -543,14 +545,21 @@ class MainActivity : ComponentActivity() {
             )
 
             val itemWidth = (rect.right - rect.left) / labelTexts.size
+            val itemHeight = rect.height
             labelTexts.forEachIndexed { index, textLayoutResult ->
                 val widthDiff = itemWidth - textLayoutResult.size.width
-                drawText(
+                drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    color = Color.Black,
-                    topLeft = Offset(
-                        rect.left + index * itemWidth + widthDiff / 2,
-                        rect.top
+                    gravity = DrawGravity.CENTER_HORIZONTAL,
+                    rect = Rect(
+                        Offset(
+                            rect.left + index * itemWidth,
+                            rect.top
+                        ),
+                        size = Size(
+                            width = itemWidth,
+                            height = itemHeight,
+                        )
                     ),
                 )
 
@@ -593,13 +602,18 @@ class MainActivity : ComponentActivity() {
                 ?: throw RuntimeException()
             val itemHeight = (rect.bottom - rect.top) / (scaleTexts.size - 1)
             scaleTexts.forEachIndexed { index, textLayoutResult ->
-                val widthDiff = itemWidth - textLayoutResult.size.width
-                drawText(
+                drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    color = Color.Black,
-                    topLeft = Offset(
-                        rect.left + widthDiff,
-                        rect.bottom - itemHeight * index - axisTextHeight / 2,
+                    gravity = DrawGravity.RIGHT,
+                    rect = Rect(
+                        Offset(
+                            x = rect.left,
+                            y = rect.bottom - itemHeight * index - axisTextHeight / 2,
+                        ),
+                        size = Size(
+                            width = itemWidth.toFloat(),
+                            height = axisTextHeight.toFloat(),
+                        )
                     ),
                 )
             }
