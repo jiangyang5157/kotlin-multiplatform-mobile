@@ -190,7 +190,7 @@ class MainActivity : ComponentActivity() {
             drawCircleRect(
                 color = color1,
                 radius = iconRadius,
-                gravity = DrawGravity.CENTER_VERTICAL,
+                gravity = DrawGravity.CenterVertical,
                 rect = Rect(
                     topLeft = iconTopLeft1,
                     bottomRight = iconBottomRight1
@@ -198,7 +198,7 @@ class MainActivity : ComponentActivity() {
             )
             drawTextRect(
                 textLayoutResult = textLayoutResult1,
-                gravity = DrawGravity.CENTER_VERTICAL,
+                gravity = DrawGravity.CenterVertical,
                 rect = Rect(
                     topLeft = Offset(
                         x = iconBottomRight1.x,
@@ -213,7 +213,7 @@ class MainActivity : ComponentActivity() {
             drawCircleRect(
                 color = color2,
                 radius = iconRadius,
-                gravity = DrawGravity.CENTER_VERTICAL,
+                gravity = DrawGravity.CenterVertical,
                 rect = Rect(
                     topLeft = iconTopLeft2,
                     bottomRight = iconBottomRight2,
@@ -221,7 +221,7 @@ class MainActivity : ComponentActivity() {
             )
             drawTextRect(
                 textLayoutResult = textLayoutResult2,
-                gravity = DrawGravity.CENTER_VERTICAL,
+                gravity = DrawGravity.CenterVertical,
                 rect = Rect(
                     topLeft = Offset(
                         x = iconBottomRight2.x,
@@ -578,7 +578,7 @@ class MainActivity : ComponentActivity() {
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    gravity = DrawGravity.CENTER_HORIZONTAL,
+                    gravity = DrawGravity.CenterHorizontal,
                     rect = Rect(
                         topLeft = Offset(
                             x = rect.left + index * itemWidth,
@@ -632,7 +632,7 @@ class MainActivity : ComponentActivity() {
             scaleTexts.forEachIndexed { index, textLayoutResult ->
                 drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    gravity = DrawGravity.RIGHT,
+                    gravity = DrawGravity.Right,
                     rect = Rect(
                         offset = Offset(
                             x = rect.left,

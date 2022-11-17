@@ -12,10 +12,10 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.style.TextDecoration
-import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.BOTTOM
-import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CENTER_HORIZONTAL
-import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CENTER_VERTICAL
-import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.RIGHT
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Bottom
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CenterHorizontal
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CenterVertical
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Right
 
 /**
  * Draw text with size and gravity
@@ -24,7 +24,7 @@ import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.RIGHT
 fun DrawScope.drawTextRect(
     textLayoutResult: TextLayoutResult,
     rect: Rect,
-    gravity: Int = DrawGravity.NO_GRAVITY,
+    gravity: Int = DrawGravity.Unspecified,
     color: Color = Color.Unspecified,
     alpha: Float = Float.NaN,
     textDecoration: TextDecoration? = null,
@@ -34,19 +34,19 @@ fun DrawScope.drawTextRect(
     val ySpace = rect.size.height - textLayoutResult.size.height
 
     when {
-        gravity.hasFlag(CENTER_VERTICAL) -> {
+        gravity.hasFlag(CenterVertical) -> {
             topLeft = topLeft.copy(y = topLeft.y + ySpace / 2)
         }
-        gravity.hasFlag(BOTTOM) -> {
+        gravity.hasFlag(Bottom) -> {
             topLeft = topLeft.copy(y = topLeft.y + ySpace)
         }
         else -> {}
     }
     when {
-        gravity.hasFlag(CENTER_HORIZONTAL) -> {
+        gravity.hasFlag(CenterHorizontal) -> {
             topLeft = topLeft.copy(x = topLeft.x + xSpace / 2)
         }
-        gravity.hasFlag(RIGHT) -> {
+        gravity.hasFlag(Right) -> {
             topLeft = topLeft.copy(x = topLeft.x + xSpace)
         }
         else -> {}
@@ -68,7 +68,7 @@ fun DrawScope.drawCircleRect(
     color: Color,
     radius: Float,
     rect: Rect,
-    gravity: Int = DrawGravity.NO_GRAVITY,
+    gravity: Int = DrawGravity.Unspecified,
     alpha: Float = 1.0f,
     style: DrawStyle = Fill,
     colorFilter: ColorFilter? = null,
@@ -83,19 +83,19 @@ fun DrawScope.drawCircleRect(
     val ySpace = rect.size.height - radius * 2
 
     when {
-        gravity.hasFlag(CENTER_VERTICAL) -> {
+        gravity.hasFlag(CenterVertical) -> {
             center = center.copy(y = center.y + ySpace / 2)
         }
-        gravity.hasFlag(BOTTOM) -> {
+        gravity.hasFlag(Bottom) -> {
             center = center.copy(y = center.y + ySpace)
         }
         else -> {}
     }
     when {
-        gravity.hasFlag(CENTER_HORIZONTAL) -> {
+        gravity.hasFlag(CenterHorizontal) -> {
             center = center.copy(x = center.x + xSpace / 2)
         }
-        gravity.hasFlag(RIGHT) -> {
+        gravity.hasFlag(Right) -> {
             center = center.copy(x = center.x + xSpace)
         }
         else -> {}
