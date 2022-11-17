@@ -482,7 +482,7 @@ class MainActivity : ComponentActivity() {
             val itemWidth = (rect.right - rect.left) / labelTexts.size
             labelTexts.forEachIndexed { index, textLayoutResult ->
                 val widthDiff = itemWidth - textLayoutResult.size.width
-                drawTextRect(
+                drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
                     rect = Rect(
@@ -536,7 +536,7 @@ class MainActivity : ComponentActivity() {
                 ?: throw RuntimeException()
             val itemHeight = (rect.bottom - rect.top) / (scaleTexts.size - 1)
             scaleTexts.forEachIndexed { index, textLayoutResult ->
-                drawTextRect(
+                drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     gravity = DrawGravity.Right,
                     rect = Rect(

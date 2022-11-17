@@ -56,7 +56,7 @@ object DrawOrientation {
  * Draw text with size and gravity
  */
 @ExperimentalTextApi
-fun DrawScope.drawTextRect(
+fun DrawScope.drawTextInRect(
     textLayoutResult: TextLayoutResult,
     rect: Rect,
     gravity: Int = Center,
@@ -105,7 +105,7 @@ fun DrawScope.drawTextRect(
 /**
  * Draw circle with size and gravity
  */
-fun DrawScope.drawCircleRect(
+fun DrawScope.drawCircleInRect(
     color: Color,
     radius: Float,
     rect: Rect,
@@ -210,7 +210,7 @@ private fun DrawWithGravityPreview() {
                     ),
                     size = boxSize,
                 )
-                drawCircleRect(
+                drawCircleInRect(
                     color = Color.Red,
                     radius = circleRadius,
                     gravity = gravity,
@@ -229,7 +229,7 @@ private fun DrawWithGravityPreview() {
                     ),
                     size = boxSize,
                 )
-                drawTextRect(
+                drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     gravity = gravity,
                     rect = Rect(

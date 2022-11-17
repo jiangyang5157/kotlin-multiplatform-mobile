@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Draw vertical or horizontal graph label (indicator + text)
+ * Draw vertical or horizontal graph label (color circle + uniform text)
  */
 @ExperimentalTextApi
 fun DrawScope.drawGraphLabel(
@@ -28,26 +28,32 @@ fun DrawScope.drawGraphLabel(
     orientation: Int = DrawOrientation.Horizontal,
     textDecoration: TextDecoration? = null,
 ) {
+    // same text style for labels
     val textStyle = TextStyle(fontSize = 16.sp)
     val labelTexts = labels.map {
         Pair(
             it.first, textMeasurer.measure(
-                text = AnnotatedString(it.second.toString()), style = textStyle
+                text = AnnotatedString(it.second.toString()),
+                style = textStyle,
             )
         )
     }
-
+    // recognize the uniform text height
+    val textHeight = labelTexts.first().second.size.height
+    // recognize the largest text width
     var textWidth = labelTexts.first().second.size.width
     for (labelText in labelTexts) {
         textWidth = maxOf(textWidth, labelText.second.size.width)
     }
 
-    val textHeight = labelTexts.first().second.size.height
-    val indicatorRadius = textHeight * 0.3f
-    val indicatorDiameter = indicatorRadius * 2
-    val indicatorTextPadding = 8.dp.toPx()
-    val labelWidth = indicatorDiameter + indicatorTextPadding + textWidth
+    // circle size relative to text height (less than)
+    val circleRadius = textHeight * 0.3f
+    val circleDiameter = circleRadius * 2
+    val circleTextPadding = 8.dp.toPx()
+
+    // calculate label size
     val labelHeight = textHeight
+    val labelWidth = circleDiameter + circleTextPadding + textWidth
 
     // space between 2 labels
     val labelSpacing = when (orientation) {
@@ -57,80 +63,80 @@ fun DrawScope.drawGraphLabel(
         DrawOrientation.Vertical -> {
             (rect.height - labelHeight * labelTexts.size) / (labelTexts.size + 1)
         }
-        else -> 0.dp.toPx()
+        else -> throw IllegalArgumentException("Undefined orientation")
     }
 
     labelTexts.forEachIndexed { index, pair ->
         when (orientation) {
             DrawOrientation.Horizontal -> {
-                val indicatorTopLeft = Offset(
+                val circleTopLeft = Offset(
                     x = rect.left + labelWidth * index + labelSpacing * (index + 1),
                     y = rect.top
                 )
-                val indicatorBottomRight = Offset(
-                    x = indicatorTopLeft.x + indicatorDiameter + indicatorTextPadding,
+                val circleBottomRight = Offset(
+                    x = circleTopLeft.x + circleDiameter + circleTextPadding,
                     y = rect.bottom,
                 )
-                drawCircleRect(
+                drawCircleInRect(
                     color = pair.first,
-                    radius = indicatorRadius,
+                    radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = indicatorTopLeft,
-                        bottomRight = indicatorBottomRight
+                        topLeft = circleTopLeft,
+                        bottomRight = circleBottomRight
                     ),
                 )
-                drawTextRect(
+                drawTextInRect(
                     textLayoutResult = pair.second,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
                     rect = Rect(
                         topLeft = Offset(
-                            x = indicatorBottomRight.x,
+                            x = circleBottomRight.x,
                             y = rect.top,
                         ),
                         bottomRight = Offset(
-                            x = indicatorBottomRight.x + textWidth,
+                            x = circleBottomRight.x + textWidth,
                             y = rect.bottom,
                         )
                     ),
                 )
             }
             DrawOrientation.Vertical -> {
-                val indicatorTopLeft = Offset(
+                val circleTopLeft = Offset(
                     x = rect.left + (rect.size.width - labelWidth) / 2,
                     y = rect.top + (labelHeight * index + labelSpacing * (index + 1))
                 )
-                val indicatorBottomRight = Offset(
-                    x = indicatorTopLeft.x + indicatorDiameter + indicatorTextPadding,
-                    y = indicatorTopLeft.y + labelHeight,
+                val circleBottomRight = Offset(
+                    x = circleTopLeft.x + circleDiameter + circleTextPadding,
+                    y = circleTopLeft.y + labelHeight,
                 )
-                drawCircleRect(
+                drawCircleInRect(
                     color = pair.first,
-                    radius = indicatorRadius,
+                    radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = indicatorTopLeft,
-                        bottomRight = indicatorBottomRight
+                        topLeft = circleTopLeft,
+                        bottomRight = circleBottomRight
                     ),
                 )
-                drawTextRect(
+                drawTextInRect(
                     textLayoutResult = pair.second,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
                     rect = Rect(
                         topLeft = Offset(
-                            x = indicatorBottomRight.x,
-                            y = indicatorTopLeft.y,
+                            x = circleBottomRight.x,
+                            y = circleTopLeft.y,
                         ),
                         bottomRight = Offset(
-                            x = indicatorBottomRight.x + textWidth,
-                            y = indicatorBottomRight.y,
+                            x = circleBottomRight.x + textWidth,
+                            y = circleBottomRight.y,
                         )
                     ),
                 )
             }
-            else -> {}
+            else -> throw IllegalArgumentException("Undefined orientation")
         }
     }
 }
@@ -168,6 +174,7 @@ private fun DrawGraphLabelPreview() {
                     height = 80.dp.toPx(),
                 ),
             )
+
             drawRect(
                 color = Color.LightGray,
                 topLeft = horizontalRect.topLeft,
