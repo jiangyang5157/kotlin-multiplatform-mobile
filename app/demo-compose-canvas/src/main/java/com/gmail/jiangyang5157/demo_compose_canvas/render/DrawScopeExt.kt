@@ -59,7 +59,7 @@ object DrawOrientation {
 fun DrawScope.drawTextRect(
     textLayoutResult: TextLayoutResult,
     rect: Rect,
-    gravity: Int = DrawGravity.Center,
+    gravity: Int = Center,
     color: Color = Color.Unspecified,
     alpha: Float = Float.NaN,
     textDecoration: TextDecoration? = null,
@@ -109,7 +109,7 @@ fun DrawScope.drawCircleRect(
     color: Color,
     radius: Float,
     rect: Rect,
-    gravity: Int = DrawGravity.Center,
+    gravity: Int = Center,
     alpha: Float = 1.0f,
     style: DrawStyle = Fill,
     colorFilter: ColorFilter? = null,
@@ -168,14 +168,13 @@ private fun DrawWithGravityPreview() {
 
         Canvas(
             modifier = Modifier.fillMaxSize()
-
         ) {
             val graphRect = this.size.toRect()
-            val padding = 10.dp.toPx()
+            val padding = 16.dp.toPx()
             val circleRadius = 12.dp.toPx()
             val textLayoutResult = textMeasurer.measure(
                 text = AnnotatedString("Asd"),
-                style = TextStyle(fontSize = 20.sp)
+                style = TextStyle(fontSize = 16.sp)
             )
             val boxSize = Size(
                 width = 60.dp.toPx(),

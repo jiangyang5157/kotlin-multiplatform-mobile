@@ -146,7 +146,7 @@ private fun DrawGraphLabelPreview() {
             modifier = Modifier.fillMaxSize()
         ) {
             val graphRect = this.size.toRect()
-            val padding = 40.dp.toPx()
+            val padding = 16.dp.toPx()
 
             val horizontalRect = Rect(
                 offset = Offset(
