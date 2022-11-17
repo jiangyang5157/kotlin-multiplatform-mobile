@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                             val tapItemRect =
                                 itemRects.firstOrNull { it.rect?.contains(tapOffset) == true }
                             focusedItemRect = tapItemRect
-                            Log.d("####", "Tap $focusedItemRect")
+                            Log.d("####", "Tap $tapOffset $focusedItemRect")
                         }
                     )
                 }
@@ -142,16 +142,6 @@ class MainActivity : ComponentActivity() {
         text2: CharSequence,
         color2: Color,
     ) {
-        val textStyle = TextStyle(fontSize = 16.sp)
-        val textLayoutResult1 = textMeasurer.measure(
-            text = AnnotatedString(text1.toString()),
-            style = textStyle
-        )
-        val textLayoutResult2 = textMeasurer.measure(
-            text = AnnotatedString(text2.toString()),
-            style = textStyle
-        )
-
         drawScope.run {
             // debug
             drawRect(
@@ -161,19 +151,28 @@ class MainActivity : ComponentActivity() {
                 size = rect.size,
             )
 
-            val iconTextPadding = 8.dp
-            val indicatorPadding = 32.dp
+            val iconTextPadding = 8.dp.toPx()
+            val indicatorPadding = 32.dp.toPx()
+            val textStyle = TextStyle(fontSize = 16.sp)
+            val textLayoutResult1 = textMeasurer.measure(
+                text = AnnotatedString(text1.toString()),
+                style = textStyle
+            )
+            val textLayoutResult2 = textMeasurer.measure(
+                text = AnnotatedString(text2.toString()),
+                style = textStyle
+            )
             val textWidth = maxOf(textLayoutResult1.size.width, textLayoutResult2.size.width)
             val textHeight = textLayoutResult1.size.height
             val iconRadius = textHeight * 0.3f
-            val indicatorWidth = iconRadius * 2 + iconTextPadding.toPx() + textWidth
+            val indicatorWidth = iconRadius * 2 + iconTextPadding + textWidth
 
             val indicatorOffset1 = Offset(
-                x = rect.center.x - indicatorPadding.toPx() / 2 - indicatorWidth,
+                x = rect.center.x - indicatorPadding / 2 - indicatorWidth,
                 y = rect.top
             )
             val indicatorOffset2 = Offset(
-                x = rect.center.x + indicatorPadding.toPx() / 2,
+                x = rect.center.x + indicatorPadding / 2,
                 y = rect.top
             )
 
@@ -186,7 +185,7 @@ class MainActivity : ComponentActivity() {
                 textLayoutResult = textLayoutResult1,
                 color = Color.Black,
                 topLeft = Offset(
-                    x = indicatorOffset1.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    x = indicatorOffset1.x + iconRadius * 2 + iconTextPadding,
                     y = rect.center.y - textHeight / 2
                 ),
             )
@@ -199,7 +198,7 @@ class MainActivity : ComponentActivity() {
                 textLayoutResult = textLayoutResult2,
                 color = Color.Black,
                 topLeft = Offset(
-                    x = indicatorOffset2.x + iconRadius * 2 + iconTextPadding.toPx(),
+                    x = indicatorOffset2.x + iconRadius * 2 + iconTextPadding,
                     y = rect.center.y - textHeight / 2,
                 ),
             )
@@ -515,7 +514,6 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
-            Log.d("####", "rect.maxDimension=${rect.maxDimension}")
             drawText(
                 textLayoutResult = symbolTextLayoutResult,
                 color = symbolColor,
@@ -535,9 +533,6 @@ class MainActivity : ComponentActivity() {
         rect: Rect,
         labelTexts: List<TextLayoutResult>,
     ) {
-        val itemWidth = (rect.right - rect.left) / labelTexts.size
-        val indicatorSize = 3.dp
-
         drawScope.run {
             // debug
             drawRect(
@@ -547,6 +542,7 @@ class MainActivity : ComponentActivity() {
                 size = rect.size,
             )
 
+            val itemWidth = (rect.right - rect.left) / labelTexts.size
             labelTexts.forEachIndexed { index, textLayoutResult ->
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawText(
@@ -557,16 +553,18 @@ class MainActivity : ComponentActivity() {
                         rect.top
                     ),
                 )
+
+                val indicatorSize = 3.dp.toPx()
                 drawRoundRect(
                     color = Color.Red,
-                    cornerRadius = CornerRadius(indicatorSize.toPx()),
+                    cornerRadius = CornerRadius(indicatorSize),
                     topLeft = Offset(
                         rect.left + index * itemWidth + widthDiff / 2,
                         rect.top + textLayoutResult.size.height
                     ),
                     size = Size(
                         width = textLayoutResult.size.width.toFloat(),
-                        height = indicatorSize.toPx()
+                        height = indicatorSize
                     ),
                 )
             }
@@ -581,11 +579,6 @@ class MainActivity : ComponentActivity() {
     ) {
         if (scaleTexts.size < 2) throw IllegalArgumentException("Scale size should not less than 2")
 
-        val itemHeight = (rect.top - rect.bottom) / (scaleTexts.size - 1)
-        val itemWidth =
-            scaleTexts.maxByOrNull { it.size.width }?.size?.width ?: throw RuntimeException()
-        val axisTextHeight = scaleTexts.first().size.height
-
         drawScope.run {
             // debug
             drawRect(
@@ -595,6 +588,10 @@ class MainActivity : ComponentActivity() {
                 size = rect.size,
             )
 
+            val axisTextHeight = scaleTexts.first().size.height
+            val itemWidth = scaleTexts.maxByOrNull { it.size.width }?.size?.width
+                ?: throw RuntimeException()
+            val itemHeight = (rect.bottom - rect.top) / (scaleTexts.size - 1)
             scaleTexts.forEachIndexed { index, textLayoutResult ->
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawText(
@@ -602,7 +599,7 @@ class MainActivity : ComponentActivity() {
                     color = Color.Black,
                     topLeft = Offset(
                         rect.left + widthDiff,
-                        rect.bottom + itemHeight * index - axisTextHeight / 2,
+                        rect.bottom - itemHeight * index - axisTextHeight / 2,
                     ),
                 )
             }
