@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gmail.jiangyang5157.demo_compose_canvas.render.drawGraphLabel
 import com.gmail.jiangyang5157.demo_compose_canvas.render.*
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -307,57 +306,28 @@ class MainActivity : ComponentActivity() {
             }
 
             val itemWidth = (rect.right - rect.left) / itemRects.size
-            val valueWidth = 8.dp
-            val valuePadding = 4.dp
-            val valueCornerRadius = 2.dp
-
             val maxScale = scaleList.maxOf { it }
             val ratio = rect.height / maxScale
 
             itemRects.forEachIndexed { index, itemRect ->
                 val height1 = itemRect.item.value1.toFloat() * ratio
                 val height2 = itemRect.item.value2.toFloat() * ratio
-                drawPath(
-                    path = Path().apply {
-                        addRoundRect(
-                            RoundRect(
-                                rect = Rect(
-                                    offset = Offset(
-                                        x = rect.left + itemWidth * index + itemWidth / 2 - valuePadding.toPx() / 2 - valueWidth.toPx(),
-                                        y = rect.bottom - height1,
-                                    ),
-                                    size = Size(
-                                        width = valueWidth.toPx(),
-                                        height = height1,
-                                    ),
-                                ),
-                                topLeft = CornerRadius(valueCornerRadius.toPx()),
-                                topRight = CornerRadius(valueCornerRadius.toPx()),
-                            )
-                        )
-                    },
-                    color = color1,
-                )
-                drawPath(
-                    path = Path().apply {
-                        addRoundRect(
-                            RoundRect(
-                                rect = Rect(
-                                    offset = Offset(
-                                        x = rect.left + itemWidth * index + itemWidth / 2 + valuePadding.toPx() / 2,
-                                        y = rect.bottom - height2,
-                                    ),
-                                    size = Size(
-                                        width = valueWidth.toPx(),
-                                        height = height2,
-                                    ),
-                                ),
-                                topLeft = CornerRadius(valueCornerRadius.toPx()),
-                                topRight = CornerRadius(valueCornerRadius.toPx()),
-                            )
-                        )
-                    },
-                    color = color2,
+
+                drawColumnar(
+                    items = listOf(
+                        Pair(color1, height1),
+                        Pair(color2, height2),
+                    ),
+                    rect = Rect(
+                        offset = Offset(
+                            x = rect.left + itemWidth * index,
+                            y = rect.top,
+                        ),
+                        size = Size(
+                            width = itemWidth,
+                            height = rect.height,
+                        ),
+                    ),
                 )
             }
         }

@@ -159,8 +159,8 @@ fun DrawScope.drawCircleInRect(
     )
 }
 
-@Preview
 @ExperimentalTextApi
+@Preview
 @Composable
 private fun DrawWithGravityPreview() {
     MaterialTheme {

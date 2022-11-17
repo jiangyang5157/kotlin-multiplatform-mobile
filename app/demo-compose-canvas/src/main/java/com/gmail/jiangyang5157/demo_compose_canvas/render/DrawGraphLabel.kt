@@ -146,8 +146,8 @@ fun DrawScope.drawGraphLabel(
     }
 }
 
-@Preview
 @ExperimentalTextApi
+@Preview
 @Composable
 private fun DrawGraphLabelPreview() {
     MaterialTheme {

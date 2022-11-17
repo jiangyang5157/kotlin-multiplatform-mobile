@@ -59,8 +59,8 @@ fun DrawScope.drawColumnar(
     }
 }
 
-@Preview
 @ExperimentalTextApi
+@Preview
 @Composable
 private fun DrawColumnarPreview() {
     MaterialTheme {
