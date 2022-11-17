@@ -22,6 +22,7 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity
+import com.gmail.jiangyang5157.demo_compose_canvas.render.drawCircleRect
 import com.gmail.jiangyang5157.demo_compose_canvas.render.drawTextRect
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -169,39 +170,67 @@ class MainActivity : ComponentActivity() {
             val iconRadius = textHeight * 0.3f
             val indicatorWidth = iconRadius * 2 + iconTextPadding + textWidth
 
-            val indicatorOffset1 = Offset(
+            val iconTopLeft1 = Offset(
                 x = rect.center.x - indicatorPadding / 2 - indicatorWidth,
                 y = rect.top
             )
-            val indicatorOffset2 = Offset(
+            val iconBottomRight1 = Offset(
+                x = iconTopLeft1.x + iconRadius * 2 + iconTextPadding,
+                y = rect.bottom,
+            )
+            val iconTopLeft2 = Offset(
                 x = rect.center.x + indicatorPadding / 2,
                 y = rect.top
             )
+            val iconBottomRight2 = Offset(
+                x = iconTopLeft2.x + iconRadius * 2 + iconTextPadding,
+                y = rect.bottom,
+            )
 
-            drawCircle(
+            drawCircleRect(
                 color = color1,
                 radius = iconRadius,
-                center = Offset(indicatorOffset1.x + iconRadius, rect.center.y),
+                gravity = DrawGravity.CENTER_VERTICAL,
+                rect = Rect(
+                    topLeft = iconTopLeft1,
+                    bottomRight = iconBottomRight1
+                )
             )
-            drawText(
+            drawTextRect(
                 textLayoutResult = textLayoutResult1,
-                color = Color.Black,
-                topLeft = Offset(
-                    x = indicatorOffset1.x + iconRadius * 2 + iconTextPadding,
-                    y = rect.center.y - textHeight / 2
+                gravity = DrawGravity.CENTER_VERTICAL,
+                rect = Rect(
+                    topLeft = Offset(
+                        x = iconBottomRight1.x,
+                        y = rect.top,
+                    ),
+                    bottomRight = Offset(
+                        x = iconBottomRight1.x + textWidth,
+                        y = rect.bottom,
+                    )
                 ),
             )
-            drawCircle(
+            drawCircleRect(
                 color = color2,
                 radius = iconRadius,
-                center = Offset(indicatorOffset2.x + iconRadius, rect.center.y),
+                gravity = DrawGravity.CENTER_VERTICAL,
+                rect = Rect(
+                    topLeft = iconTopLeft2,
+                    bottomRight = iconBottomRight2,
+                )
             )
-            drawText(
+            drawTextRect(
                 textLayoutResult = textLayoutResult2,
-                color = Color.Black,
-                topLeft = Offset(
-                    x = indicatorOffset2.x + iconRadius * 2 + iconTextPadding,
-                    y = rect.center.y - textHeight / 2,
+                gravity = DrawGravity.CENTER_VERTICAL,
+                rect = Rect(
+                    topLeft = Offset(
+                        x = iconBottomRight2.x,
+                        y = rect.top,
+                    ),
+                    bottomRight = Offset(
+                        x = iconBottomRight2.x + textWidth,
+                        y = rect.bottom,
+                    )
                 ),
             )
         }
@@ -545,21 +574,20 @@ class MainActivity : ComponentActivity() {
             )
 
             val itemWidth = (rect.right - rect.left) / labelTexts.size
-            val itemHeight = rect.height
             labelTexts.forEachIndexed { index, textLayoutResult ->
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawTextRect(
                     textLayoutResult = textLayoutResult,
                     gravity = DrawGravity.CENTER_HORIZONTAL,
                     rect = Rect(
-                        Offset(
-                            rect.left + index * itemWidth,
-                            rect.top
+                        topLeft = Offset(
+                            x = rect.left + index * itemWidth,
+                            y = rect.top
                         ),
-                        size = Size(
-                            width = itemWidth,
-                            height = itemHeight,
-                        )
+                        bottomRight = Offset(
+                            x = rect.left + (index + 1) * itemWidth,
+                            y = rect.bottom
+                        ),
                     ),
                 )
 
@@ -606,7 +634,7 @@ class MainActivity : ComponentActivity() {
                     textLayoutResult = textLayoutResult,
                     gravity = DrawGravity.RIGHT,
                     rect = Rect(
-                        Offset(
+                        offset = Offset(
                             x = rect.left,
                             y = rect.bottom - itemHeight * index - axisTextHeight / 2,
                         ),
