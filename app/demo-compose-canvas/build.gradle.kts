@@ -81,6 +81,8 @@ dependencies {
     implementation(Dep.ComposeRuntimeLiveData)
     implementation(Dep.ComposeUi)
     implementation(Dep.ComposeUiText)
+    implementation(Dep.ComposeUiToolingPreview)
+    implementation(Dep.ComposeUiTooling)
 
     debugImplementation(Dep.ComposeUiTestManifest)
 

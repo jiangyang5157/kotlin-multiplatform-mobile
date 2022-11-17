@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gmail.jiangyang5157.demo_compose_canvas.graph.drawGraphLabel
+import com.gmail.jiangyang5157.demo_compose_canvas.render.drawGraphLabel
 import com.gmail.jiangyang5157.demo_compose_canvas.render.*
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -484,7 +484,7 @@ class MainActivity : ComponentActivity() {
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    gravity = DrawGravity.CenterHorizontal.withFlag(DrawGravity.Top),
+                    gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
                     rect = Rect(
                         topLeft = Offset(
                             x = rect.left + index * itemWidth,

@@ -1,23 +1,56 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Bottom
+import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Center
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CenterHorizontal
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.CenterVertical
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Left
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Right
 import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity.Top
+
+fun Int.hasFlag(flag: Int): Boolean = flag and this == flag
+fun Int.addFlag(flag: Int): Int = this or flag
+fun Int.minusFlag(flag: Int): Int = this and flag.inv()
+
+fun Long.hasFlag(flag: Long): Boolean = flag and this == flag
+fun Long.addFlag(flag: Long): Long = this or flag
+fun Long.minusFlag(flag: Long): Long = this and flag.inv()
+
+object DrawGravity {
+    val Left = 1
+    val Top = 1 shl 1
+    val Right = 1 shl 2
+    val Bottom = 1 shl 3
+
+    val CenterVertical = Top or Bottom
+    val CenterHorizontal = Left or Right
+    val Center = CenterVertical or CenterHorizontal
+}
+
+object DrawOrientation {
+    val Vertical = 1
+    val Horizontal = 1 shl 1
+}
 
 /**
  * Draw text with size and gravity
@@ -124,4 +157,90 @@ fun DrawScope.drawCircleRect(
         colorFilter = colorFilter,
         blendMode = blendMode,
     )
+}
+
+@Preview
+@ExperimentalTextApi
+@Composable
+private fun DrawWithGravityPreview() {
+    MaterialTheme {
+        val textMeasurer = rememberTextMeasurer()
+
+        Canvas(
+            modifier = Modifier.fillMaxSize()
+
+        ) {
+            val graphRect = this.size.toRect()
+            val padding = 10.dp.toPx()
+            val circleRadius = 12.dp.toPx()
+            val textLayoutResult = textMeasurer.measure(
+                text = AnnotatedString("Asd"),
+                style = TextStyle(fontSize = 20.sp)
+            )
+            val boxSize = Size(
+                width = 60.dp.toPx(),
+                height = 60.dp.toPx(),
+            )
+            val column1row1 = Offset(
+                x = graphRect.left + padding,
+                y = graphRect.top + padding,
+            )
+            val column2row1 = Offset(
+                x = graphRect.left + padding + boxSize.width + padding,
+                y = graphRect.top + padding,
+            )
+
+            val gravityList = listOf(
+                Top.addFlag(Left),
+                Top.addFlag(Right),
+                Bottom.addFlag(Left),
+                Bottom.addFlag(Right),
+                CenterVertical.addFlag(Left),
+                CenterVertical.addFlag(Right),
+                CenterHorizontal.addFlag(Top),
+                CenterHorizontal.addFlag(Bottom),
+                Center,
+                CenterVertical,
+                CenterHorizontal,
+            )
+            gravityList.forEachIndexed { index, gravity ->
+                drawRect(
+                    color = Color.LightGray,
+                    topLeft = column1row1.copy(
+                        y = column1row1.y + (boxSize.height + padding) * index
+                    ),
+                    size = boxSize,
+                )
+                drawCircleRect(
+                    color = Color.Red,
+                    radius = circleRadius,
+                    gravity = gravity,
+                    rect = Rect(
+                        offset = column1row1.copy(
+                            y = column1row1.y + (boxSize.height + padding) * index
+                        ),
+                        size = boxSize,
+                    ),
+                )
+
+                drawRect(
+                    color = Color.LightGray,
+                    topLeft = column2row1.copy(
+                        y = column2row1.y + (boxSize.height + padding) * index
+                    ),
+                    size = boxSize,
+                )
+                drawTextRect(
+                    textLayoutResult = textLayoutResult,
+                    gravity = gravity,
+                    rect = Rect(
+                        offset = column2row1.copy(
+                            y = column2row1.y + (boxSize.height + padding) * index
+                        ),
+                        size = boxSize,
+                    ),
+                )
+            }
+        }
+    }
 }

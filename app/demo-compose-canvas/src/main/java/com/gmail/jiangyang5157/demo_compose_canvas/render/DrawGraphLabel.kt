@@ -1,17 +1,21 @@
-package com.gmail.jiangyang5157.demo_compose_canvas.graph
+package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextMeasurer
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gmail.jiangyang5157.demo_compose_canvas.render.*
 
 /**
  * Draw vertical or horizontal graph label (indicator + text)
@@ -70,7 +74,7 @@ fun DrawScope.drawGraphLabel(
                 drawCircleRect(
                     color = pair.first,
                     radius = indicatorRadius,
-                    gravity = DrawGravity.CenterVertical.withFlag(DrawGravity.Left),
+                    gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
                         topLeft = indicatorTopLeft,
                         bottomRight = indicatorBottomRight
@@ -104,7 +108,7 @@ fun DrawScope.drawGraphLabel(
                 drawCircleRect(
                     color = pair.first,
                     radius = indicatorRadius,
-                    gravity = DrawGravity.CenterVertical.withFlag(DrawGravity.Left),
+                    gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
                         topLeft = indicatorTopLeft,
                         bottomRight = indicatorBottomRight
@@ -127,6 +131,72 @@ fun DrawScope.drawGraphLabel(
                 )
             }
             else -> {}
+        }
+    }
+}
+
+@Preview
+@ExperimentalTextApi
+@Composable
+private fun DrawGraphLabelPreview() {
+    MaterialTheme {
+        val textMeasurer = rememberTextMeasurer()
+
+        Canvas(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            val graphRect = this.size.toRect()
+            val padding = 40.dp.toPx()
+
+            val horizontalRect = Rect(
+                offset = Offset(
+                    x = graphRect.left + padding,
+                    y = graphRect.top + padding,
+                ),
+                size = Size(
+                    width = 200.dp.toPx(),
+                    height = 40.dp.toPx(),
+                ),
+            )
+            val verticalRect = Rect(
+                offset = Offset(
+                    x = graphRect.left + padding,
+                    y = graphRect.top + padding + 40.dp.toPx() + padding,
+                ),
+                size = Size(
+                    width = 160.dp.toPx(),
+                    height = 80.dp.toPx(),
+                ),
+            )
+            drawRect(
+                color = Color.LightGray,
+                topLeft = horizontalRect.topLeft,
+                size = horizontalRect.size,
+            )
+            drawRect(
+                color = Color.LightGray,
+                topLeft = verticalRect.topLeft,
+                size = verticalRect.size,
+            )
+
+            drawGraphLabel(
+                textMeasurer = textMeasurer,
+                listOf(
+                    Pair(Color.Red, "12345"),
+                    Pair(Color.Blue, "67890"),
+                ),
+                rect = horizontalRect,
+                orientation = DrawOrientation.Horizontal,
+            )
+            drawGraphLabel(
+                textMeasurer = textMeasurer,
+                listOf(
+                    Pair(Color.Red, "1234567890"),
+                    Pair(Color.Blue, "12345"),
+                ),
+                rect = verticalRect,
+                orientation = DrawOrientation.Vertical,
+            )
         }
     }
 }
