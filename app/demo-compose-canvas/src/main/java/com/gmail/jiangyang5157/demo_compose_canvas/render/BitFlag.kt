@@ -9,7 +9,6 @@ fun Long.withFlag(flag: Long): Long = this or flag
 fun Long.minusFlag(flag: Long): Long = this and flag.inv()
 
 object DrawGravity {
-    val Unspecified = 0
     val Left = 1
     val Top = 1 shl 1
     val Right = 1 shl 2
@@ -21,7 +20,6 @@ object DrawGravity {
 }
 
 object DrawOrientation {
-    val Unspecified = 0
     val Vertical = 1
     val Horizontal = 1 shl 1
 }

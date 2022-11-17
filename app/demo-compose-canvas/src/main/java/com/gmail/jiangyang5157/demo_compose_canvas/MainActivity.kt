@@ -21,9 +21,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gmail.jiangyang5157.demo_compose_canvas.render.DrawGravity
-import com.gmail.jiangyang5157.demo_compose_canvas.render.drawCircleRect
-import com.gmail.jiangyang5157.demo_compose_canvas.render.drawTextRect
+import com.gmail.jiangyang5157.demo_compose_canvas.graph.drawGraphLabel
+import com.gmail.jiangyang5157.demo_compose_canvas.render.*
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -91,17 +90,12 @@ class MainActivity : ComponentActivity() {
             val padding = 8.dp
             val indicatorHeight = 24.dp
 
-            val androidIndicatorText = "Android"
-            val androidIndicatorColor = Color.Red
-            val iosIndicatorText = "iOS"
-            val iosIndicatorColor = Color.Blue
-
             val indicatorRect = Rect(
                 topLeft = Offset(
-                    graphRect.left,
+                    graphRect.left + 64.dp.toPx(),
                     graphRect.bottom - indicatorHeight.toPx() - padding.toPx()
                 ),
-                bottomRight = Offset(graphRect.right, graphRect.bottom - padding.toPx()),
+                bottomRight = Offset(graphRect.right - 64.dp.toPx(), graphRect.bottom - padding.toPx()),
             )
             val contentRect = Rect(
                 topLeft = Offset(
@@ -118,17 +112,13 @@ class MainActivity : ComponentActivity() {
                 this,
                 textMeasurer,
                 indicatorRect,
-                androidIndicatorText,
-                androidIndicatorColor,
-                iosIndicatorText,
-                iosIndicatorColor,
             )
             drawContent(
                 this,
                 textMeasurer,
                 contentRect,
-                androidIndicatorColor,
-                iosIndicatorColor,
+                Color.Red,
+                Color.Blue,
                 itemRects,
                 focusedItemRect,
             )
@@ -140,10 +130,6 @@ class MainActivity : ComponentActivity() {
         drawScope: DrawScope,
         textMeasurer: TextMeasurer,
         rect: Rect,
-        text1: CharSequence,
-        color1: Color,
-        text2: CharSequence,
-        color2: Color,
     ) {
         drawScope.run {
             // debug
@@ -154,84 +140,14 @@ class MainActivity : ComponentActivity() {
                 size = rect.size,
             )
 
-            val iconTextPadding = 8.dp.toPx()
-            val indicatorPadding = 32.dp.toPx()
-            val textStyle = TextStyle(fontSize = 16.sp)
-            val textLayoutResult1 = textMeasurer.measure(
-                text = AnnotatedString(text1.toString()),
-                style = textStyle
-            )
-            val textLayoutResult2 = textMeasurer.measure(
-                text = AnnotatedString(text2.toString()),
-                style = textStyle
-            )
-            val textWidth = maxOf(textLayoutResult1.size.width, textLayoutResult2.size.width)
-            val textHeight = textLayoutResult1.size.height
-            val iconRadius = textHeight * 0.3f
-            val indicatorWidth = iconRadius * 2 + iconTextPadding + textWidth
-
-            val iconTopLeft1 = Offset(
-                x = rect.center.x - indicatorPadding / 2 - indicatorWidth,
-                y = rect.top
-            )
-            val iconBottomRight1 = Offset(
-                x = iconTopLeft1.x + iconRadius * 2 + iconTextPadding,
-                y = rect.bottom,
-            )
-            val iconTopLeft2 = Offset(
-                x = rect.center.x + indicatorPadding / 2,
-                y = rect.top
-            )
-            val iconBottomRight2 = Offset(
-                x = iconTopLeft2.x + iconRadius * 2 + iconTextPadding,
-                y = rect.bottom,
-            )
-
-            drawCircleRect(
-                color = color1,
-                radius = iconRadius,
-                gravity = DrawGravity.CenterVertical,
-                rect = Rect(
-                    topLeft = iconTopLeft1,
-                    bottomRight = iconBottomRight1
-                )
-            )
-            drawTextRect(
-                textLayoutResult = textLayoutResult1,
-                gravity = DrawGravity.CenterVertical,
-                rect = Rect(
-                    topLeft = Offset(
-                        x = iconBottomRight1.x,
-                        y = rect.top,
-                    ),
-                    bottomRight = Offset(
-                        x = iconBottomRight1.x + textWidth,
-                        y = rect.bottom,
-                    )
+            drawGraphLabel(
+                textMeasurer = textMeasurer,
+                listOf(
+                    Pair(Color.Red, "Android"),
+                    Pair(Color.Blue, "iOS"),
                 ),
-            )
-            drawCircleRect(
-                color = color2,
-                radius = iconRadius,
-                gravity = DrawGravity.CenterVertical,
-                rect = Rect(
-                    topLeft = iconTopLeft2,
-                    bottomRight = iconBottomRight2,
-                )
-            )
-            drawTextRect(
-                textLayoutResult = textLayoutResult2,
-                gravity = DrawGravity.CenterVertical,
-                rect = Rect(
-                    topLeft = Offset(
-                        x = iconBottomRight2.x,
-                        y = rect.top,
-                    ),
-                    bottomRight = Offset(
-                        x = iconBottomRight2.x + textWidth,
-                        y = rect.bottom,
-                    )
-                ),
+                rect = rect,
+                orientation = DrawOrientation.Horizontal,
             )
         }
     }
@@ -578,7 +494,7 @@ class MainActivity : ComponentActivity() {
                 val widthDiff = itemWidth - textLayoutResult.size.width
                 drawTextRect(
                     textLayoutResult = textLayoutResult,
-                    gravity = DrawGravity.CenterHorizontal,
+                    gravity = DrawGravity.CenterHorizontal.withFlag(DrawGravity.Top),
                     rect = Rect(
                         topLeft = Offset(
                             x = rect.left + index * itemWidth,
