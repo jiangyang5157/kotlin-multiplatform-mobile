@@ -220,11 +220,12 @@ class MainActivity : ComponentActivity() {
 
         val maxMoney =
             itemRects.maxByOrNull { it.item.maxValue }?.item?.maxValue ?: throw RuntimeException()
+        val primaryFactor = 3.0
+        val secondaryFactor = 4.0
+
         val roundUpMaxMoney = roundUpMoney(maxMoney)
         Log.d("####", "Round up $maxMoney to $roundUpMaxMoney")
 
-        val primaryFactor = 3
-        val secondaryFactor = 4
         val primaryDivisor = factor2Divisor(roundUpMaxMoney, primaryFactor)
         val secondaryDivisor = factor2Divisor(roundUpMaxMoney, secondaryFactor)
         Log.d(
@@ -235,7 +236,7 @@ class MainActivity : ComponentActivity() {
         val moneyToDivision = roundUpToDivision(roundUpMaxMoney, primaryDivisor, secondaryDivisor)
         val highest = moneyToDivision.first
         val factory = divisor2Factor(highest, moneyToDivision.second)
-        Log.d("####", "Round up $roundUpMaxMoney to $highest by chosen factory $factory")
+        Log.d("####", "Round up $roundUpMaxMoney to $highest by chosen division ${moneyToDivision.second} factory $factory")
 
         val scaleList = buildScaleList(highest, factory)
         val scaleMoneyList = scaleList.map { buildMoneyAbbr(it) }
