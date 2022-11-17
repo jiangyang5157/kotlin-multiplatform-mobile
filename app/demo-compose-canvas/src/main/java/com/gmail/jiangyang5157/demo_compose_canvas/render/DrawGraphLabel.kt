@@ -23,14 +23,16 @@ import androidx.compose.ui.unit.sp
 @ExperimentalTextApi
 fun DrawScope.drawGraphLabel(
     textMeasurer: TextMeasurer,
-    labels: List<Pair<Color, CharSequence>>,
+    items: List<Pair<Color, CharSequence>>,
     rect: Rect,
     orientation: Int = DrawOrientation.Horizontal,
     textDecoration: TextDecoration? = null,
 ) {
+    if (items.isEmpty()) return
+
     // same text style for labels
     val textStyle = TextStyle(fontSize = 16.sp)
-    val labelTexts = labels.map {
+    val labels = items.map {
         Pair(
             it.first, textMeasurer.measure(
                 text = AnnotatedString(it.second.toString()),
@@ -39,10 +41,10 @@ fun DrawScope.drawGraphLabel(
         )
     }
     // recognize the uniform text height
-    val textHeight = labelTexts.first().second.size.height
+    val textHeight = labels.first().second.size.height
     // recognize the largest text width
-    var textWidth = labelTexts.first().second.size.width
-    for (labelText in labelTexts) {
+    var textWidth = labels.first().second.size.width
+    for (labelText in labels) {
         textWidth = maxOf(textWidth, labelText.second.size.width)
     }
 
@@ -55,22 +57,25 @@ fun DrawScope.drawGraphLabel(
     val labelHeight = textHeight
     val labelWidth = circleDiameter + circleTextPadding + textWidth
 
-    // space between 2 labels
-    val labelSpacing = when (orientation) {
+    // padding between 2 labels
+    val labelPadding = when (orientation) {
         DrawOrientation.Horizontal -> {
-            (rect.width - labelWidth * labelTexts.size) / (labelTexts.size + 1)
+            (rect.width - labelWidth * labels.size) / (labels.size + 1)
         }
         DrawOrientation.Vertical -> {
-            (rect.height - labelHeight * labelTexts.size) / (labelTexts.size + 1)
+            (rect.height - labelHeight * labels.size) / (labels.size + 1)
         }
         else -> throw IllegalArgumentException("Undefined orientation")
     }
 
-    labelTexts.forEachIndexed { index, pair ->
+    labels.forEachIndexed { index, pair ->
+        val color = pair.first
+        val textLayoutResult = pair.second
+
         when (orientation) {
             DrawOrientation.Horizontal -> {
                 val circleTopLeft = Offset(
-                    x = rect.left + labelWidth * index + labelSpacing * (index + 1),
+                    x = rect.left + labelWidth * index + labelPadding * (index + 1),
                     y = rect.top
                 )
                 val circleBottomRight = Offset(
@@ -78,7 +83,7 @@ fun DrawScope.drawGraphLabel(
                     y = rect.bottom,
                 )
                 drawCircleInRect(
-                    color = pair.first,
+                    color = color,
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
@@ -87,7 +92,7 @@ fun DrawScope.drawGraphLabel(
                     ),
                 )
                 drawTextInRect(
-                    textLayoutResult = pair.second,
+                    textLayoutResult = textLayoutResult,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
                     rect = Rect(
@@ -105,14 +110,14 @@ fun DrawScope.drawGraphLabel(
             DrawOrientation.Vertical -> {
                 val circleTopLeft = Offset(
                     x = rect.left + (rect.size.width - labelWidth) / 2,
-                    y = rect.top + (labelHeight * index + labelSpacing * (index + 1))
+                    y = rect.top + (labelHeight * index + labelPadding * (index + 1))
                 )
                 val circleBottomRight = Offset(
                     x = circleTopLeft.x + circleDiameter + circleTextPadding,
                     y = circleTopLeft.y + labelHeight,
                 )
                 drawCircleInRect(
-                    color = pair.first,
+                    color = color,
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
@@ -121,7 +126,7 @@ fun DrawScope.drawGraphLabel(
                     ),
                 )
                 drawTextInRect(
-                    textLayoutResult = pair.second,
+                    textLayoutResult = textLayoutResult,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
                     rect = Rect(
