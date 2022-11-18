@@ -111,29 +111,21 @@ class MainActivity : ComponentActivity() {
                 ),
             )
 
-            // debug
-            drawRect(
-                color = Color.Cyan,
-                alpha = 0.2f,
-                topLeft = indicatorRect.topLeft,
-                size = indicatorRect.size,
-            )
-
             drawGraphLabel(
                 textMeasurer = textMeasurer,
-                listOf(
-                    Pair(Color.Red, "12345"),
-                    Pair(Color.Blue, "67890"),
-                ),
                 rect = indicatorRect,
                 orientation = DrawOrientation.Horizontal,
+                items = listOf(
+                    Pair(Color.DarkGray, "iOS"),
+                    Pair(Color.Blue, "Android"),
+                ),
             )
 
             drawContent(
                 this,
                 textMeasurer,
                 contentRect,
-                Color.Red,
+                Color.DarkGray,
                 Color.Blue,
                 itemRects,
                 focusedItemRect,
@@ -146,8 +138,8 @@ class MainActivity : ComponentActivity() {
         drawScope: DrawScope,
         textMeasurer: TextMeasurer,
         rect: Rect,
-        androidIndicatorColor: Color,
-        iosIndicatorColor: Color,
+        color1: Color,
+        color2: Color,
         itemRects: List<ItemRect>,
         focusedItemRect: ItemRect?,
     ) {
@@ -189,6 +181,7 @@ class MainActivity : ComponentActivity() {
                     style = axisTextStyle
                 )
             }
+            val labelTexts = itemRects.map { it.item.label }
             val labelTextLayoutResults = itemRects.map {
                 textMeasurer.measure(
                     text = AnnotatedString(it.item.label),
@@ -255,13 +248,15 @@ class MainActivity : ComponentActivity() {
                 ),
                 scaleTextLayoutResults,
             )
-            drawLabel(
+            drawXAxisLabel(
                 this,
+                textMeasurer = textMeasurer,
                 Rect(
                     topLeft = Offset(labelLeft, labelTop),
                     bottomRight = Offset(labelRight, labelBottom),
                 ),
-                labelTextLayoutResults,
+                labelTexts = labelTexts,
+                focusedItemRect,
             )
             drawData(
                 this,
@@ -269,8 +264,8 @@ class MainActivity : ComponentActivity() {
                     topLeft = Offset(dataLeft, dataTop),
                     bottomRight = Offset(dataRight, dataBottom),
                 ),
-                androidIndicatorColor,
-                iosIndicatorColor,
+                color2,
+                color1,
                 itemRects,
                 scaleList
             )
@@ -435,49 +430,34 @@ class MainActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawLabel(
+    private fun drawXAxisLabel(
         drawScope: DrawScope,
+        textMeasurer: TextMeasurer,
         rect: Rect,
-        labelTexts: List<TextLayoutResult>,
+        labelTexts: List<CharSequence>,
+        focusedItemRect: ItemRect?,
     ) {
         drawScope.run {
-            // debug
-            drawRect(
-                color = Color.Cyan,
-                alpha = 0.2f,
-                topLeft = rect.topLeft,
-                size = rect.size,
-            )
-
             val itemWidth = (rect.right - rect.left) / labelTexts.size
-            labelTexts.forEachIndexed { index, textLayoutResult ->
-                val widthDiff = itemWidth - textLayoutResult.size.width
-                drawTextInRect(
-                    textLayoutResult = textLayoutResult,
-                    gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
-                    rect = Rect(
-                        topLeft = Offset(
-                            x = rect.left + index * itemWidth,
-                            y = rect.top
-                        ),
-                        bottomRight = Offset(
-                            x = rect.left + (index + 1) * itemWidth,
-                            y = rect.bottom
-                        ),
-                    ),
-                )
+            val itemHeight = rect.height
 
-                val indicatorSize = 3.dp.toPx()
-                drawRoundRect(
-                    color = Color.Red,
-                    cornerRadius = CornerRadius(indicatorSize),
-                    topLeft = Offset(
-                        rect.left + index * itemWidth + widthDiff / 2,
-                        rect.top + textLayoutResult.size.height
-                    ),
-                    size = Size(
-                        width = textLayoutResult.size.width.toFloat(),
-                        height = indicatorSize
+            labelTexts.forEachIndexed { index, text ->
+                val selected = text == focusedItemRect?.item?.label
+                drawUnderlineLabel(
+                    textMeasurer = textMeasurer,
+                    underlineColor = Color.Blue,
+                    text = text,
+                    textColor = Color.DarkGray,
+                    selected = selected,
+                    rect = Rect(
+                        offset = Offset(
+                            x = rect.left + itemWidth * index,
+                            y = rect.top,
+                        ),
+                        size = Size(
+                            width = itemWidth,
+                            height = itemHeight
+                        ),
                     ),
                 )
             }
