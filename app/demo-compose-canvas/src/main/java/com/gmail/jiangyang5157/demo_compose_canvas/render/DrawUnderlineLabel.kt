@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
  * Draw x-axis label (text + round underline) center horizontal
  */
 @ExperimentalTextApi
-fun DrawScope.drawXAxisLabel(
+fun DrawScope.drawUnderlineLabel(
     textMeasurer: TextMeasurer,
     text: CharSequence,
     underlineColor: Color,
@@ -83,7 +83,7 @@ fun DrawScope.drawXAxisLabel(
 @Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun DrawXAxisLabelPreview() {
+private fun DrawUnderlineLabelPreview() {
     MaterialTheme {
         val color1 = Color.DarkGray
         val color2 = Color.Blue
@@ -132,7 +132,7 @@ private fun DrawXAxisLabelPreview() {
                 size = boxSize,
             )
 
-            drawXAxisLabel(
+            drawUnderlineLabel(
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "iOS",
@@ -143,7 +143,7 @@ private fun DrawXAxisLabelPreview() {
                     size = boxSize,
                 ),
             )
-            drawXAxisLabel(
+            drawUnderlineLabel(
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "A",
@@ -154,7 +154,7 @@ private fun DrawXAxisLabelPreview() {
                     size = boxSize,
                 ),
             )
-            drawXAxisLabel(
+            drawUnderlineLabel(
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "Win",
@@ -182,7 +182,7 @@ private fun DrawXAxisLabelPreview() {
                 )
 
                 val selected = index % 2 == 0
-                drawXAxisLabel(
+                drawUnderlineLabel(
                     textMeasurer = textMeasurer,
                     underlineColor = color2,
                     text = text,
