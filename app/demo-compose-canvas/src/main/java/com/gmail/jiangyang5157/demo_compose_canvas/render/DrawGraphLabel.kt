@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -25,6 +26,7 @@ fun DrawScope.drawGraphLabel(
     textMeasurer: TextMeasurer,
     items: List<Pair<Color, CharSequence>>,
     rect: Rect,
+    textColor: Color = Color.Unspecified,
     orientation: Int = DrawOrientation.Horizontal,
     textDecoration: TextDecoration? = null,
 ) {
@@ -34,10 +36,11 @@ fun DrawScope.drawGraphLabel(
     val textStyle = TextStyle(fontSize = 16.sp)
     val labels = items.map {
         Pair(
-            it.first, textMeasurer.measure(
+            it.first,
+            textMeasurer.measure(
                 text = AnnotatedString(it.second.toString()),
                 style = textStyle,
-            )
+            ),
         )
     }
     // recognize the uniform text height
@@ -75,8 +78,7 @@ fun DrawScope.drawGraphLabel(
         when (orientation) {
             DrawOrientation.Horizontal -> {
                 val circleTopLeft = Offset(
-                    x = rect.left + labelWidth * index + labelPadding * (index + 1),
-                    y = rect.top
+                    x = rect.left + labelWidth * index + labelPadding * (index + 1), y = rect.top
                 )
                 val circleBottomRight = Offset(
                     x = circleTopLeft.x + circleDiameter + circleTextPadding,
@@ -87,20 +89,19 @@ fun DrawScope.drawGraphLabel(
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = circleTopLeft,
-                        bottomRight = circleBottomRight
+                        topLeft = circleTopLeft, bottomRight = circleBottomRight
                     ),
                 )
                 drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
+                    color = textColor,
                     rect = Rect(
                         topLeft = Offset(
                             x = circleBottomRight.x,
                             y = rect.top,
-                        ),
-                        bottomRight = Offset(
+                        ), bottomRight = Offset(
                             x = circleBottomRight.x + textWidth,
                             y = rect.bottom,
                         )
@@ -121,20 +122,19 @@ fun DrawScope.drawGraphLabel(
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = circleTopLeft,
-                        bottomRight = circleBottomRight
+                        topLeft = circleTopLeft, bottomRight = circleBottomRight
                     ),
                 )
                 drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     textDecoration = textDecoration,
                     gravity = DrawGravity.CenterVertical,
+                    color = textColor,
                     rect = Rect(
                         topLeft = Offset(
                             x = circleBottomRight.x,
                             y = circleTopLeft.y,
-                        ),
-                        bottomRight = Offset(
+                        ), bottomRight = Offset(
                             x = circleBottomRight.x + textWidth,
                             y = circleBottomRight.y,
                         )
@@ -147,10 +147,14 @@ fun DrawScope.drawGraphLabel(
 }
 
 @ExperimentalTextApi
-@Preview
+@Preview(showBackground = true, heightDp = 200, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(showBackground = true, heightDp = 200, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun DrawGraphLabelPreview() {
     MaterialTheme {
+        val color1 = Color.DarkGray
+        val color2 = Color.Blue
+        val color3 = Color.Red
         val textMeasurer = rememberTextMeasurer()
 
         Canvas(
@@ -194,18 +198,20 @@ private fun DrawGraphLabelPreview() {
             drawGraphLabel(
                 textMeasurer = textMeasurer,
                 listOf(
-                    Pair(Color.Red, "12345"),
-                    Pair(Color.Blue, "67890"),
+                    Pair(color2, "12345"),
+                    Pair(color3, "67890"),
                 ),
+                textColor = color1,
                 rect = horizontalRect,
                 orientation = DrawOrientation.Horizontal,
             )
             drawGraphLabel(
                 textMeasurer = textMeasurer,
                 listOf(
-                    Pair(Color.Red, "1234567890"),
-                    Pair(Color.Blue, "12345"),
+                    Pair(color2, "1234567890"),
+                    Pair(color3, "12345"),
                 ),
+                textColor = color1,
                 rect = verticalRect,
                 orientation = DrawOrientation.Vertical,
             )

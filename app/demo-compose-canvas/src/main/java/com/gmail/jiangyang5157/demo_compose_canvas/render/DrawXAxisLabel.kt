@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -20,13 +21,13 @@ import androidx.compose.ui.unit.sp
 @ExperimentalTextApi
 fun DrawScope.drawXAxisLabel(
     textMeasurer: TextMeasurer,
-    color: Color,
     text: CharSequence,
+    underlineColor: Color,
     rect: Rect,
+    textColor: Color = Color.Unspecified,
     selected: Boolean = false,
     textDecoration: TextDecoration? = null,
 ) {
-    val textColor = if (selected) Color.Black else Color.DarkGray
     val textStyle = TextStyle(fontSize = 16.sp)
     val textLayoutResult = textMeasurer.measure(
         text = AnnotatedString(text.toString()),
@@ -48,11 +49,11 @@ fun DrawScope.drawXAxisLabel(
         x = rect.right,
         y = textTopLeft.y + textHeight
     )
-    val underLineTopLeft = Offset(
+    val underlineTopLeft = Offset(
         x = rect.left + (rect.width - underlineWidth) / 2,
         y = textBottomRight.y,
     )
-    val underLineSize = Size(
+    val underlineSize = Size(
         width = underlineWidth,
         height = underlineHeight,
     )
@@ -61,6 +62,7 @@ fun DrawScope.drawXAxisLabel(
         textLayoutResult = textLayoutResult,
         textDecoration = textDecoration,
         color = textColor,
+        alpha = if (selected) 1.0f else 0.7f,
         gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
         rect = Rect(
             topLeft = textTopLeft,
@@ -69,19 +71,22 @@ fun DrawScope.drawXAxisLabel(
     )
     if (selected) {
         drawRoundRect(
-            color = color,
+            color = underlineColor,
             cornerRadius = underLineCornerRadius,
-            topLeft = underLineTopLeft,
-            size = underLineSize,
+            topLeft = underlineTopLeft,
+            size = underlineSize,
         )
     }
 }
 
 @ExperimentalTextApi
-@Preview
+@Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun DrawXAxisLabelPreview() {
     MaterialTheme {
+        val color1 = Color.DarkGray
+        val color2 = Color.Blue
         val textMeasurer = rememberTextMeasurer()
 
         Canvas(
@@ -129,8 +134,9 @@ private fun DrawXAxisLabelPreview() {
 
             drawXAxisLabel(
                 textMeasurer = textMeasurer,
-                color = Color.Red,
-                "iOS",
+                underlineColor = color2,
+                text = "iOS",
+                textColor = color1,
                 selected = false,
                 rect = Rect(
                     offset = column1row1,
@@ -139,8 +145,9 @@ private fun DrawXAxisLabelPreview() {
             )
             drawXAxisLabel(
                 textMeasurer = textMeasurer,
-                color = Color.Red,
-                "A",
+                underlineColor = color2,
+                text = "A",
+                textColor = color1,
                 selected = true,
                 rect = Rect(
                     offset = column2row1,
@@ -149,8 +156,9 @@ private fun DrawXAxisLabelPreview() {
             )
             drawXAxisLabel(
                 textMeasurer = textMeasurer,
-                color = Color.Red,
-                "Win",
+                underlineColor = color2,
+                text = "Win",
+                textColor = color1,
                 selected = false,
                 rect = Rect(
                     offset = column3row1,
@@ -176,8 +184,9 @@ private fun DrawXAxisLabelPreview() {
                 val selected = index % 2 == 0
                 drawXAxisLabel(
                     textMeasurer = textMeasurer,
-                    color = Color.Blue,
-                    text,
+                    underlineColor = color2,
+                    text = text,
+                    textColor = color1,
                     selected = selected,
                     rect = Rect(
                         offset = column1row2.copy(

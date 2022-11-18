@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -160,10 +161,12 @@ fun DrawScope.drawCircleInRect(
 }
 
 @ExperimentalTextApi
-@Preview
+@Preview(showBackground = true, widthDp = 200, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(showBackground = true, widthDp = 200, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun DrawWithGravityPreview() {
     MaterialTheme {
+        val color1 = Color.DarkGray
         val textMeasurer = rememberTextMeasurer()
 
         Canvas(
@@ -211,7 +214,7 @@ private fun DrawWithGravityPreview() {
                     size = boxSize,
                 )
                 drawCircleInRect(
-                    color = Color.Red,
+                    color = color1,
                     radius = circleRadius,
                     gravity = gravity,
                     rect = Rect(
@@ -232,6 +235,7 @@ private fun DrawWithGravityPreview() {
                 drawTextInRect(
                     textLayoutResult = textLayoutResult,
                     gravity = gravity,
+                    color = color1,
                     rect = Rect(
                         offset = column2row1.copy(
                             y = column2row1.y + (boxSize.height + padding) * index

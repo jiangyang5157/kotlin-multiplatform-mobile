@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -60,10 +61,23 @@ fun DrawScope.drawColumn(
 }
 
 @ExperimentalTextApi
-@Preview
+@Preview(
+    showBackground = true,
+    widthDp = 200,
+    heightDp = 500,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+)
+@Preview(
+    showBackground = true,
+    widthDp = 200,
+    heightDp = 500,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
 @Composable
 private fun DrawColumnPreview() {
     MaterialTheme {
+        val color1 = Color.DarkGray
+        val color2 = Color.Blue
         Canvas(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -104,15 +118,15 @@ private fun DrawColumnPreview() {
 
             drawColumn(
                 items = listOf(
-                    Pair(Color.Red, 100.dp.toPx()),
-                    Pair(Color.Blue, 160.dp.toPx()),
+                    Pair(color1, 100.dp.toPx()),
+                    Pair(color2, 160.dp.toPx()),
                 ),
                 rect = smallRect,
             )
             drawColumn(
                 items = listOf(
-                    Pair(Color.Red, 100.dp.toPx()),
-                    Pair(Color.Blue, 160.dp.toPx()),
+                    Pair(color1, 100.dp.toPx()),
+                    Pair(color2, 160.dp.toPx()),
                 ),
                 rect = largeRect,
             )
