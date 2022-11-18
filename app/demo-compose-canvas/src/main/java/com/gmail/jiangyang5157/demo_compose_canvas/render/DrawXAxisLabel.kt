@@ -34,6 +34,7 @@ fun DrawScope.drawXAxisLabel(
     )
     val textHeight = textLayoutResult.size.height
     val textWidth = textLayoutResult.size.width
+    
     // Underline Width relative to text width
     val underlineWidth = textWidth * 1.2f
     val underlineHeight = 4.dp.toPx()
