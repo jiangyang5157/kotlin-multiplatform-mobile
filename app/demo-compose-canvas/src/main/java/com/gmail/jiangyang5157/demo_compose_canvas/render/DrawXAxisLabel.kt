@@ -26,7 +26,7 @@ fun DrawScope.drawXAxisLabel(
     selected: Boolean = false,
     textDecoration: TextDecoration? = null,
 ) {
-    val textColor = if (selected) Color.Black else Color.Gray
+    val textColor = if (selected) Color.Black else Color.DarkGray
     val textStyle = TextStyle(fontSize = 16.sp)
     val textLayoutResult = textMeasurer.measure(
         text = AnnotatedString(text.toString()),
