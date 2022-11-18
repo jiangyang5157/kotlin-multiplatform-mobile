@@ -78,10 +78,19 @@ fun DrawScope.drawGraphLabel(
         when (orientation) {
             DrawOrientation.Horizontal -> {
                 val circleTopLeft = Offset(
-                    x = rect.left + labelWidth * index + labelPadding * (index + 1), y = rect.top
+                    x = rect.left + labelWidth * index + labelPadding * (index + 1),
+                    y = rect.top,
                 )
                 val circleBottomRight = Offset(
                     x = circleTopLeft.x + circleDiameter + circleTextPadding,
+                    y = rect.bottom,
+                )
+                val textTopLeft = Offset(
+                    x = circleBottomRight.x,
+                    y = rect.top,
+                )
+                val textBottomRight = Offset(
+                    x = circleBottomRight.x + textWidth,
                     y = rect.bottom,
                 )
                 drawCircleInRect(
@@ -89,7 +98,8 @@ fun DrawScope.drawGraphLabel(
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = circleTopLeft, bottomRight = circleBottomRight
+                        topLeft = circleTopLeft,
+                        bottomRight = circleBottomRight,
                     ),
                 )
                 drawTextInRect(
@@ -98,31 +108,35 @@ fun DrawScope.drawGraphLabel(
                     gravity = DrawGravity.CenterVertical,
                     color = textColor,
                     rect = Rect(
-                        topLeft = Offset(
-                            x = circleBottomRight.x,
-                            y = rect.top,
-                        ), bottomRight = Offset(
-                            x = circleBottomRight.x + textWidth,
-                            y = rect.bottom,
-                        )
+                        topLeft = textTopLeft,
+                        bottomRight = textBottomRight,
                     ),
                 )
             }
             DrawOrientation.Vertical -> {
                 val circleTopLeft = Offset(
                     x = rect.left + (rect.size.width - labelWidth) / 2,
-                    y = rect.top + (labelHeight * index + labelPadding * (index + 1))
+                    y = rect.top + (labelHeight * index + labelPadding * (index + 1)),
                 )
                 val circleBottomRight = Offset(
                     x = circleTopLeft.x + circleDiameter + circleTextPadding,
                     y = circleTopLeft.y + labelHeight,
+                )
+                val textTopLeft = Offset(
+                    x = circleBottomRight.x,
+                    y = circleTopLeft.y,
+                )
+                val textBottomRight = Offset(
+                    x = circleBottomRight.x + textWidth,
+                    y = circleBottomRight.y,
                 )
                 drawCircleInRect(
                     color = color,
                     radius = circleRadius,
                     gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                     rect = Rect(
-                        topLeft = circleTopLeft, bottomRight = circleBottomRight
+                        topLeft = circleTopLeft,
+                        bottomRight = circleBottomRight,
                     ),
                 )
                 drawTextInRect(
@@ -131,13 +145,8 @@ fun DrawScope.drawGraphLabel(
                     gravity = DrawGravity.CenterVertical,
                     color = textColor,
                     rect = Rect(
-                        topLeft = Offset(
-                            x = circleBottomRight.x,
-                            y = circleTopLeft.y,
-                        ), bottomRight = Offset(
-                            x = circleBottomRight.x + textWidth,
-                            y = circleBottomRight.y,
-                        )
+                        topLeft = textTopLeft,
+                        bottomRight = textBottomRight,
                     ),
                 )
             }

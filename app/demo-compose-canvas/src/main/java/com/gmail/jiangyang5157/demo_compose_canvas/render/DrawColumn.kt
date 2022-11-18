@@ -28,29 +28,32 @@ fun DrawScope.drawColumn(
     // padding between 2 columns
     val columnPadding = 4.dp.toPx()
     val itemsWidth = columnWidth * items.size + columnPadding * (items.size - 1)
-    val columnTopLeft = Offset(
+    val itemsTopLeft = Offset(
         x = rect.left + (rect.width - itemsWidth) / 2,
         y = rect.top,
     )
+
     items.forEachIndexed { index, pair ->
         val color = pair.first
         val height = pair.second
+
+        val columnRect = Rect(
+            offset = Offset(
+                x = itemsTopLeft.x + columnWidth * index + columnPadding * index,
+                y = rect.bottom - height,
+            ),
+            size = Size(
+                width = columnWidth,
+                height = height,
+            ),
+        )
 
         drawPath(
             color = color,
             path = Path().apply {
                 addRoundRect(
                     RoundRect(
-                        rect = Rect(
-                            offset = Offset(
-                                x = columnTopLeft.x + columnWidth * index + columnPadding * index,
-                                y = rect.bottom - height,
-                            ),
-                            size = Size(
-                                width = columnWidth,
-                                height = height,
-                            ),
-                        ),
+                        rect = columnRect,
                         topLeft = columnCornerRadius,
                         topRight = columnCornerRadius,
                     )
