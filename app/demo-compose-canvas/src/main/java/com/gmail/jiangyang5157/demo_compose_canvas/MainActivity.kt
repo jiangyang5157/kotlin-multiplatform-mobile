@@ -313,7 +313,7 @@ class MainActivity : ComponentActivity() {
                 val height1 = itemRect.item.value1.toFloat() * ratio
                 val height2 = itemRect.item.value2.toFloat() * ratio
 
-                drawColumnar(
+                drawColumn(
                     items = listOf(
                         Pair(color1, height1),
                         Pair(color2, height2),

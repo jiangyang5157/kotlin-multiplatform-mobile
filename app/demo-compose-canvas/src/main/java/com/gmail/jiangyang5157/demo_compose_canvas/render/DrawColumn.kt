@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 /**
- * Draw columnar data center horizontal
+ * Draw column(s) center horizontal
  */
-fun DrawScope.drawColumnar(
+fun DrawScope.drawColumn(
     items: List<Pair<Color, Float>>,
     rect: Rect,
 ) {
@@ -24,11 +24,11 @@ fun DrawScope.drawColumnar(
 
     val columnCornerRadius = CornerRadius(2.dp.toPx())
     val columnWidth = 8.dp.toPx()
-    // padding between 2 column
+    // padding between 2 columns
     val columnPadding = 4.dp.toPx()
-    val columnsWidth = columnWidth * items.size + columnPadding * (items.size - 1)
+    val itemsWidth = columnWidth * items.size + columnPadding * (items.size - 1)
     val columnTopLeft = Offset(
-        x = rect.left + (rect.width - columnsWidth) / 2,
+        x = rect.left + (rect.width - itemsWidth) / 2,
         y = rect.top,
     )
     items.forEachIndexed { index, pair ->
@@ -62,7 +62,7 @@ fun DrawScope.drawColumnar(
 @ExperimentalTextApi
 @Preview
 @Composable
-private fun DrawColumnarPreview() {
+private fun DrawColumnPreview() {
     MaterialTheme {
         Canvas(
             modifier = Modifier.fillMaxSize()
@@ -102,14 +102,14 @@ private fun DrawColumnarPreview() {
                 size = largeRect.size,
             )
 
-            drawColumnar(
+            drawColumn(
                 items = listOf(
                     Pair(Color.Red, 100.dp.toPx()),
                     Pair(Color.Blue, 160.dp.toPx()),
                 ),
                 rect = smallRect,
             )
-            drawColumnar(
+            drawColumn(
                 items = listOf(
                     Pair(Color.Red, 100.dp.toPx()),
                     Pair(Color.Blue, 160.dp.toPx()),

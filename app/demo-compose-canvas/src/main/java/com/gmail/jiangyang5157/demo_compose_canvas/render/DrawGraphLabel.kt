@@ -48,7 +48,7 @@ fun DrawScope.drawGraphLabel(
         textWidth = maxOf(textWidth, labelText.second.size.width)
     }
 
-    // circle size relative to text height (less than)
+    // circle size relative to text height
     val circleRadius = textHeight * 0.3f
     val circleDiameter = circleRadius * 2
     val circleTextPadding = 8.dp.toPx()
