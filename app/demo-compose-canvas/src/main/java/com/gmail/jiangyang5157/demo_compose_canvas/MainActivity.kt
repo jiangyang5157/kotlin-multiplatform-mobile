@@ -231,7 +231,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            drawFocus(
+            drawDialog(
                 this,
                 textMeasurer,
                 Rect(
@@ -329,7 +329,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @OptIn(ExperimentalTextApi::class)
-    private fun drawFocus(
+    private fun drawDialog(
         drawScope: DrawScope,
         textMeasurer: TextMeasurer,
         rect: Rect,
@@ -354,8 +354,8 @@ class MainActivity : ComponentActivity() {
 
         drawScope.run {
             val textPadding = 8.dp
-            val boxCornerRadius = 8.dp
-            val arrayCornerRadius = 2.dp
+            val boxCornerRadius = 6.dp
+            val arrayCornerRadius = 3.dp
             val arrayHeight = 8.dp
             val arrayWidth = 16.dp
 
@@ -374,8 +374,8 @@ class MainActivity : ComponentActivity() {
             )
             val arrayPath = Path().apply {
                 moveTo(arrayRect.center.x, arrayRect.bottom)
-                lineTo(arrayRect.topRight.x, arrayRect.topRight.y - arrayCornerRadius.toPx())
-                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y - arrayCornerRadius.toPx())
+                lineTo(arrayRect.topRight.x, arrayRect.topRight.y - arrayCornerRadius.toPx()/2)
+                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y - arrayCornerRadius.toPx()/2)
                 close()
             }
 
@@ -401,7 +401,7 @@ class MainActivity : ComponentActivity() {
             // debug
             drawRoundRect(
                 color = Color.Cyan,
-                alpha = 0.2f,
+                alpha = 0.6f,
                 cornerRadius = CornerRadius(boxCornerRadius.toPx()),
                 topLeft = boxTopLeft,
                 size = Size(width = boxWidth, height = boxHeight),
@@ -411,7 +411,7 @@ class MainActivity : ComponentActivity() {
                     outline = Outline.Generic(arrayPath),
                     paint = Paint().apply {
                         color = Color.Cyan
-                        alpha = 0.2f
+                        alpha = 0.6f
                         pathEffect = PathEffect.cornerPathEffect(arrayCornerRadius.toPx())
                     }
                 )
