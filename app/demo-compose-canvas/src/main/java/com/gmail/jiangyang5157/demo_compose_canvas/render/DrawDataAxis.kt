@@ -17,6 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Draw y-axis labels and return the data rect
+ */
 @ExperimentalTextApi
 fun DrawScope.drawDataAxis(
     rect: Rect,

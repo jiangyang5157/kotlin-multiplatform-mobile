@@ -38,12 +38,7 @@ class MainActivity : ComponentActivity() {
                         Button(onClick = {
                             // TODO YangJ
                         }) {
-                            Text(text = "Prev")
-                        }
-                        Button(onClick = {
-                            // TODO YangJ
-                        }) {
-                            Text(text = "Next")
+                            Text(text = "next")
                         }
                     }
                     Graph()
@@ -205,14 +200,8 @@ class MainActivity : ComponentActivity() {
                     ?: throw RuntimeException()
             val scaleRight = scaleLeft + scaleWidth
             val dataLeft = scaleRight + padding.toPx()
-            val focusLeft = dataLeft
-            val labelLeft = dataLeft
-            val focusRight = dataRight
-            val labelRight = dataRight
 
             val labelTop = labelBottom - labelHeight
-            val scaleBottom = labelTop - padding.toPx()
-            val dataBottom = scaleBottom
 
             val itemRectWidth = (dataRight - dataLeft) / itemRects.size
             val itemRectHeight = labelBottom - dataTop
@@ -229,45 +218,88 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            // ================================================================
+
+            val dataRect = drawDataAxis(
+                rect = Rect(
+                    topLeft = Offset(
+                        x = rect.left,
+                        y = focusBottom,
+                    ),
+                    bottomRight = Offset(
+                        x = rect.right,
+                        y = labelTop,
+                    ),
+                ),
+                textStyle = TextStyle(fontSize = 16.sp, color = color1),
+                textMeasurer = textMeasurer,
+                lineColor = Color.DarkGray,
+                items = scaleMoneyList,
+            )
+
+            // ================================================================
+
             drawDialog(
                 this,
                 textMeasurer,
                 Rect(
-                    topLeft = Offset(focusLeft, focusTop),
-                    bottomRight = Offset(focusRight, focusBottom),
+                    topLeft = Offset(
+                        x = dataRect.left,
+                        y = rect.top,
+                    ),
+                    bottomRight = Offset(
+                        x = dataRect.right,
+                        y = dataRect.top,
+                    )
                 ),
                 focusedItemRect,
             )
-            drawScale(
-                this,
-                textMeasurer,
-                Rect(
-                    topLeft = Offset(scaleLeft, scaleTop),
-                    bottomRight = Offset(scaleRight, scaleBottom),
-                ),
-                scaleTextLayoutResults,
+
+            // ================================================================
+
+            val underlineLabelPaddingTop = 6.dp.toPx()
+            val underlineLabelRect = Rect(
+                offset = dataRect.bottomLeft.plus(Offset(0f, underlineLabelPaddingTop)),
+                size = Size(
+                    width = dataRect.width,
+                    height = labelHeight.toFloat(),
+                )
             )
-            drawXAxisLabel(
-                this,
-                textMeasurer = textMeasurer,
-                Rect(
-                    topLeft = Offset(labelLeft, labelTop),
-                    bottomRight = Offset(labelRight, labelBottom),
-                ),
-                labelTexts = labelTexts,
-                focusedItemRect,
-            )
+            val underlineItemWidth = underlineLabelRect.width / labelTexts.size
+
+            labelTexts.forEachIndexed { index, text ->
+                val selected = text == focusedItemRect?.item?.label
+                drawUnderlineLabel(
+                    textMeasurer = textMeasurer,
+                    underlineColor = Color.Blue,
+                    text = text,
+                    textStyle = TextStyle(fontSize = 16.sp, color = Color.DarkGray),
+                    selected = selected,
+                    rect = Rect(
+                        offset = Offset(
+                            x = underlineLabelRect.left + underlineItemWidth * index,
+                            y = underlineLabelRect.top,
+                        ),
+                        size = Size(
+                            width = underlineItemWidth,
+                            height = underlineLabelRect.height
+                        ),
+                    ),
+                )
+            }
+
+            // ================================================================
+
             drawData(
                 this,
-                Rect(
-                    topLeft = Offset(dataLeft, dataTop),
-                    bottomRight = Offset(dataRight, dataBottom),
-                ),
+                dataRect,
                 color2,
                 color1,
                 itemRects,
                 scaleList
             )
+
+            // ================================================================
         }
     }
 
@@ -377,84 +409,6 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             )
-        }
-    }
-
-    @OptIn(ExperimentalTextApi::class)
-    private fun drawXAxisLabel(
-        drawScope: DrawScope,
-        textMeasurer: TextMeasurer,
-        rect: Rect,
-        labelTexts: List<CharSequence>,
-        focusedItemRect: ItemRect?,
-    ) {
-        drawScope.run {
-            val itemWidth = (rect.right - rect.left) / labelTexts.size
-            val itemHeight = rect.height
-
-            labelTexts.forEachIndexed { index, text ->
-                val selected = text == focusedItemRect?.item?.label
-                drawUnderlineLabel(
-                    textMeasurer = textMeasurer,
-                    underlineColor = Color.Blue,
-                    text = text,
-                    textStyle = TextStyle(fontSize = 16.sp, color = Color.DarkGray),
-                    selected = selected,
-                    rect = Rect(
-                        offset = Offset(
-                            x = rect.left + itemWidth * index,
-                            y = rect.top,
-                        ),
-                        size = Size(
-                            width = itemWidth,
-                            height = itemHeight
-                        ),
-                    ),
-                )
-            }
-        }
-    }
-
-    @OptIn(ExperimentalTextApi::class)
-    private fun drawScale(
-        drawScope: DrawScope,
-        textMeasurer: TextMeasurer,
-        rect: Rect,
-        scaleTexts: List<TextLayoutResult>,
-    ) {
-        if (scaleTexts.size < 2) throw IllegalArgumentException("Scale size should not less than 2")
-
-        drawScope.run {
-            // debug
-            drawRect(
-                color = Color.Cyan,
-                alpha = 0.2f,
-                topLeft = rect.topLeft,
-                size = rect.size,
-            )
-
-            val axisTextHeight = scaleTexts.first().size.height
-            val itemWidth = scaleTexts.maxByOrNull { it.size.width }?.size?.width
-                ?: throw RuntimeException()
-            val itemHeight = (rect.bottom - rect.top) / (scaleTexts.size - 1)
-            scaleTexts.forEachIndexed { index, textLayoutResult ->
-                drawTextInRect(
-                    text = textLayoutResult.layoutInput.text,
-                    textStyle = textLayoutResult.layoutInput.style,
-                    textMeasurer = textMeasurer,
-                    gravity = DrawGravity.Right,
-                    rect = Rect(
-                        offset = Offset(
-                            x = rect.left,
-                            y = rect.bottom - itemHeight * index - axisTextHeight / 2,
-                        ),
-                        size = Size(
-                            width = itemWidth.toFloat(),
-                            height = axisTextHeight.toFloat(),
-                        )
-                    ),
-                )
-            }
         }
     }
 
