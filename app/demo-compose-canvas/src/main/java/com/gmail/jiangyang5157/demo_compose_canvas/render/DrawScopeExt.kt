@@ -1,6 +1,5 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -17,7 +16,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,16 +56,21 @@ object DrawOrientation {
  */
 @ExperimentalTextApi
 fun DrawScope.drawTextInRect(
-    textLayoutResult: TextLayoutResult,
     rect: Rect,
-    gravity: Int = Center,
-    color: Color = Color.Unspecified,
+    text: CharSequence,
+    textStyle: TextStyle = TextStyle(fontSize = 16.sp),
+    textMeasurer: TextMeasurer,
     alpha: Float = Float.NaN,
-    textDecoration: TextDecoration? = null,
+    gravity: Int = Center,
 ) {
-    var topLeft = rect.topLeft
+    val textLayoutResult = textMeasurer.measure(
+        text = AnnotatedString(text.toString()),
+        style = textStyle,
+    )
     val xSpace = rect.size.width - textLayoutResult.size.width
     val ySpace = rect.size.height - textLayoutResult.size.height
+
+    var topLeft = rect.topLeft
 
     when {
         gravity.hasFlag(CenterVertical) -> {
@@ -97,9 +100,7 @@ fun DrawScope.drawTextInRect(
     drawText(
         textLayoutResult = textLayoutResult,
         topLeft = topLeft,
-        color = color,
         alpha = alpha,
-        textDecoration = textDecoration,
     )
 }
 
@@ -107,14 +108,14 @@ fun DrawScope.drawTextInRect(
  * Draw circle with size and gravity
  */
 fun DrawScope.drawCircleInRect(
-    color: Color,
-    radius: Float,
     rect: Rect,
-    gravity: Int = Center,
+    radius: Float,
+    color: Color,
+    colorFilter: ColorFilter? = null,
     alpha: Float = 1.0f,
     style: DrawStyle = Fill,
-    colorFilter: ColorFilter? = null,
     blendMode: BlendMode = DrawScope.DefaultBlendMode,
+    gravity: Int = Center,
 ) {
     var center = Offset(
         x = rect.left + radius,
@@ -150,24 +151,23 @@ fun DrawScope.drawCircleInRect(
     }
 
     drawCircle(
-        color = color,
-        radius = radius,
         center = center,
+        radius = radius,
+        color = color,
+        colorFilter = colorFilter,
         alpha = alpha,
         style = style,
-        colorFilter = colorFilter,
         blendMode = blendMode,
     )
 }
 
 @ExperimentalTextApi
-@Preview(showBackground = true, widthDp = 200, uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(showBackground = true, widthDp = 200, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(widthDp = 200)
 @Composable
 private fun DrawWithGravityPreview() {
     MaterialTheme {
-        val color1 = Color.DarkGray
         val textMeasurer = rememberTextMeasurer()
+        val color1 = Color.DarkGray
 
         Canvas(
             modifier = Modifier.fillMaxSize()
@@ -175,10 +175,6 @@ private fun DrawWithGravityPreview() {
             val graphRect = this.size.toRect()
             val padding = 16.dp.toPx()
             val circleRadius = 12.dp.toPx()
-            val textLayoutResult = textMeasurer.measure(
-                text = AnnotatedString("Asd"),
-                style = TextStyle(fontSize = 16.sp)
-            )
             val boxSize = Size(
                 width = 60.dp.toPx(),
                 height = 60.dp.toPx(),
@@ -233,9 +229,10 @@ private fun DrawWithGravityPreview() {
                     size = boxSize,
                 )
                 drawTextInRect(
-                    textLayoutResult = textLayoutResult,
+                    textMeasurer = textMeasurer,
+                    text = "Asd",
+                    textStyle = TextStyle(fontSize = 16.sp, color = color1),
                     gravity = gravity,
-                    color = color1,
                     rect = Rect(
                         offset = column2row1.copy(
                             y = column2row1.y + (boxSize.height + padding) * index

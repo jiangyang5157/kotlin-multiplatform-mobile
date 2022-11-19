@@ -20,29 +20,26 @@ import androidx.compose.ui.unit.sp
  * Draw a bottom-aligned dialog within the [rect] area
  */
 fun DrawScope.drawUpperDialog(
+    // rect of the dialog area
+    rect: Rect,
+    padding: Float = 8.dp.toPx(),
+    dialogCornerRadius: Float = 6.dp.toPx(),
     color: Color,
     // label position
     x: Float,
-    // rect of the dialog area
-    rect: Rect,
-    dialogCornerRadius: Float = 6.dp.toPx(),
+    labelSize: Size = Size(width = 16.dp.toPx(), height = 9.dp.toPx()),
     labelCornerRadius: Float = 3.dp.toPx(),
     // calculate content receive the size of content
     calculateContent: () -> Size,
     // draw content
     drawContent: (DrawScope, Rect) -> Unit,
 ) {
-    val labelHeight = 8.dp.toPx()
-    val labelWidth = 16.dp.toPx()
     val labelRect = Rect(
         offset = Offset(
-            x = x - labelWidth / 2,
-            y = rect.bottom - labelHeight,
+            x = x - labelSize.width / 2,
+            y = rect.bottom - labelSize.height,
         ),
-        size = Size(
-            width = labelWidth,
-            height = labelHeight,
-        ),
+        size = labelSize,
     )
 
     // inverted triangle label hide it's topLeft and topRight corner Radius
@@ -60,15 +57,13 @@ fun DrawScope.drawUpperDialog(
         })
     }
 
-    val contentPadding = 8.dp.toPx()
-    val dialogCornerRadiusInstance = CornerRadius(dialogCornerRadius)
     val contentSize = calculateContent()
     // dialog rect with padding at topLeft(0, 0)
-    var dialogRect = contentSize.toRect().inflate(contentPadding)
+    var dialogRect = contentSize.toRect().inflate(padding)
     // move dialog rect on center top of label
     dialogRect = dialogRect.translate(
-        translateX = x - (dialogRect.width - labelWidth) / 2,
-        translateY = rect.bottom - dialogRect.bottom - labelHeight
+        translateX = x - (dialogRect.width - labelSize.width) / 2,
+        translateY = rect.bottom - dialogRect.bottom - labelSize.height
     )
 
     if (dialogRect.width < rect.width) {
@@ -88,6 +83,8 @@ fun DrawScope.drawUpperDialog(
         }
     }
 
+    val dialogCornerRadiusInstance = CornerRadius(dialogCornerRadius)
+
     // draw dialog background
     drawRoundRect(
         color = color,
@@ -97,7 +94,7 @@ fun DrawScope.drawUpperDialog(
     )
 
     // draw content on top of background
-    drawContent(this, dialogRect.deflate(contentPadding))
+    drawContent(this, dialogRect.deflate(padding))
 }
 
 @ExperimentalTextApi
@@ -210,7 +207,9 @@ private fun DrawUpperDialogPreview() {
                 },
                 drawContent = { drawScope, rect ->
                     drawScope.drawTextInRect(
-                        textLayoutResult = text1,
+                        text = "Hello",
+                        textStyle = TextStyle(fontSize = 16.sp, color = color2),
+                        textMeasurer = textMeasurer,
                         gravity = DrawGravity.Center,
                         rect = rect,
                     )

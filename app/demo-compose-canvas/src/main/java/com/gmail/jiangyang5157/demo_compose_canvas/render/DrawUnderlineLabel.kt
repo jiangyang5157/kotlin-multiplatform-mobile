@@ -1,6 +1,5 @@
 package com.gmail.jiangyang5157.demo_compose_canvas.render
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -10,7 +9,6 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,16 +18,14 @@ import androidx.compose.ui.unit.sp
  */
 @ExperimentalTextApi
 fun DrawScope.drawUnderlineLabel(
-    textMeasurer: TextMeasurer,
-    text: CharSequence,
-    underlineColor: Color,
     rect: Rect,
-    textColor: Color = Color.Unspecified,
-    selected: Boolean = false,
+    text: CharSequence,
+    textStyle: TextStyle = TextStyle(fontSize = 16.sp),
+    textMeasurer: TextMeasurer,
+    underlineColor: Color,
     underlineHeight: Float = 4.dp.toPx(),
     underlineCornerRadius: Float = 4.dp.toPx(),
-    textStyle: TextStyle = TextStyle(fontSize = 16.sp),
-    textDecoration: TextDecoration? = null,
+    selected: Boolean = false,
 ) {
     val textAlpha = if (selected) 1.0f else 0.7f
     val textLayoutResult = textMeasurer.measure(
@@ -61,9 +57,9 @@ fun DrawScope.drawUnderlineLabel(
     )
 
     drawTextInRect(
-        textLayoutResult = textLayoutResult,
-        textDecoration = textDecoration,
-        color = textColor,
+        text = text,
+        textStyle = textStyle,
+        textMeasurer = textMeasurer,
         alpha = textAlpha,
         gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
         rect = Rect(
@@ -82,14 +78,13 @@ fun DrawScope.drawUnderlineLabel(
 }
 
 @ExperimentalTextApi
-@Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(heightDp = 120)
 @Composable
 private fun DrawUnderlineLabelPreview() {
     MaterialTheme {
+        val textMeasurer = rememberTextMeasurer()
         val color1 = Color.DarkGray
         val color2 = Color.Blue
-        val textMeasurer = rememberTextMeasurer()
 
         Canvas(
             modifier = Modifier.fillMaxSize()
@@ -138,7 +133,7 @@ private fun DrawUnderlineLabelPreview() {
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "iOS",
-                textColor = color1,
+                textStyle = TextStyle(fontSize = 16.sp, color = color1),
                 selected = false,
                 rect = Rect(
                     offset = column1row1,
@@ -149,7 +144,7 @@ private fun DrawUnderlineLabelPreview() {
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "A",
-                textColor = color1,
+                textStyle = TextStyle(fontSize = 16.sp, color = color1),
                 selected = true,
                 rect = Rect(
                     offset = column2row1,
@@ -160,7 +155,7 @@ private fun DrawUnderlineLabelPreview() {
                 textMeasurer = textMeasurer,
                 underlineColor = color2,
                 text = "Win",
-                textColor = color1,
+                textStyle = TextStyle(fontSize = 16.sp, color = color1),
                 selected = false,
                 rect = Rect(
                     offset = column3row1,
@@ -188,7 +183,7 @@ private fun DrawUnderlineLabelPreview() {
                     textMeasurer = textMeasurer,
                     underlineColor = color2,
                     text = text,
-                    textColor = color1,
+                    textStyle = TextStyle(fontSize = 16.sp, color = color1),
                     selected = selected,
                     rect = Rect(
                         offset = column1row2.copy(

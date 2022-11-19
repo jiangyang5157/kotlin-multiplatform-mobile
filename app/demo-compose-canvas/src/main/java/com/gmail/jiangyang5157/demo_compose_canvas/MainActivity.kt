@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.*
@@ -182,12 +181,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
             val labelTexts = itemRects.map { it.item.label }
-            val labelTextLayoutResults = itemRects.map {
-                textMeasurer.measure(
-                    text = AnnotatedString(it.item.label),
-                    style = axisTextStyle
-                )
-            }
 
             val padding = 4.dp
             val focusHeight = 48.dp
@@ -195,7 +188,12 @@ class MainActivity : ComponentActivity() {
             val dataRight = rect.right
             val scaleLeft = rect.left
             val labelBottom = rect.bottom
-            val axisTextHeight = labelTextLayoutResults.first().size.height
+            val axisTextHeight = itemRects.first().let {
+                textMeasurer.measure(
+                    text = AnnotatedString(it.item.label),
+                    style = axisTextStyle
+                ).size.height
+            }
             val labelHeight = axisTextHeight
 
             val focusBottom = focusTop + focusHeight.toPx()
@@ -242,6 +240,7 @@ class MainActivity : ComponentActivity() {
             )
             drawScale(
                 this,
+                textMeasurer,
                 Rect(
                     topLeft = Offset(scaleLeft, scaleTop),
                     bottomRight = Offset(scaleRight, scaleBottom),
@@ -342,89 +341,41 @@ class MainActivity : ComponentActivity() {
         val symbolColor = if (item.diff >= 0) Color.Green else Color.Red
         val diff = abs(item.diff)
 
-        val textStyle = TextStyle(fontSize = 20.sp)
         val symbolTextLayoutResult = textMeasurer.measure(
             text = AnnotatedString(symbol),
-            style = textStyle
+            style = TextStyle(fontSize = 20.sp)
         )
         val diffTextLayoutResult = textMeasurer.measure(
             text = AnnotatedString("$${String.format("%.2f", diff)}"),
-            style = textStyle
+            style = TextStyle(fontSize = 20.sp)
         )
 
         drawScope.run {
-            val textPadding = 8.dp
-            val boxCornerRadius = 6.dp
-            val arrayCornerRadius = 3.dp
-            val arrayHeight = 8.dp
-            val arrayWidth = 16.dp
-
-            val textHeight = symbolTextLayoutResult.size.height
-            val textWidth = symbolTextLayoutResult.size.width + diffTextLayoutResult.size.width
-
-            val arrayRect = Rect(
-                topLeft = Offset(
-                    itemRect.center.x - arrayWidth.toPx() / 2,
-                    rect.bottom - arrayHeight.toPx(),
-                ),
-                bottomRight = Offset(
-                    itemRect.center.x + arrayWidth.toPx() / 2,
-                    rect.bottom,
-                ),
-            )
-            val arrayPath = Path().apply {
-                moveTo(arrayRect.center.x, arrayRect.bottom)
-                lineTo(arrayRect.topRight.x, arrayRect.topRight.y - arrayCornerRadius.toPx()/2)
-                lineTo(arrayRect.topLeft.x, arrayRect.topLeft.y - arrayCornerRadius.toPx()/2)
-                close()
-            }
-
-            val boxHeight = rect.height - arrayHeight.toPx()
-            val boxWidth = textWidth + textPadding.toPx() + textPadding.toPx()
-
-            var boxLeft = itemRect.center.x - boxWidth / 2
-            if (boxWidth < rect.right - rect.left) {
-                boxLeft = maxOf(boxLeft, rect.left)
-                boxLeft = minOf(boxLeft, rect.right - boxWidth)
-            }
-            val boxTopLeft = rect.topLeft.copy(x = boxLeft)
-
-            val symbolTopLeft = Offset(
-                x = boxTopLeft.x + textPadding.toPx(),
-                y = boxTopLeft.y + boxHeight / 2 - textHeight / 2,
-            )
-            val diffTopLeft = Offset(
-                x = symbolTopLeft.x + symbolTextLayoutResult.size.width,
-                y = symbolTopLeft.y,
-            )
-
-            // debug
-            drawRoundRect(
+            drawUpperDialog(
+                rect = rect,
                 color = Color.Cyan,
-                alpha = 0.6f,
-                cornerRadius = CornerRadius(boxCornerRadius.toPx()),
-                topLeft = boxTopLeft,
-                size = Size(width = boxWidth, height = boxHeight),
-            )
-            drawIntoCanvas { canvas ->
-                canvas.drawOutline(
-                    outline = Outline.Generic(arrayPath),
-                    paint = Paint().apply {
-                        color = Color.Cyan
-                        alpha = 0.6f
-                        pathEffect = PathEffect.cornerPathEffect(arrayCornerRadius.toPx())
-                    }
-                )
-            }
-            drawText(
-                textLayoutResult = symbolTextLayoutResult,
-                color = symbolColor,
-                topLeft = symbolTopLeft,
-            )
-            drawText(
-                textLayoutResult = diffTextLayoutResult,
-                color = Color.Black,
-                topLeft = diffTopLeft,
+                x = itemRect.center.x,
+                calculateContent = {
+                    Size(
+                        width = (symbolTextLayoutResult.size.width + diffTextLayoutResult.size.width).toFloat(),
+                        height = symbolTextLayoutResult.size.height.toFloat()
+                    )
+                },
+                // draw content
+                drawContent = { drawScope, rect ->
+                    drawScope.drawText(
+                        textLayoutResult = symbolTextLayoutResult,
+                        color = symbolColor,
+                        topLeft = rect.topLeft,
+                    )
+                    drawScope.drawText(
+                        textLayoutResult = diffTextLayoutResult,
+                        color = Color.Black,
+                        topLeft = rect.topLeft.copy(
+                            x = rect.topLeft.x + symbolTextLayoutResult.size.width
+                        ),
+                    )
+                }
             )
         }
     }
@@ -447,7 +398,7 @@ class MainActivity : ComponentActivity() {
                     textMeasurer = textMeasurer,
                     underlineColor = Color.Blue,
                     text = text,
-                    textColor = Color.DarkGray,
+                    textStyle = TextStyle(fontSize = 16.sp, color = Color.DarkGray),
                     selected = selected,
                     rect = Rect(
                         offset = Offset(
@@ -467,6 +418,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalTextApi::class)
     private fun drawScale(
         drawScope: DrawScope,
+        textMeasurer: TextMeasurer,
         rect: Rect,
         scaleTexts: List<TextLayoutResult>,
     ) {
@@ -487,7 +439,9 @@ class MainActivity : ComponentActivity() {
             val itemHeight = (rect.bottom - rect.top) / (scaleTexts.size - 1)
             scaleTexts.forEachIndexed { index, textLayoutResult ->
                 drawTextInRect(
-                    textLayoutResult = textLayoutResult,
+                    text = textLayoutResult.layoutInput.text,
+                    textStyle = textLayoutResult.layoutInput.style,
+                    textMeasurer = textMeasurer,
                     gravity = DrawGravity.Right,
                     rect = Rect(
                         offset = Offset(

@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.sp
 
 @ExperimentalTextApi
 fun DrawScope.drawDataAxis(
-    textMeasurer: TextMeasurer,
-    lineColor: Color,
     rect: Rect,
     textStyle: TextStyle = TextStyle(fontSize = 16.sp),
+    textMeasurer: TextMeasurer,
+    lineColor: Color,
 ) {
 
 }
