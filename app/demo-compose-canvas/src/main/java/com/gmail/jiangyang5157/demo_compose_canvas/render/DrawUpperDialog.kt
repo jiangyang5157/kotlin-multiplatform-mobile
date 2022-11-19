@@ -25,6 +25,8 @@ fun DrawScope.drawUpperDialog(
     x: Float,
     // rect of the dialog area
     rect: Rect,
+    dialogCornerRadius: Float = 6.dp.toPx(),
+    labelCornerRadius: Float = 3.dp.toPx(),
     // calculate content receive the size of content
     calculateContent: () -> Size,
     // draw content
@@ -32,7 +34,6 @@ fun DrawScope.drawUpperDialog(
 ) {
     val labelHeight = 8.dp.toPx()
     val labelWidth = 16.dp.toPx()
-    val labelCornerRadius = 3.dp.toPx()
     val labelRect = Rect(
         offset = Offset(
             x = x - labelWidth / 2,
@@ -60,7 +61,7 @@ fun DrawScope.drawUpperDialog(
     }
 
     val contentPadding = 8.dp.toPx()
-    val dialogCornerRadius = CornerRadius(6.dp.toPx())
+    val dialogCornerRadiusInstance = CornerRadius(dialogCornerRadius)
     val contentSize = calculateContent()
     // dialog rect with padding at topLeft(0, 0)
     var dialogRect = contentSize.toRect().inflate(contentPadding)
@@ -90,7 +91,7 @@ fun DrawScope.drawUpperDialog(
     // draw dialog background
     drawRoundRect(
         color = color,
-        cornerRadius = dialogCornerRadius,
+        cornerRadius = dialogCornerRadiusInstance,
         topLeft = dialogRect.topLeft,
         size = dialogRect.size,
     )
@@ -103,7 +104,7 @@ fun DrawScope.drawUpperDialog(
 @Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(showBackground = true, heightDp = 120, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun DrawUnderlineLabelPreview() {
+private fun DrawUpperDialogPreview() {
     MaterialTheme {
         val color1 = Color.DarkGray
         val color2 = Color.LightGray

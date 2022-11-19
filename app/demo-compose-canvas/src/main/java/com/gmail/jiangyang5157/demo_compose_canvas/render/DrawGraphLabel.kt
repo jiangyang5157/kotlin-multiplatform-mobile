@@ -28,12 +28,11 @@ fun DrawScope.drawGraphLabel(
     rect: Rect,
     textColor: Color = Color.Unspecified,
     orientation: Int = DrawOrientation.Horizontal,
+    textStyle: TextStyle = TextStyle(fontSize = 16.sp),
     textDecoration: TextDecoration? = null,
 ) {
     if (items.isEmpty()) return
 
-    // same text style for labels
-    val textStyle = TextStyle(fontSize = 16.sp)
     val labels = items.map {
         Pair(
             it.first,

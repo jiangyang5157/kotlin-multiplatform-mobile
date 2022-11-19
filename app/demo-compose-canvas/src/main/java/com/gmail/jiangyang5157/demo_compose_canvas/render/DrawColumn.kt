@@ -20,13 +20,14 @@ import androidx.compose.ui.unit.dp
 fun DrawScope.drawColumn(
     items: List<Pair<Color, Float>>,
     rect: Rect,
+    columnCornerRadius: Float = 2.dp.toPx(),
+    columnWidth: Float = 8.dp.toPx(),
+    // padding between 2 columns
+    columnPadding: Float = 4.dp.toPx(),
 ) {
     if (items.isEmpty()) return
 
-    val columnCornerRadius = CornerRadius(2.dp.toPx())
-    val columnWidth = 8.dp.toPx()
-    // padding between 2 columns
-    val columnPadding = 4.dp.toPx()
+    val columnCornerRadiusInstance = CornerRadius(columnCornerRadius)
     val itemsWidth = columnWidth * items.size + columnPadding * (items.size - 1)
     val itemsTopLeft = Offset(
         x = rect.left + (rect.width - itemsWidth) / 2,
@@ -54,8 +55,8 @@ fun DrawScope.drawColumn(
                 addRoundRect(
                     RoundRect(
                         rect = columnRect,
-                        topLeft = columnCornerRadius,
-                        topRight = columnCornerRadius,
+                        topLeft = columnCornerRadiusInstance,
+                        topRight = columnCornerRadiusInstance,
                     )
                 )
             },

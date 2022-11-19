@@ -26,9 +26,12 @@ fun DrawScope.drawUnderlineLabel(
     rect: Rect,
     textColor: Color = Color.Unspecified,
     selected: Boolean = false,
+    underlineHeight: Float = 4.dp.toPx(),
+    underlineCornerRadius: Float = 4.dp.toPx(),
+    textStyle: TextStyle = TextStyle(fontSize = 16.sp),
     textDecoration: TextDecoration? = null,
 ) {
-    val textStyle = TextStyle(fontSize = 16.sp)
+    val textAlpha = if (selected) 1.0f else 0.7f
     val textLayoutResult = textMeasurer.measure(
         text = AnnotatedString(text.toString()),
         style = textStyle,
@@ -38,8 +41,7 @@ fun DrawScope.drawUnderlineLabel(
 
     // Underline Width relative to text width
     val underlineWidth = textWidth * 1.2f
-    val underlineHeight = 4.dp.toPx()
-    val underLineCornerRadius = CornerRadius(2.dp.toPx())
+    val underLineCornerRadiusInstance = CornerRadius(underlineCornerRadius)
 
     val textTopLeft = Offset(
         x = rect.left,
@@ -62,7 +64,7 @@ fun DrawScope.drawUnderlineLabel(
         textLayoutResult = textLayoutResult,
         textDecoration = textDecoration,
         color = textColor,
-        alpha = if (selected) 1.0f else 0.7f,
+        alpha = textAlpha,
         gravity = DrawGravity.CenterHorizontal.addFlag(DrawGravity.Top),
         rect = Rect(
             topLeft = textTopLeft,
@@ -72,7 +74,7 @@ fun DrawScope.drawUnderlineLabel(
     if (selected) {
         drawRoundRect(
             color = underlineColor,
-            cornerRadius = underLineCornerRadius,
+            cornerRadius = underLineCornerRadiusInstance,
             topLeft = underlineTopLeft,
             size = underlineSize,
         )

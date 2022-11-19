@@ -116,7 +116,6 @@ fun DrawScope.drawCircleInRect(
     colorFilter: ColorFilter? = null,
     blendMode: BlendMode = DrawScope.DefaultBlendMode,
 ) {
-
     var center = Offset(
         x = rect.left + radius,
         y = rect.top + radius
