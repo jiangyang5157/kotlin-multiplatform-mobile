@@ -121,8 +121,9 @@ fun DrawScope.drawCircleInRect(
         x = rect.left + radius,
         y = rect.top + radius
     )
-    val xSpace = rect.size.width - radius * 2
-    val ySpace = rect.size.height - radius * 2
+    val diameter = radius * 2
+    val xSpace = rect.size.width - diameter
+    val ySpace = rect.size.height - diameter
 
     when {
         gravity.hasFlag(CenterVertical) -> {
