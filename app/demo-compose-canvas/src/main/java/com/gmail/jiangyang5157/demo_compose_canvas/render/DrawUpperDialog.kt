@@ -50,10 +50,13 @@ fun DrawScope.drawUpperDialog(
         close()
     }
     drawIntoCanvas { canvas ->
-        canvas.drawOutline(outline = Outline.Generic(labelPath), paint = Paint().apply {
-            this.color = color
-            this.pathEffect = PathEffect.cornerPathEffect(labelCornerRadius)
-        })
+        canvas.drawOutline(
+            outline = Outline.Generic(labelPath),
+            paint = Paint().apply {
+                this.color = color
+                this.pathEffect = PathEffect.cornerPathEffect(labelCornerRadius)
+            },
+        )
     }
 
     val contentSize = calculateContent()
@@ -116,10 +119,11 @@ private fun DrawUpperDialogPreview() {
                 topLeft = Offset(
                     x = graphRect.left + padding,
                     y = graphRect.top + padding,
-                ), bottomRight = Offset(
+                ),
+                bottomRight = Offset(
                     x = graphRect.right - padding,
                     y = graphRect.bottom - padding,
-                )
+                ),
             )
             drawRect(
                 color = Color.LightGray,
@@ -141,7 +145,8 @@ private fun DrawUpperDialogPreview() {
             )
             val circleRadius = 5.dp.toPx()
 
-            drawUpperDialog(color = color1,
+            drawUpperDialog(
+                color = color1,
                 x = 34.dp.toPx(),
                 rect = upperDialogRect,
                 calculateContent = {
@@ -167,9 +172,11 @@ private fun DrawUpperDialogPreview() {
                             x = rect.topLeft.x + text1.size.width + textSpace.size.width
                         ),
                     )
-                })
+                },
+            )
 
-            drawUpperDialog(color = color1,
+            drawUpperDialog(
+                color = color1,
                 x = upperDialogRect.center.x,
                 rect = upperDialogRect,
                 calculateContent = {
@@ -192,9 +199,11 @@ private fun DrawUpperDialogPreview() {
                             x = rect.topLeft.x + circleRadius * 2 + 3.dp.toPx()
                         ),
                     )
-                })
+                },
+            )
 
-            drawUpperDialog(color = color1,
+            drawUpperDialog(
+                color = color1,
                 x = 350.dp.toPx(),
                 rect = upperDialogRect,
                 calculateContent = {
@@ -235,7 +244,8 @@ private fun DrawUpperDialogPreview() {
                         gravity = DrawGravity.Bottom.addFlag(DrawGravity.Right),
                         rect = rect,
                     )
-                })
+                },
+            )
         }
     }
 }

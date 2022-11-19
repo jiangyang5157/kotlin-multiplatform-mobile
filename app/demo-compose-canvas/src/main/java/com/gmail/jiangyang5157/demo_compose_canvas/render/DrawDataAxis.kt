@@ -50,9 +50,10 @@ fun DrawScope.drawDataAxis(
     val ret = Rect(
         topLeft = rect.topLeft.plus(
             Offset((itemWidth + itemPaddingRight), verticalPadding),
-        ), bottomRight = rect.bottomRight.plus(
+        ),
+        bottomRight = rect.bottomRight.plus(
             Offset(0f, -verticalPadding),
-        )
+        ),
     )
 
     val itemPaddingBetween = if (items.size == 1) {
@@ -118,19 +119,22 @@ private fun DrawDataAxisPreview() {
                 offset = Offset(
                     x = rect1.left,
                     y = rect1.bottom + padding,
-                ), size = rect1.size
+                ),
+                size = rect1.size,
             )
             val rect3 = Rect(
                 offset = Offset(
                     x = rect2.left,
                     y = rect2.bottom + padding,
-                ), size = rect2.size
+                ),
+                size = rect2.size,
             )
             val rect4 = Rect(
                 offset = Offset(
                     x = rect3.left,
                     y = rect3.bottom + padding,
-                ), size = rect3.size
+                ),
+                size = rect3.size,
             )
             drawRect(
                 color = Color.LightGray,
