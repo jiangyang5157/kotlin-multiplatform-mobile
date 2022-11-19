@@ -33,7 +33,7 @@ fun DrawScope.drawDataAxis(
 @Preview(showBackground = true, heightDp = 200, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(showBackground = true, heightDp = 200, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun drawDataAxisPreview() {
+private fun DrawDataAxisPreview() {
     MaterialTheme {
         val color1 = Color.DarkGray
         val textMeasurer = rememberTextMeasurer()
