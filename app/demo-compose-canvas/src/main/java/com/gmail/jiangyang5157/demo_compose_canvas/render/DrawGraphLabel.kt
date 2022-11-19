@@ -41,10 +41,8 @@ fun DrawScope.drawGraphLabel(
     // recognize the uniform text height
     val textHeight = labels.first().second.size.height
     // recognize the largest text width
-    var textWidth = labels.first().second.size.width
-    for (labelText in labels) {
-        textWidth = maxOf(textWidth, labelText.second.size.width)
-    }
+    val textWidth = labels.maxByOrNull { it.second.size.width }?.second?.size?.width
+        ?: throw RuntimeException()
 
     val circleRadius = textHeight * 0.3f
     val circleDiameter = circleRadius * 2
@@ -65,9 +63,9 @@ fun DrawScope.drawGraphLabel(
         else -> throw IllegalArgumentException("Undefined orientation")
     }
 
-    items.forEachIndexed { index, pair ->
+    labels.forEachIndexed { index, pair ->
         val color = pair.first
-        val text = pair.second
+        val text = pair.second.layoutInput.text
 
         when (orientation) {
             DrawOrientation.Horizontal -> {

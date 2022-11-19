@@ -11,10 +11,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextMeasurer
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,11 +19,50 @@ import androidx.compose.ui.unit.sp
 @ExperimentalTextApi
 fun DrawScope.drawDataAxis(
     rect: Rect,
+    items: List<CharSequence>,
     textStyle: TextStyle = TextStyle(fontSize = 16.sp),
     textMeasurer: TextMeasurer,
     lineColor: Color,
-) {
+): Rect {
+    if (items.isEmpty()) throw IllegalArgumentException("Empty items")
 
+    val itemTextLayoutResults = items.map {
+        textMeasurer.measure(
+            text = AnnotatedString(it.toString()),
+            style = textStyle
+        )
+    }
+    // recognize the uniform text height
+    val itemHeight = itemTextLayoutResults.first().size.height
+    // recognize the largest text width
+    val itemWidth = itemTextLayoutResults.maxByOrNull { it.size.width }?.size?.width
+        ?: throw RuntimeException()
+
+    // x-axis starts from the middle of the y-axis text
+    val verticalPadding = itemHeight / 2f
+    val itemPaddingRight = verticalPadding
+
+    val ret = Rect(
+        topLeft = rect.topLeft.plus(
+            Offset((itemWidth + itemPaddingRight), verticalPadding),
+        ),
+        bottomRight = rect.bottomRight.minus(
+            Offset(0f, verticalPadding),
+        )
+    )
+
+    when (items.size) {
+        1 -> {
+
+        }
+        else -> {
+            val itemPaddingBetween = ret.height / (items.size - 1) - itemHeight
+
+
+        }
+    }
+
+    return ret
 }
 
 @ExperimentalTextApi

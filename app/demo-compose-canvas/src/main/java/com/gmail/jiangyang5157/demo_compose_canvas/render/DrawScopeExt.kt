@@ -36,19 +36,19 @@ fun Long.addFlag(flag: Long): Long = this or flag
 fun Long.minusFlag(flag: Long): Long = this and flag.inv()
 
 object DrawGravity {
-    val Left = 1
-    val Top = 1 shl 1
-    val Right = 1 shl 2
-    val Bottom = 1 shl 3
+    const val Left = 1
+    const val Top = 1 shl 1
+    const val Right = 1 shl 2
+    const val Bottom = 1 shl 3
 
-    val CenterVertical = Top or Bottom
-    val CenterHorizontal = Left or Right
-    val Center = CenterVertical or CenterHorizontal
+    const val CenterVertical = Top or Bottom
+    const val CenterHorizontal = Left or Right
+    const val Center = CenterVertical or CenterHorizontal
 }
 
 object DrawOrientation {
-    val Vertical = 1
-    val Horizontal = 1 shl 1
+    const val Vertical = 1
+    const val Horizontal = 1 shl 1
 }
 
 /**
