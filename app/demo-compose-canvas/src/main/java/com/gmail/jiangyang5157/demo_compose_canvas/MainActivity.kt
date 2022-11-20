@@ -110,52 +110,58 @@ class MainActivity : ComponentActivity() {
 
         findViewById<ComposeView>(R.id.composeView).setContent {
             MaterialTheme {
-                Column {
-                    Row {
-                        Button(onClick = {
-                            items = nextItems()
-                            itemIndex = -1
-                        }) {
-                            Text(text = "next")
-                        }
-                    }
-                    Row {
-                        Button(onClick = {
-                            factor = Pair(2, factor.second)
-                        }) {
-                            Text(text = "primary factor 2")
-                        }
-                        Button(onClick = {
-                            factor = Pair(3, factor.second)
-                        }) {
-                            Text(text = "3")
-                        }
-                        Button(onClick = {
-                            factor = Pair(4, factor.second)
-                        }) {
-                            Text(text = "4")
-                        }
-                    }
-                    Row {
-                        Button(onClick = {
-                            factor = Pair(factor.first, 2)
-                        }) {
-                            Text(text = "secondary factor 2")
-                        }
-                        Button(onClick = {
-                            factor = Pair(factor.first, 3)
-                        }) {
-                            Text(text = "3")
-                        }
-                        Button(onClick = {
-                            factor = Pair(factor.first, 4)
-                        }) {
-                            Text(text = "4")
-                        }
-                    }
-                    DrawItems()
+                Content()
+            }
+        }
+    }
+
+    @ExperimentalTextApi
+    @Composable
+    private fun Content() {
+        Column {
+            Row {
+                Button(onClick = {
+                    items = nextItems()
+                    itemIndex = -1
+                }) {
+                    Text(text = "next")
                 }
             }
+            Row {
+                Button(onClick = {
+                    factor = Pair(2, factor.second)
+                }) {
+                    Text(text = "primary factor 2")
+                }
+                Button(onClick = {
+                    factor = Pair(3, factor.second)
+                }) {
+                    Text(text = "3")
+                }
+                Button(onClick = {
+                    factor = Pair(4, factor.second)
+                }) {
+                    Text(text = "4")
+                }
+            }
+            Row {
+                Button(onClick = {
+                    factor = Pair(factor.first, 2)
+                }) {
+                    Text(text = "secondary factor 2")
+                }
+                Button(onClick = {
+                    factor = Pair(factor.first, 3)
+                }) {
+                    Text(text = "3")
+                }
+                Button(onClick = {
+                    factor = Pair(factor.first, 4)
+                }) {
+                    Text(text = "4")
+                }
+            }
+            DrawItems()
         }
     }
 
