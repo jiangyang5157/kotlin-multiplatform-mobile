@@ -190,6 +190,7 @@ class MainActivity : ComponentActivity() {
             )
 
             // #### DataAxis ================================================================
+
             val primaryFactor = 3
             val secondaryFactor = 4
             val scaleList = buildScaleList(items, primaryFactor, secondaryFactor)
@@ -208,7 +209,7 @@ class MainActivity : ComponentActivity() {
                 ),
                 bottomRight = Offset(
                     x = rect.right,
-                    y = graphLabelRect.top - underlineLabelHeight,
+                    y = graphLabelRect.top - underlineLabelHeight - padding,
                 ),
             )
             val dataRect = drawDataAxis(
@@ -230,11 +231,11 @@ class MainActivity : ComponentActivity() {
             val underlineLabelsRect = Rect(
                 topLeft = Offset(
                     x = dataRect.left,
-                    y = graphLabelRect.top - underlineLabelHeight,
+                    y = dataRect.bottom + padding,
                 ),
                 bottomRight = Offset(
                     x = dataRect.right,
-                    y = graphLabelRect.top,
+                    y = dataRect.bottom + padding + underlineLabelHeight,
                 )
             )
             val underlineItemWidth = underlineLabelsRect.width / items.size
