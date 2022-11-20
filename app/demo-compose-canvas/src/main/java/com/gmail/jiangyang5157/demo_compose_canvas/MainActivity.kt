@@ -101,6 +101,7 @@ class MainActivity : ComponentActivity() {
     private var items = nextItems()
     private val itemRects = mutableListOf<Rect>()
     private var itemIndex by mutableStateOf(-1)
+    private var factor by mutableStateOf(Pair(3, 2))
 
     @ExperimentalTextApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +117,40 @@ class MainActivity : ComponentActivity() {
                             itemIndex = -1
                         }) {
                             Text(text = "next")
+                        }
+                    }
+                    Row {
+                        Button(onClick = {
+                            factor = Pair(2, factor.second)
+                        }) {
+                            Text(text = "primary factor 2")
+                        }
+                        Button(onClick = {
+                            factor = Pair(3, factor.second)
+                        }) {
+                            Text(text = "3")
+                        }
+                        Button(onClick = {
+                            factor = Pair(4, factor.second)
+                        }) {
+                            Text(text = "4")
+                        }
+                    }
+                    Row {
+                        Button(onClick = {
+                            factor = Pair(factor.first, 2)
+                        }) {
+                            Text(text = "secondary factor 2")
+                        }
+                        Button(onClick = {
+                            factor = Pair(factor.first, 3)
+                        }) {
+                            Text(text = "3")
+                        }
+                        Button(onClick = {
+                            factor = Pair(factor.first, 4)
+                        }) {
+                            Text(text = "4")
                         }
                     }
                     DrawItems()
@@ -191,9 +226,7 @@ class MainActivity : ComponentActivity() {
 
             // #### DataAxis ================================================================
 
-            val primaryFactor = 3
-            val secondaryFactor = 4
-            val scaleList = buildScaleList(items, primaryFactor, secondaryFactor)
+            val scaleList = buildScaleList(items, factor.first, factor.second)
             val scaleListString = scaleList.map { it.toString() }
             val dataAxisTextLayoutResult = scaleListString.first().let {
                 textMeasurer.measure(
