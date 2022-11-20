@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
  */
 fun DrawScope.drawColumn(
     rect: Rect,
-    items: List<Pair<Color, Float>>,
+    items: List<Pair<Float, Color>>,
     columnWidth: Float = 8.dp.toPx(),
     columnPadding: Float = 4.dp.toPx(),
     columnCornerRadius: Float = 2.dp.toPx(),
@@ -33,8 +33,8 @@ fun DrawScope.drawColumn(
     val columnCornerRadiusInstance = CornerRadius(columnCornerRadius)
 
     items.forEachIndexed { index, pair ->
-        val color = pair.first
-        val height = pair.second
+        val height = pair.first
+        val color = pair.second
 
         val columnRect = Rect(
             offset = Offset(
@@ -111,15 +111,15 @@ private fun DrawColumnPreview() {
             drawColumn(
                 rect = smallRect,
                 items = listOf(
-                    Pair(color1, 100.dp.toPx()),
-                    Pair(color2, 160.dp.toPx()),
+                    Pair(100.dp.toPx(), color1),
+                    Pair(160.dp.toPx(), color2),
                 ),
             )
             drawColumn(
                 rect = largeRect,
                 items = listOf(
-                    Pair(color1, 100.dp.toPx()),
-                    Pair(color2, 160.dp.toPx()),
+                    Pair(100.dp.toPx(), color1),
+                    Pair(160.dp.toPx(), color2),
                 ),
             )
         }

@@ -1,7 +1,6 @@
 package com.gmail.jiangyang5157.demo_compose_canvas
 
 import androidx.annotation.IntRange
-import androidx.annotation.VisibleForTesting
 import kotlin.math.ceil
 
 class AxisScaleUtils {
@@ -48,7 +47,6 @@ class AxisScaleUtils {
     /**
      * Return Long divisor >= 1
      */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun factorToDivisor(value: Long, @IntRange(from = 1, to = 9) factor: Int): Long {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (factor < 1 || factor > 9) throw IllegalArgumentException("Factor $factor should be in Int range [1, 9]")
@@ -67,7 +65,7 @@ class AxisScaleUtils {
      * Use [divisor] from [factorToDivisor], not useful for others
      * Return Int factor in range [1, 9]
      */
-    private fun divisorToFactor(value: Long, divisor: Long): Int {
+    fun divisorToFactor(value: Long, divisor: Long): Int {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (divisor < 1) throw IllegalArgumentException("Divisor $divisor should be not less than 1")
 

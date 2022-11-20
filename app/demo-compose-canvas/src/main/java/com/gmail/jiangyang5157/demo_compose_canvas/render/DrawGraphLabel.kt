@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 @ExperimentalTextApi
 fun DrawScope.drawGraphLabel(
     rect: Rect,
-    items: List<Pair<Color, CharSequence>>,
+    items: List<Pair<CharSequence, Color>>,
     textStyle: TextStyle = TextStyle(fontSize = 16.sp),
     textMeasurer: TextMeasurer,
     orientation: Int = DrawOrientation.Horizontal,
@@ -31,17 +31,17 @@ fun DrawScope.drawGraphLabel(
 
     val labels = items.map {
         Pair(
-            it.first,
             textMeasurer.measure(
-                text = AnnotatedString(it.second.toString()),
+                text = AnnotatedString(it.first.toString()),
                 style = textStyle,
             ),
+            it.second,
         )
     }
     // recognize the uniform text height
-    val textHeight = labels.first().second.size.height
+    val textHeight = labels.first().first.size.height
     // recognize the largest text width
-    val textWidth = labels.maxByOrNull { it.second.size.width }?.second?.size?.width
+    val textWidth = labels.maxByOrNull { it.first.size.width }?.first?.size?.width
         ?: throw RuntimeException()
 
     val circleRadius = textHeight * 0.3f
@@ -64,8 +64,8 @@ fun DrawScope.drawGraphLabel(
     }
 
     labels.forEachIndexed { index, pair ->
-        val color = pair.first
-        val text = pair.second.layoutInput.text
+        val color = pair.second
+        val text = pair.first.layoutInput.text
 
         when (orientation) {
             DrawOrientation.Horizontal -> {
@@ -201,8 +201,8 @@ private fun DrawGraphLabelPreview() {
                 rect = horizontalRect,
                 orientation = DrawOrientation.Horizontal,
                 items = listOf(
-                    Pair(color2, "12345"),
-                    Pair(color3, "67890"),
+                    Pair("12345", color2),
+                    Pair("67890", color3),
                 ),
             )
             drawGraphLabel(
@@ -211,8 +211,8 @@ private fun DrawGraphLabelPreview() {
                 rect = verticalRect,
                 orientation = DrawOrientation.Vertical,
                 items = listOf(
-                    Pair(color2, "1234567890"),
-                    Pair(color3, "12345"),
+                    Pair("1234567890", color2),
+                    Pair("12345", color3),
                 ),
             )
         }
