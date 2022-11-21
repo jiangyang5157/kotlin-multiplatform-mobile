@@ -112,7 +112,7 @@ class MainActivity : ComponentActivity() {
     private fun Content() {
         Log.d("####", "Content")
         val textMeasurer = rememberTextMeasurer()
-        var items  = nextItems()
+        var items = nextItems()
         val itemRects = mutableListOf<Rect>()
         var itemIndex by remember { mutableStateOf(-1) }
         var factor = Pair(3, 2)
