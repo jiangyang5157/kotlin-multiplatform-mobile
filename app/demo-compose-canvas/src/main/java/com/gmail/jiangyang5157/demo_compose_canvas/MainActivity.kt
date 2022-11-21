@@ -118,6 +118,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalTextApi
     @Composable
     private fun Content() {
+        Log.d("####", "Content")
         Column {
             Row {
                 Button(onClick = {
@@ -168,6 +169,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalTextApi
     @Composable
     private fun DrawItems() {
+        Log.d("####", "DrawItems")
         val textMeasurer = rememberTextMeasurer()
 
         Canvas(
@@ -184,6 +186,7 @@ class MainActivity : ComponentActivity() {
                     )
                 },
         ) {
+            Log.d("####", "Canvas")
             if (items.isEmpty()) return@Canvas
 
             val padding = 8.dp.toPx()
