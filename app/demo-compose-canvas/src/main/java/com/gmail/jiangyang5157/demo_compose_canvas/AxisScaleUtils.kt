@@ -1,6 +1,5 @@
 package com.gmail.jiangyang5157.demo_compose_canvas
 
-import androidx.annotation.IntRange
 import kotlin.math.ceil
 
 /**
@@ -119,14 +118,16 @@ class AxisScaleUtils {
      * 12, 2 --> 20,
      * 123, 2 --> 200
      * 1234, 2 --> 2000
-     * 12345, 2 --> 2000
-     * 123456, 2 --> 2000
+     * 12345, 2 --> 20000
+     * 123456, 2 --> 200000
      * 1234567, 2 --> 2000000
+     * 12345678, 2 --> 20000000
+     * 123456789, 2 --> 200000000
      *
      * @param factor in Int range [1, 9]
      * @throws IllegalArgumentException
      */
-    fun factorToDivisor(value: Long, @IntRange(from = 1, to = 9) factor: Int): Long {
+    fun factorToDivisor(value: Long, factor: Int): Long {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (factor < 1 || factor > 9) throw IllegalArgumentException("Factor $factor should be in Int range [1, 9]")
 
@@ -134,8 +135,12 @@ class AxisScaleUtils {
             value >= 0 && value <= 10 -> factor
             value > 10 && value <= 100 -> factor * 10
             value > 100 && value <= 1000 -> factor * 100
-            value > 1000 && value <= 1000000 -> factor * 1000
-            value > 1000000 && value <= 1000000000 -> factor * 1000000
+            value > 1000 && value <= 10000 -> factor * 1000
+            value > 10000 && value <= 100000 -> factor * 10000
+            value > 100000 && value <= 1000000 -> factor * 100000
+            value > 1000000 && value <= 10000000 -> factor * 1000000
+            value > 10000000 && value <= 100000000 -> factor * 10000000
+            value > 100000000 && value <= 1000000000 -> factor * 100000000
             else -> throw IllegalArgumentException("Unexpected value $value")
         }.toLong()
     }
@@ -148,9 +153,11 @@ class AxisScaleUtils {
      * 12, 20 --> 2,
      * 123, 200 --> 2
      * 1234, 2000 --> 2
-     * 12345, 2000 --> 2
-     * 123456, 2000 --> 2
+     * 12345, 20000 --> 2
+     * 123456, 200000 --> 2
      * 1234567, 2000000 --> 2
+     * 12345678, 20000000 --> 2
+     * 123456789, 200000000 --> 2
      *
      * @param divisor greater than 0. Expecting it came from [factorToDivisor], not quite useful for others.
      * @throws IllegalArgumentException
@@ -160,38 +167,16 @@ class AxisScaleUtils {
         if (divisor < 1) throw IllegalArgumentException("Divisor $divisor should be not less than 1")
 
         return when {
-            // expecting divisor in range [1, 9] with step 1
             value >= 0 && value <= 10 -> divisor
-            // expecting divisor in range [10, 90] with step 10
-            value > 10 && value <= 100 -> if (divisor > 10) {
-                divisor / 10
-            } else {
-                divisor
-            }
-            // expecting divisor in range [100, 900] with step 100
-            value > 100 && value <= 1000 -> if (divisor > 100) {
-                divisor / 100
-            } else {
-                divisor / 10
-            }
-            // expecting divisor in range [1000, 900000] with step 1000
-            value > 1000 && value <= 1000000 -> if (divisor > 1000) {
-                divisor / 1000
-            } else {
-                divisor / 100
-            }
-            // expecting divisor in range [1000000, 900000000] with step 1000000
-            value > 1000000 && value <= 1000000000 -> if (divisor > 1000000) {
-                divisor / 1000000
-            } else {
-                divisor / 1000
-            }
-            // expecting divisor large than 1000000000 with step 1000000000
-            value > 1000000000 -> if (divisor > 1000000000) {
-                divisor / 1000000000
-            } else {
-                divisor / 1000000
-            }
+            value > 10 && value <= 100 -> if (divisor > 10) divisor / 10 else divisor
+            value > 100 && value <= 1000 -> if (divisor > 100) divisor / 100 else divisor / 10
+            value > 1000 && value <= 10000 -> if (divisor > 1000) divisor / 1000 else divisor / 100
+            value > 10000 && value <= 100000 -> if (divisor > 10000) divisor / 10000 else divisor / 1000
+            value > 100000 && value <= 1000000 -> if (divisor > 100000) divisor / 100000 else divisor / 10000
+            value > 1000000 && value <= 10000000 -> if (divisor > 1000000) divisor / 1000000 else divisor / 100000
+            value > 10000000 && value <= 100000000 -> if (divisor > 10000000) divisor / 10000000 else divisor / 1000000
+            value > 100000000 && value <= 1000000000 -> if (divisor > 100000000) divisor / 100000000 else divisor / 10000000
+            value > 1000000000 -> if (divisor > 1000000000) divisor / 1000000000 else divisor / 100000000
             else -> throw IllegalArgumentException("Unexpected value $value")
         }.toInt()
     }
@@ -281,7 +266,7 @@ class AxisScaleUtils {
      *
      * @throws IllegalArgumentException
      */
-    fun buildScaleList(value: Long, @IntRange(from = 1, to = 9) factor: Int): List<Long> {
+    fun buildScaleList(value: Long, factor: Int): List<Long> {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (factor < 1 || factor > 9) throw IllegalArgumentException("Factor $factor should be in Int range [1, 9]")
 

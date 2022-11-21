@@ -192,82 +192,73 @@ class AxisScaleUtilsTest {
     @Test
     fun `factorToDivisor with factor 1 value 0, 1000000000`() {
         Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(0, 1))
-        Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(1, 1))
         Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(10, 1))
-
-        Assert.assertEquals(10, AxisScaleUtils().factorToDivisor(12, 1))
         Assert.assertEquals(10, AxisScaleUtils().factorToDivisor(100, 1))
-
-        Assert.assertEquals(100, AxisScaleUtils().factorToDivisor(123, 1))
         Assert.assertEquals(100, AxisScaleUtils().factorToDivisor(1000, 1))
-
-        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(1234, 1))
         Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(10000, 1))
-        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(12345, 1))
-        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(100000, 1))
-        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(123456, 1))
-        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(1000000, 1))
-
-        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(1234567, 1))
+        Assert.assertEquals(10000, AxisScaleUtils().factorToDivisor(100000, 1))
+        Assert.assertEquals(100000, AxisScaleUtils().factorToDivisor(1000000, 1))
         Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(10000000, 1))
-        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(12345678, 1))
-        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(100000000, 1))
-        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(123456789, 1))
-        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(1000000000, 1))
+        Assert.assertEquals(10000000, AxisScaleUtils().factorToDivisor(100000000, 1))
+        Assert.assertEquals(100000000, AxisScaleUtils().factorToDivisor(1000000000, 1))
+
+        Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(1, 1))
+        Assert.assertEquals(10, AxisScaleUtils().factorToDivisor(12, 1))
+        Assert.assertEquals(100, AxisScaleUtils().factorToDivisor(123, 1))
+        Assert.assertEquals(1000, AxisScaleUtils().factorToDivisor(1234, 1))
+        Assert.assertEquals(10000, AxisScaleUtils().factorToDivisor(12345, 1))
+        Assert.assertEquals(100000, AxisScaleUtils().factorToDivisor(123456, 1))
+        Assert.assertEquals(1000000, AxisScaleUtils().factorToDivisor(1234567, 1))
+        Assert.assertEquals(10000000, AxisScaleUtils().factorToDivisor(12345678, 1))
+        Assert.assertEquals(100000000, AxisScaleUtils().factorToDivisor(123456789, 1))
     }
 
     @Test
     fun `factorToDivisor with factor 2 value 0, 1000000000`() {
         Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(0, 2))
-        Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(1, 2))
         Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(10, 2))
-
-        Assert.assertEquals(20, AxisScaleUtils().factorToDivisor(12, 2))
         Assert.assertEquals(20, AxisScaleUtils().factorToDivisor(100, 2))
-
-        Assert.assertEquals(200, AxisScaleUtils().factorToDivisor(123, 2))
         Assert.assertEquals(200, AxisScaleUtils().factorToDivisor(1000, 2))
-
-        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(1234, 2))
         Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(10000, 2))
-        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(12345, 2))
-        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(100000, 2))
-        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(123456, 2))
-        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(1000000, 2))
-
-        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(1234567, 2))
+        Assert.assertEquals(20000, AxisScaleUtils().factorToDivisor(100000, 2))
+        Assert.assertEquals(200000, AxisScaleUtils().factorToDivisor(1000000, 2))
         Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(10000000, 2))
-        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(12345678, 2))
-        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(100000000, 2))
-        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(123456789, 2))
-        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(1000000000, 2))
+        Assert.assertEquals(20000000, AxisScaleUtils().factorToDivisor(100000000, 2))
+        Assert.assertEquals(200000000, AxisScaleUtils().factorToDivisor(1000000000, 2))
+
+        Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(1, 2))
+        Assert.assertEquals(20, AxisScaleUtils().factorToDivisor(12, 2))
+        Assert.assertEquals(200, AxisScaleUtils().factorToDivisor(123, 2))
+        Assert.assertEquals(2000, AxisScaleUtils().factorToDivisor(1234, 2))
+        Assert.assertEquals(20000, AxisScaleUtils().factorToDivisor(12345, 2))
+        Assert.assertEquals(200000, AxisScaleUtils().factorToDivisor(123456, 2))
+        Assert.assertEquals(2000000, AxisScaleUtils().factorToDivisor(1234567, 2))
+        Assert.assertEquals(20000000, AxisScaleUtils().factorToDivisor(12345678, 2))
+        Assert.assertEquals(200000000, AxisScaleUtils().factorToDivisor(123456789, 2))
     }
 
     @Test
     fun `factorToDivisor with factor 9 value 0, 1000000000`() {
         Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(0, 9))
-        Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(1, 9))
         Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(10, 9))
-
-        Assert.assertEquals(90, AxisScaleUtils().factorToDivisor(12, 9))
         Assert.assertEquals(90, AxisScaleUtils().factorToDivisor(100, 9))
-
-        Assert.assertEquals(900, AxisScaleUtils().factorToDivisor(123, 9))
         Assert.assertEquals(900, AxisScaleUtils().factorToDivisor(1000, 9))
-
-        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(1234, 9))
         Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(10000, 9))
-        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(12345, 9))
-        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(100000, 9))
-        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(123456, 9))
-        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(1000000, 9))
-
-        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(1234567, 9))
+        Assert.assertEquals(90000, AxisScaleUtils().factorToDivisor(100000, 9))
+        Assert.assertEquals(900000, AxisScaleUtils().factorToDivisor(1000000, 9))
         Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(10000000, 9))
-        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(12345678, 9))
-        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(100000000, 9))
-        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(123456789, 9))
-        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(1000000000, 9))
+        Assert.assertEquals(90000000, AxisScaleUtils().factorToDivisor(100000000, 9))
+        Assert.assertEquals(900000000, AxisScaleUtils().factorToDivisor(1000000000, 9))
+
+        Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(1, 9))
+        Assert.assertEquals(90, AxisScaleUtils().factorToDivisor(12, 9))
+        Assert.assertEquals(900, AxisScaleUtils().factorToDivisor(123, 9))
+        Assert.assertEquals(9000, AxisScaleUtils().factorToDivisor(1234, 9))
+        Assert.assertEquals(90000, AxisScaleUtils().factorToDivisor(12345, 9))
+        Assert.assertEquals(900000, AxisScaleUtils().factorToDivisor(123456, 9))
+        Assert.assertEquals(9000000, AxisScaleUtils().factorToDivisor(1234567, 9))
+        Assert.assertEquals(90000000, AxisScaleUtils().factorToDivisor(12345678, 9))
+        Assert.assertEquals(900000000, AxisScaleUtils().factorToDivisor(123456789, 9))
     }
 
     @Test
