@@ -3,13 +3,79 @@ package com.gmail.jiangyang5157.demo_compose_canvas
 import androidx.annotation.IntRange
 import kotlin.math.ceil
 
+/**
+ * Build expected scale list on the value for column visualization.
+ * Example: 5678.90 --> [0, 2000, 4000, 6000]
+ */
 class AxisScaleUtils {
 
     enum class RoundUpScale {
         Integer, Ten, Hundred, Thousand, Million, Billion;
 
         /**
-         * Return roundup scale
+         * Apply scale roundup on [value]
+         *
+         * Examples of Integer: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 1
+         * 1.1 --> 2
+         * 4.1 --> 5
+         * 9.0 --> 9
+         * 9.1 --> 10
+         * 555555555.5 --> 555555556
+         * 999999999999.9 --> 1000000000000
+         *
+         * Examples of Ten: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 10
+         * 10.1 --> 20
+         * 40.1 --> 50
+         * 90.0 --> 90
+         * 90.1 --> 100
+         * 555555555.5 --> 555555560
+         * 999999999999.9 --> 1000000000000
+         *
+         * Examples of Hundred: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 100
+         * 100.1 --> 200
+         * 400.1 --> 500
+         * 900.0 --> 900
+         * 900.1 --> 1000
+         * 555555555.5 --> 555555600
+         * 999999999999.9 --> 1000000000000
+         *
+         * Examples of Thousand: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 1000
+         * 1000.1 --> 2000
+         * 4000.1 --> 5000
+         * 9000.0 --> 9000
+         * 9000.1 --> 10000
+         * 555555555.5 --> 555556000
+         * 999999999999.9 --> 1000000000000
+         *
+         * Examples of Million: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 1000000
+         * 1000000.1 --> 2000000
+         * 4000000.1 --> 5000000
+         * 9000000.0 --> 9000000
+         * 9000000.1 --> 10000000
+         * 555555555.5 --> 556000000
+         * 999999999999.9 --> 1000000000000
+         *
+         * Examples of Billion: value --> next value
+         * 0.0 --> 0
+         * 0.1 --> 1000000000
+         * 1000000000.1 --> 2000000000
+         * 4000000000.1 --> 5000000000
+         * 9000000000.0 --> 9000000000
+         * 9000000000.1 --> 10000000000
+         * 555555555.5 --> 1000000000
+         * 999999999999.9 --> 1000000000000
+         *
+         * @throws IllegalArgumentException
          */
         fun apply(value: Double): Long {
             if (value < 0.0) throw IllegalArgumentException("Value $value should be not less than 0")
@@ -27,7 +93,8 @@ class AxisScaleUtils {
         companion object {
 
             /**
-             * Choice expected [RoundUpScale] to [apply] the [value], return next value
+             * Apply expected [RoundUpScale], return next value
+             * @throws IllegalArgumentException
              */
             fun roundUp(value: Double): Long {
                 return when {
@@ -45,7 +112,19 @@ class AxisScaleUtils {
     }
 
     /**
-     * Return Long divisor >= 1
+     * Return Long divisor greater than 0
+     *
+     * Examples: value, factor --> divisor
+     * 1, 2 --> 2
+     * 12, 2 --> 20,
+     * 123, 2 --> 200
+     * 1234, 2 --> 2000
+     * 12345, 2 --> 2000
+     * 123456, 2 --> 2000
+     * 1234567, 2 --> 2000000
+     *
+     * @param factor in Int range [1, 9]
+     * @throws IllegalArgumentException
      */
     fun factorToDivisor(value: Long, @IntRange(from = 1, to = 9) factor: Int): Long {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
@@ -62,8 +141,19 @@ class AxisScaleUtils {
     }
 
     /**
-     * Use [divisor] from [factorToDivisor], not useful for others
      * Return Int factor in range [1, 9]
+     *
+     * Examples: value, divisor --> factor
+     * 1, 2 --> 2
+     * 12, 20 --> 2,
+     * 123, 200 --> 2
+     * 1234, 2000 --> 2
+     * 12345, 2000 --> 2
+     * 123456, 2000 --> 2
+     * 1234567, 2000000 --> 2
+     *
+     * @param divisor greater than 0. Expecting it came from [factorToDivisor], not quite useful for others.
+     * @throws IllegalArgumentException
      */
     fun divisorToFactor(value: Long, divisor: Long): Int {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
@@ -107,8 +197,22 @@ class AxisScaleUtils {
     }
 
     /**
-     * Round up value and make it divisible by the divisor with no remainders.
-     * Return the new value.
+     * Round up to next value and make it divisible by the divisor with no remainders.
+     *
+     * Examples: value, divisor --> next value
+     * 0, 3 --> 3
+     * 1, 3 --> 3
+     * 2, 3 --> 3
+     * 3, 3 --> 3
+     * 4, 3 --> 6
+     * 5, 3 --> 6
+     * 6, 3 --> 6
+     * 7, 3 --> 9
+     * 8, 3 --> 9
+     * 9, 3 --> 9
+     * 10, 3 --> 12
+     *
+     * @throws IllegalArgumentException
      */
     fun roundUpForDivision(value: Long, divisor: Long): Long {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
@@ -125,11 +229,27 @@ class AxisScaleUtils {
     }
 
     /**
-     * Round up value and make it divisible by either [primaryDivisor] or [secondaryDivisor] with no remainders.
+     * Round up to next value and make it divisible by either [primaryDivisor] or [secondaryDivisor] with no remainders.
      * Return the smaller new value and the divisor was used.
+     *
+     * Examples: value, primaryDivisor, secondaryDivisor --> (next value, chosen divisor)
+     * 0, 3, 2 --> (2, 2)
+     * 1, 3, 2 --> (2, 2)
+     * 2, 3, 2 --> (2, 2)
+     * 3, 3, 2 --> (3, 3)
+     * 4, 3, 2 --> (4, 2)
+     * 5, 3, 2 --> (6, 3)
+     * 6, 3, 2 --> (6, 3)
+     * 7, 3, 2 --> (8, 2)
+     * 8, 3, 2 --> (8, 2)
+     * 9, 3, 2 --> (9, 3)
+     *
+     * @throws IllegalArgumentException
      */
     fun roundUpForDivision(
-        value: Long, primaryDivisor: Long, secondaryDivisor: Long
+        value: Long,
+        primaryDivisor: Long,
+        secondaryDivisor: Long,
     ): Pair<Long, Long> {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (primaryDivisor < 1) throw IllegalArgumentException("Divisor $primaryDivisor should be not less than 1")
@@ -141,15 +261,26 @@ class AxisScaleUtils {
             Pair(secondaryDivisor, secondaryDivisor)
         }
 
-        val primaryMoney = roundUpForDivision(value, primaryDivisor)
-        val secondaryMoney = roundUpForDivision(value, secondaryDivisor)
-        return if (primaryMoney <= secondaryMoney) {
-            Pair(primaryMoney, primaryDivisor)
+        val primaryDivision = roundUpForDivision(value, primaryDivisor)
+        val secondaryDivision = roundUpForDivision(value, secondaryDivisor)
+        return if (primaryDivision <= secondaryDivision) {
+            Pair(primaryDivision, primaryDivisor)
         } else {
-            Pair(secondaryMoney, secondaryDivisor)
+            Pair(secondaryDivision, secondaryDivisor)
         }
     }
 
+    /**
+     * Build expected scale list on the [value]
+     *
+     * Examples: value, factor --> scale list
+     * 0, 3 --> [0, 1, 2, 3]
+     * 5, 2 --> [0, 3, 6]
+     * 5, 3 --> [0, 2, 4, 6]
+     * 60, 3 --> [0, 20, 40, 60]
+     *
+     * @throws IllegalArgumentException
+     */
     fun buildScaleList(value: Long, @IntRange(from = 1, to = 9) factor: Int): List<Long> {
         if (value < 0) throw IllegalArgumentException("Value $value should be not less than 0")
         if (factor < 1 || factor > 9) throw IllegalArgumentException("Factor $factor should be in Int range [1, 9]")
