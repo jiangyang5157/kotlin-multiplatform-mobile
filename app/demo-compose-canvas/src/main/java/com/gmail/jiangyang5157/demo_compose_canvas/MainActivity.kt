@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -98,11 +95,6 @@ class MainActivity : ComponentActivity() {
         return scaleList
     }
 
-    private var items = nextItems()
-    private val itemRects = mutableListOf<Rect>()
-    private var itemIndex by mutableStateOf(-1)
-    private var factor by mutableStateOf(Pair(3, 2))
-
     @ExperimentalTextApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,6 +111,12 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun Content() {
         Log.d("####", "Content")
+        val textMeasurer = rememberTextMeasurer()
+        var items  = nextItems()
+        val itemRects = mutableListOf<Rect>()
+        var itemIndex by remember { mutableStateOf(-1) }
+        var factor = Pair(3, 2)
+
         Column {
             Row {
                 Button(onClick = {
@@ -162,232 +160,223 @@ class MainActivity : ComponentActivity() {
                     Text(text = "4")
                 }
             }
-            DrawItems()
-        }
-    }
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.LightGray)
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = { tapOffset ->
+                                itemIndex =
+                                    itemRects.indexOfFirst { it.contains(tapOffset) }
+                                Log.d("####", "Tap $tapOffset belongs to item $itemIndex")
+                            }
+                        )
+                    },
+            ) {
+                Log.d("####", "Canvas")
+                if (items.isEmpty()) return@Canvas
 
-    @ExperimentalTextApi
-    @Composable
-    private fun DrawItems() {
-        Log.d("####", "DrawItems")
-        val textMeasurer = rememberTextMeasurer()
-
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.LightGray)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = { tapOffset ->
-                            itemIndex =
-                                itemRects.indexOfFirst { it.contains(tapOffset) }
-                            Log.d("####", "Tap $tapOffset belongs to item $itemIndex")
-                        }
+                val padding = 8.dp.toPx()
+                val rect = this.size.toRect().deflate(padding)
+                val itemsFontSize = 16.sp
+                val underlineLabelTextLayoutResult = items.first().let {
+                    textMeasurer.measure(
+                        AnnotatedString(it.name),
+                        TextStyle(fontSize = itemsFontSize, color = Color.DarkGray)
                     )
-                },
-        ) {
-            Log.d("####", "Canvas")
-            if (items.isEmpty()) return@Canvas
+                }
+                val underlineTextHeight = underlineLabelTextLayoutResult.size.height
+                val underlineHeight = 4.dp.toPx()
+                val underlineLabelHeight = underlineTextHeight + underlineHeight
 
-            val padding = 8.dp.toPx()
-            val rect = this.size.toRect().deflate(padding)
-            val itemsFontSize = 16.sp
-            val underlineLabelTextLayoutResult = items.first().let {
-                textMeasurer.measure(
-                    AnnotatedString(it.name),
-                    TextStyle(fontSize = itemsFontSize, color = Color.DarkGray)
-                )
-            }
-            val underlineTextHeight = underlineLabelTextLayoutResult.size.height
-            val underlineHeight = 4.dp.toPx()
-            val underlineLabelHeight = underlineTextHeight + underlineHeight
+                // #### GraphLabel ================================================================
 
-            // #### GraphLabel ================================================================
+                val graphLabelHeight = 24.dp.toPx()
+                val graphLabelTextLayoutResult = Item.value1Name.let {
+                    textMeasurer.measure(
+                        AnnotatedString(it),
+                        TextStyle(fontSize = itemsFontSize)
+                    )
+                }
 
-            val graphLabelHeight = 24.dp.toPx()
-            val graphLabelTextLayoutResult = Item.value1Name.let {
-                textMeasurer.measure(
-                    AnnotatedString(it),
-                    TextStyle(fontSize = itemsFontSize)
-                )
-            }
-
-            val graphLabelRect = Rect(
-                topLeft = Offset(
-                    rect.left + 64.dp.toPx(),
-                    rect.bottom - graphLabelHeight
-                ),
-                bottomRight = Offset(
-                    rect.right - 64.dp.toPx(),
-                    rect.bottom,
-                ),
-            )
-            drawGraphLabel(
-                textMeasurer = textMeasurer,
-                rect = graphLabelRect,
-                textStyle = graphLabelTextLayoutResult.layoutInput.style,
-                orientation = DrawOrientation.Horizontal,
-                items = listOf(
-                    Pair(Item.value1Name, Item.value1Color),
-                    Pair(Item.value2Name, Item.value2Color),
-                ),
-            )
-
-            // #### DataAxis ================================================================
-
-            val scaleList = buildScaleList(items, factor.first, factor.second)
-            val scaleListString = scaleList.map { it.toString() }
-            val dataAxisTextLayoutResult = scaleListString.first().let {
-                textMeasurer.measure(
-                    AnnotatedString(it),
-                    TextStyle(fontSize = itemsFontSize, color = Color.DarkGray)
-                )
-            }
-            val upperDialogHeight = 48.dp.toPx()
-            val dataAxisRect = Rect(
-                topLeft = Offset(
-                    x = rect.left,
-                    y = rect.top + upperDialogHeight,
-                ),
-                bottomRight = Offset(
-                    x = rect.right,
-                    y = graphLabelRect.top - underlineLabelHeight - padding,
-                ),
-            )
-            val dataRect = drawDataAxis(
-                rect = dataAxisRect,
-                textStyle = dataAxisTextLayoutResult.layoutInput.style,
-                textMeasurer = textMeasurer,
-                lineColor = dataAxisTextLayoutResult.layoutInput.style.color,
-                items = scaleListString,
-            )
-
-            // #### UnderlineLabel(s) ================================================================
-
-            val positiveColor = Color.Yellow
-            val negativeColor = Color.Red
-            val underlineColor = Color.DarkGray
-            val upperDialogColor = Color.DarkGray
-            val upperDialogFontSize = 20.sp
-
-            val underlineLabelsRect = Rect(
-                topLeft = Offset(
-                    x = dataRect.left,
-                    y = dataRect.bottom + padding,
-                ),
-                bottomRight = Offset(
-                    x = dataRect.right,
-                    y = dataRect.bottom + padding + underlineLabelHeight,
-                )
-            )
-            val underlineItemWidth = underlineLabelsRect.width / items.size
-            itemRects.clear()
-            items.forEachIndexed { index, item ->
-                val selected = index == itemIndex
-                val underlineLabelRect = Rect(
-                    offset = Offset(
-                        x = underlineLabelsRect.left + underlineItemWidth * index,
-                        y = underlineLabelsRect.top,
+                val graphLabelRect = Rect(
+                    topLeft = Offset(
+                        rect.left + 64.dp.toPx(),
+                        rect.bottom - graphLabelHeight
                     ),
-                    size = Size(
-                        width = underlineItemWidth,
-                        height = underlineLabelsRect.height
+                    bottomRight = Offset(
+                        rect.right - 64.dp.toPx(),
+                        rect.bottom,
                     ),
                 )
-                itemRects.add(index, underlineLabelRect.copy(top = dataRect.top))
-                drawUnderlineLabel(
+                drawGraphLabel(
                     textMeasurer = textMeasurer,
-                    underlineColor = underlineColor,
-                    underlineHeight = underlineHeight,
-                    text = item.name,
-                    textStyle = underlineLabelTextLayoutResult.layoutInput.style,
-                    selected = selected,
-                    rect = underlineLabelRect,
-                )
-            }
-
-            // #### Column(s) ================================================================
-
-            val maxValue = scaleList.maxOf { it }
-            val ratio = dataRect.height / maxValue
-            val columnWidth = dataRect.width / items.size
-            items.forEachIndexed { index, item ->
-                val height1 = item.value1 * ratio
-                val height2 = item.value2 * ratio
-
-                drawColumn(
+                    rect = graphLabelRect,
+                    textStyle = graphLabelTextLayoutResult.layoutInput.style,
+                    orientation = DrawOrientation.Horizontal,
                     items = listOf(
-                        Pair(height1.toFloat(), Item.value1Color),
-                        Pair(height2.toFloat(), Item.value2Color),
-                    ),
-                    rect = Rect(
-                        offset = Offset(
-                            x = dataRect.left + columnWidth * index,
-                            y = dataRect.top,
-                        ),
-                        size = Size(
-                            width = columnWidth,
-                            height = dataRect.height,
-                        ),
+                        Pair(Item.value1Name, Item.value1Color),
+                        Pair(Item.value2Name, Item.value2Color),
                     ),
                 )
-            }
 
-            // #### UpperDialog ================================================================
+                // #### DataAxis ================================================================
 
-            if (itemIndex != -1) {
-                val item = items[itemIndex]
-                val itemRect = itemRects[itemIndex]
-                val symbol = if (item.diff >= 0) "+" else "-"
-                val upperDialogTextColor = if (item.diff >= 0) positiveColor else negativeColor
-                val diff = abs(item.diff)
-                val symbolTextLayoutResult = textMeasurer.measure(
-                    text = AnnotatedString(symbol),
-                    style = TextStyle(
-                        fontSize = upperDialogFontSize,
-                        color = upperDialogTextColor
+                val scaleList = buildScaleList(items, factor.first, factor.second)
+                val scaleListString = scaleList.map { it.toString() }
+                val dataAxisTextLayoutResult = scaleListString.first().let {
+                    textMeasurer.measure(
+                        AnnotatedString(it),
+                        TextStyle(fontSize = itemsFontSize, color = Color.DarkGray)
                     )
+                }
+                val upperDialogHeight = 48.dp.toPx()
+                val dataAxisRect = Rect(
+                    topLeft = Offset(
+                        x = rect.left,
+                        y = rect.top + upperDialogHeight,
+                    ),
+                    bottomRight = Offset(
+                        x = rect.right,
+                        y = graphLabelRect.top - underlineLabelHeight - padding,
+                    ),
                 )
-                val diffTextLayoutResult = textMeasurer.measure(
-                    text = AnnotatedString("$${String.format("%.2f", diff)}"),
-                    style = TextStyle(
-                        fontSize = upperDialogFontSize,
-                        color = upperDialogTextColor
-                    )
+                val dataRect = drawDataAxis(
+                    rect = dataAxisRect,
+                    textStyle = dataAxisTextLayoutResult.layoutInput.style,
+                    textMeasurer = textMeasurer,
+                    lineColor = dataAxisTextLayoutResult.layoutInput.style.color,
+                    items = scaleListString,
                 )
-                val upperDialogRect = Rect(
+
+                // #### UnderlineLabel(s) ================================================================
+
+                val positiveColor = Color.Yellow
+                val negativeColor = Color.Red
+                val underlineColor = Color.DarkGray
+                val upperDialogColor = Color.DarkGray
+                val upperDialogFontSize = 20.sp
+
+                val underlineLabelsRect = Rect(
                     topLeft = Offset(
                         x = dataRect.left,
-                        y = rect.top,
+                        y = dataRect.bottom + padding,
                     ),
                     bottomRight = Offset(
                         x = dataRect.right,
-                        y = dataRect.top,
+                        y = dataRect.bottom + padding + underlineLabelHeight,
                     )
                 )
-                drawUpperDialog(
-                    rect = upperDialogRect,
-                    color = upperDialogColor,
-                    x = itemRect.center.x,
-                    calculateContent = {
-                        Size(
-                            width = (symbolTextLayoutResult.size.width + diffTextLayoutResult.size.width).toFloat(),
-                            height = symbolTextLayoutResult.size.height.toFloat(),
-                        )
-                    },
-                    drawContent = { drawScope, contentRect ->
-                        drawScope.drawText(
-                            textLayoutResult = symbolTextLayoutResult,
-                            topLeft = contentRect.topLeft,
-                        )
-                        drawScope.drawText(
-                            textLayoutResult = diffTextLayoutResult,
-                            topLeft = contentRect.topLeft.copy(
-                                x = contentRect.topLeft.x + symbolTextLayoutResult.size.width,
+                val underlineItemWidth = underlineLabelsRect.width / items.size
+                itemRects.clear()
+                items.forEachIndexed { index, item ->
+                    val selected = index == itemIndex
+                    val underlineLabelRect = Rect(
+                        offset = Offset(
+                            x = underlineLabelsRect.left + underlineItemWidth * index,
+                            y = underlineLabelsRect.top,
+                        ),
+                        size = Size(
+                            width = underlineItemWidth,
+                            height = underlineLabelsRect.height
+                        ),
+                    )
+                    itemRects.add(index, underlineLabelRect.copy(top = dataRect.top))
+                    drawUnderlineLabel(
+                        textMeasurer = textMeasurer,
+                        underlineColor = underlineColor,
+                        underlineHeight = underlineHeight,
+                        text = item.name,
+                        textStyle = underlineLabelTextLayoutResult.layoutInput.style,
+                        selected = selected,
+                        rect = underlineLabelRect,
+                    )
+                }
+
+                // #### Column(s) ================================================================
+
+                val maxValue = scaleList.maxOf { it }
+                val ratio = dataRect.height / maxValue
+                val columnWidth = dataRect.width / items.size
+                items.forEachIndexed { index, item ->
+                    val height1 = item.value1 * ratio
+                    val height2 = item.value2 * ratio
+
+                    drawColumn(
+                        items = listOf(
+                            Pair(height1.toFloat(), Item.value1Color),
+                            Pair(height2.toFloat(), Item.value2Color),
+                        ),
+                        rect = Rect(
+                            offset = Offset(
+                                x = dataRect.left + columnWidth * index,
+                                y = dataRect.top,
                             ),
+                            size = Size(
+                                width = columnWidth,
+                                height = dataRect.height,
+                            ),
+                        ),
+                    )
+                }
+
+                // #### UpperDialog ================================================================
+
+                if (itemIndex != -1) {
+                    val item = items[itemIndex]
+                    val itemRect = itemRects[itemIndex]
+                    val symbol = if (item.diff >= 0) "+" else "-"
+                    val upperDialogTextColor = if (item.diff >= 0) positiveColor else negativeColor
+                    val diff = abs(item.diff)
+                    val symbolTextLayoutResult = textMeasurer.measure(
+                        text = AnnotatedString(symbol),
+                        style = TextStyle(
+                            fontSize = upperDialogFontSize,
+                            color = upperDialogTextColor
                         )
-                    }
-                )
+                    )
+                    val diffTextLayoutResult = textMeasurer.measure(
+                        text = AnnotatedString("$${String.format("%.2f", diff)}"),
+                        style = TextStyle(
+                            fontSize = upperDialogFontSize,
+                            color = upperDialogTextColor
+                        )
+                    )
+                    val upperDialogRect = Rect(
+                        topLeft = Offset(
+                            x = dataRect.left,
+                            y = rect.top,
+                        ),
+                        bottomRight = Offset(
+                            x = dataRect.right,
+                            y = dataRect.top,
+                        )
+                    )
+                    drawUpperDialog(
+                        rect = upperDialogRect,
+                        color = upperDialogColor,
+                        x = itemRect.center.x,
+                        calculateContent = {
+                            Size(
+                                width = (symbolTextLayoutResult.size.width + diffTextLayoutResult.size.width).toFloat(),
+                                height = symbolTextLayoutResult.size.height.toFloat(),
+                            )
+                        },
+                        drawContent = { drawScope, contentRect ->
+                            drawScope.drawText(
+                                textLayoutResult = symbolTextLayoutResult,
+                                topLeft = contentRect.topLeft,
+                            )
+                            drawScope.drawText(
+                                textLayoutResult = diffTextLayoutResult,
+                                topLeft = contentRect.topLeft.copy(
+                                    x = contentRect.topLeft.x + symbolTextLayoutResult.size.width,
+                                ),
+                            )
+                        }
+                    )
+                }
             }
         }
     }
