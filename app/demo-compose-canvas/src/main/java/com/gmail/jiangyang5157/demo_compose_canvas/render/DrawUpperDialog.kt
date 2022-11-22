@@ -26,12 +26,12 @@ fun DrawScope.drawUpperDialog(
     color: Color,
     // label position
     x: Float,
-    labelSize: Size = Size(width = 16.dp.toPx(), height = 9.dp.toPx()),
-    labelCornerRadius: Float = 3.dp.toPx(),
+    labelSize: Size = Size(width = 16.dp.toPx(), height = 10.dp.toPx()),
+    labelCornerRadius: Float = 4.dp.toPx(),
     // calculate content receive the size of content
     calculateContent: () -> Size,
     // draw content
-    drawContent: (DrawScope, Rect) -> Unit,
+    drawContent: DrawScope.(Rect) -> Unit,
 ) {
     val labelRect = Rect(
         offset = Offset(
@@ -155,18 +155,18 @@ private fun DrawUpperDialogPreview() {
                         height = text1.size.height.toFloat(),
                     )
                 },
-                drawContent = { drawScope, rect ->
-                    drawScope.drawText(
+                drawContent = { rect ->
+                    drawText(
                         textLayoutResult = text1,
                         topLeft = rect.topLeft,
                     )
-                    drawScope.drawText(
+                    drawText(
                         textLayoutResult = textSpace,
                         topLeft = rect.topLeft.copy(
                             x = rect.topLeft.x + text1.size.width
                         ),
                     )
-                    drawScope.drawText(
+                    drawText(
                         textLayoutResult = text2,
                         topLeft = rect.topLeft.copy(
                             x = rect.topLeft.x + text1.size.width + textSpace.size.width
@@ -185,14 +185,14 @@ private fun DrawUpperDialogPreview() {
                         height = text2small.size.height.toFloat(),
                     )
                 },
-                drawContent = { drawScope, rect ->
-                    drawScope.drawCircleInRect(
+                drawContent = { rect ->
+                    drawCircleInRect(
                         color = color3,
                         radius = circleRadius,
                         gravity = DrawGravity.CenterVertical.addFlag(DrawGravity.Left),
                         rect = rect,
                     )
-                    drawScope.drawText(
+                    drawText(
                         textLayoutResult = text2small,
                         textDecoration = TextDecoration.LineThrough,
                         topLeft = rect.topLeft.copy(
@@ -212,33 +212,33 @@ private fun DrawUpperDialogPreview() {
                         height = text1.size.height + circleRadius * 2 * 2 + 6.dp.toPx(),
                     )
                 },
-                drawContent = { drawScope, rect ->
-                    drawScope.drawTextInRect(
+                drawContent = { rect ->
+                    drawTextInRect(
                         text = "Hello",
                         textStyle = TextStyle(fontSize = 16.sp, color = color2),
                         textMeasurer = textMeasurer,
                         gravity = DrawGravity.Center,
                         rect = rect,
                     )
-                    drawScope.drawCircleInRect(
+                    drawCircleInRect(
                         color = color2,
                         radius = circleRadius,
                         gravity = DrawGravity.Top.addFlag(DrawGravity.Left),
                         rect = rect,
                     )
-                    drawScope.drawCircleInRect(
+                    drawCircleInRect(
                         color = color2,
                         radius = circleRadius,
                         gravity = DrawGravity.Top.addFlag(DrawGravity.Right),
                         rect = rect,
                     )
-                    drawScope.drawCircleInRect(
+                    drawCircleInRect(
                         color = color2,
                         radius = circleRadius,
                         gravity = DrawGravity.Bottom.addFlag(DrawGravity.Left),
                         rect = rect,
                     )
-                    drawScope.drawCircleInRect(
+                    drawCircleInRect(
                         color = color2,
                         radius = circleRadius,
                         gravity = DrawGravity.Bottom.addFlag(DrawGravity.Right),

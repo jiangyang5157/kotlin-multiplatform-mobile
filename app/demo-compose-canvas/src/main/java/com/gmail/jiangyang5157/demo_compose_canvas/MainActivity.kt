@@ -381,12 +381,12 @@ class MainActivity : ComponentActivity() {
                                 height = symbolTextLayoutResult.size.height.toFloat(),
                             )
                         },
-                        drawContent = { drawScope, contentRect ->
-                            drawScope.drawText(
+                        drawContent = { contentRect ->
+                            drawText(
                                 textLayoutResult = symbolTextLayoutResult,
                                 topLeft = contentRect.topLeft,
                             )
-                            drawScope.drawText(
+                            drawText(
                                 textLayoutResult = diffTextLayoutResult,
                                 topLeft = contentRect.topLeft.copy(
                                     x = contentRect.topLeft.x + symbolTextLayoutResult.size.width,
