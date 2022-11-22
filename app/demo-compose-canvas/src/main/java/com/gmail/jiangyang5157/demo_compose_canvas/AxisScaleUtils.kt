@@ -4,7 +4,11 @@ import kotlin.math.ceil
 
 /**
  * Build expected scale list on the value for column visualization.
- * Example: 5678.90 --> [0, 2000, 4000, 6000]
+ * Example:
+ * 567.89 --> [0, 200, 400, 600]
+ * 1234.56789 --> [0, 1000, 2000, 3000]
+ *
+ * https://pl.kotl.in/MvKoH1wIQ
  */
 class AxisScaleUtils {
 
