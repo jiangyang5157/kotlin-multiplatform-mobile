@@ -107,55 +107,71 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    data class CanvasUio(
+        val items: List<Item>,
+        val itemRects: List<Rect>,
+        val itemIndex: Int,
+        val factor: Pair<Int, Int>,
+    )
+
     @ExperimentalTextApi
     @Composable
     private fun Content() {
         Log.d("####", "Content")
         val textMeasurer = rememberTextMeasurer()
-        var items = nextItems()
-        val itemRects = mutableListOf<Rect>()
-        var itemIndex by remember { mutableStateOf(-1) }
-        var factor = Pair(3, 2)
+        var uio by remember {
+            mutableStateOf(
+                CanvasUio(
+                    items = nextItems(),
+                    itemRects = emptyList(),
+                    itemIndex = -1,
+                    factor = Pair(3, 2),
+                )
+            )
+        }
 
         Column {
             Row {
                 Button(onClick = {
-                    items = nextItems()
-                    itemIndex = -1
+                    uio = uio.copy(
+                        items = nextItems(),
+                        itemRects = emptyList(),
+                        itemIndex = -1,
+                    )
                 }) {
                     Text(text = "next")
                 }
             }
             Row {
                 Button(onClick = {
-                    factor = Pair(2, factor.second)
+                    uio = uio.copy(factor = Pair(2, uio.factor.second))
                 }) {
                     Text(text = "primary factor 2")
                 }
                 Button(onClick = {
-                    factor = Pair(3, factor.second)
+                    uio = uio.copy(factor = Pair(3, uio.factor.second))
                 }) {
                     Text(text = "3")
                 }
                 Button(onClick = {
-                    factor = Pair(4, factor.second)
+                    uio = uio.copy(factor = Pair(4, uio.factor.second))
                 }) {
                     Text(text = "4")
                 }
             }
             Row {
                 Button(onClick = {
-                    factor = Pair(factor.first, 2)
+                    uio = uio.copy(factor = Pair(uio.factor.first, 2))
                 }) {
                     Text(text = "secondary factor 2")
                 }
                 Button(onClick = {
-                    factor = Pair(factor.first, 3)
+                    uio = uio.copy(factor = Pair(uio.factor.first, 3))
                 }) {
                     Text(text = "3")
                 }
                 Button(onClick = {
-                    factor = Pair(factor.first, 4)
+                    uio = uio.copy(factor = Pair(uio.factor.first, 4))
                 }) {
                     Text(text = "4")
                 }
@@ -167,20 +183,21 @@ class MainActivity : ComponentActivity() {
                     .pointerInput(Unit) {
                         detectTapGestures(
                             onTap = { tapOffset ->
-                                itemIndex =
-                                    itemRects.indexOfFirst { it.contains(tapOffset) }
-                                Log.d("####", "Tap $tapOffset belongs to item $itemIndex")
+                                uio = uio.copy(itemIndex = uio.itemRects.indexOfFirst {
+                                    it.contains(tapOffset)
+                                })
+                                Log.d("####", "Tap $tapOffset belongs to item ${uio.itemIndex}")
                             }
                         )
                     },
             ) {
                 Log.d("####", "Canvas")
-                if (items.isEmpty()) return@Canvas
+                if (uio.items.isEmpty()) return@Canvas
 
                 val padding = 8.dp.toPx()
                 val rect = this.size.toRect().deflate(padding)
                 val itemsFontSize = 16.sp
-                val underlineLabelTextLayoutResult = items.first().let {
+                val underlineLabelTextLayoutResult = uio.items.first().let {
                     textMeasurer.measure(
                         AnnotatedString(it.name),
                         TextStyle(fontSize = itemsFontSize, color = Color.DarkGray)
@@ -223,7 +240,7 @@ class MainActivity : ComponentActivity() {
 
                 // #### DataAxis ================================================================
 
-                val scaleList = buildScaleList(items, factor.first, factor.second)
+                val scaleList = buildScaleList(uio.items, uio.factor.first, uio.factor.second)
                 val scaleListString = scaleList.map { it.toString() }
                 val dataAxisTextLayoutResult = scaleListString.first().let {
                     textMeasurer.measure(
@@ -268,10 +285,10 @@ class MainActivity : ComponentActivity() {
                         y = dataRect.bottom + padding + underlineLabelHeight,
                     )
                 )
-                val underlineItemWidth = underlineLabelsRect.width / items.size
-                itemRects.clear()
-                items.forEachIndexed { index, item ->
-                    val selected = index == itemIndex
+                val underlineItemWidth = underlineLabelsRect.width / uio.items.size
+                val newItemRects = mutableListOf<Rect>()
+                uio.items.forEachIndexed { index, item ->
+                    val selected = index == uio.itemIndex
                     val underlineLabelRect = Rect(
                         offset = Offset(
                             x = underlineLabelsRect.left + underlineItemWidth * index,
@@ -282,7 +299,7 @@ class MainActivity : ComponentActivity() {
                             height = underlineLabelsRect.height
                         ),
                     )
-                    itemRects.add(index, underlineLabelRect.copy(top = dataRect.top))
+                    newItemRects.add(index, underlineLabelRect.copy(top = dataRect.top))
                     drawUnderlineLabel(
                         textMeasurer = textMeasurer,
                         underlineColor = underlineColor,
@@ -293,13 +310,14 @@ class MainActivity : ComponentActivity() {
                         rect = underlineLabelRect,
                     )
                 }
+                uio = uio.copy(itemRects = newItemRects)
 
                 // #### Column(s) ================================================================
 
                 val maxValue = scaleList.maxOf { it }
                 val ratio = dataRect.height / maxValue
-                val columnWidth = dataRect.width / items.size
-                items.forEachIndexed { index, item ->
+                val columnWidth = dataRect.width / uio.items.size
+                uio.items.forEachIndexed { index, item ->
                     val height1 = item.value1 * ratio
                     val height2 = item.value2 * ratio
 
@@ -323,9 +341,9 @@ class MainActivity : ComponentActivity() {
 
                 // #### UpperDialog ================================================================
 
-                if (itemIndex != -1) {
-                    val item = items[itemIndex]
-                    val itemRect = itemRects[itemIndex]
+                if (uio.itemIndex != -1) {
+                    val item = uio.items[uio.itemIndex]
+                    val itemRect = uio.itemRects[uio.itemIndex]
                     val symbol = if (item.diff >= 0) "+" else "-"
                     val upperDialogTextColor = if (item.diff >= 0) positiveColor else negativeColor
                     val diff = abs(item.diff)
