@@ -64,8 +64,8 @@ fun DrawScope.drawGraphLabel(
     }
 
     labels.forEachIndexed { index, pair ->
-        val color = pair.second
         val text = pair.first.layoutInput.text
+        val color = pair.second
 
         when (orientation) {
             DrawOrientation.Horizontal -> {
