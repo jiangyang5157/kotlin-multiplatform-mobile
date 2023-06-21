@@ -56,8 +56,8 @@ open class ViewTypeRegistry(
     /**
      * @throws IndexOutOfBoundsException if the given index is out of range.
      */
-    @Suppress("UNCHECKED_CAST")
     fun <T, D> findByIndex(index: Int): ViewType<T, D> {
+        @Suppress("UNCHECKED_CAST")
         return viewTypes[index] as ViewType<T, D>
     }
 }

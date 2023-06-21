@@ -23,8 +23,8 @@ interface RouterFragmentActivityHost<T : Route> : RouterFragmentActivity {
  * Implemented by Fragment, use [router] value from it's [RouterFragmentActivityHost]
  */
 interface RouterFragmentGuest<T : Route> : RouterFragment {
-    @Suppress("UNCHECKED_CAST")
     override val router: FragmentRouter<T>
+        @Suppress("UNCHECKED_CAST")
         get() = (expectThisToBeAFragment().activity as RouterFragmentActivityHost<T>).router
 }
 

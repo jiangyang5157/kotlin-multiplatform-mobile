@@ -16,6 +16,7 @@ object Config {
 object Version {
 
     const val JetbrainsKotlin = "1.7.20"
+    const val JetbrainsKotlinBom = "1.8.0"
     const val JetbrainsKotlinx = "1.6.4"
     const val JetbrainsKotlinxDateTime = "0.4.0"
     const val JetbrainsKotlinxSerializationJson = "1.5.0"
@@ -74,6 +75,7 @@ object BuildPlugin {
 object Dep {
 
     const val Kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Version.JetbrainsKotlin}"
+    const val KotlinBom = "org.jetbrains.kotlin:kotlin-bom:${Version.JetbrainsKotlinBom}"
     const val KotlinTestJunit = "org.jetbrains.kotlin:kotlin-test-junit:${Version.JetbrainsKotlin}"
 
     const val CoroutinesAndroid =

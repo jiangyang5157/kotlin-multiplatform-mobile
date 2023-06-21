@@ -81,10 +81,14 @@ dependencies {
     implementation(Dep.CoroutinesAndroid)
     implementation(Dep.KotlinxSerializationJson)
 
+    implementation(platform(Dep.KotlinBom)) // Align versions of all Kotlin components
+
     testImplementation(Dep.Junit)
+    testImplementation(Dep.CoroutinesTest)
 
     androidTestImplementation(Dep.AndroidxJunit)
     androidTestImplementation(Dep.TestRunner)
+    androidTestImplementation(Dep.CoroutinesTest)
 
     // Internal
     api(project(":kit"))
