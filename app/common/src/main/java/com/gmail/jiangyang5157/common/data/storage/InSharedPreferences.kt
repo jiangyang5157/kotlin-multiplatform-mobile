@@ -89,7 +89,7 @@ class InSharedPreferences(
         @Suppress("UNCHECKED_CAST")
         return flow {
             val valueMap = storage.all
-                .filterNot { it.value != null } // ignore null values
+                .filter { it.value != null } // ignore null values
                 .toMap() as Map<String, Any>
             emit(valueMap)
         }

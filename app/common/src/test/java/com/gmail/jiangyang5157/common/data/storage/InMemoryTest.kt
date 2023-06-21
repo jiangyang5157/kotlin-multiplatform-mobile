@@ -31,6 +31,19 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
+    fun `entities returns map of key-values`() = runTest {
+        storage.put("string", "s1")
+        storage.put("boolean", true)
+        storage.put("int", 1)
+        storage.put("long", 1L)
+        storage.put("float", 1f)
+        storage.put("double", 1.0)
+
+        Assert.assertEquals(6, storage.entities().first().size)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
     fun `get() will not emit for non-existent key`() = runTest {
         Assert.assertEquals(0, storage.get<Any>("unknown").count())
         Assert.assertEquals(null, storage.get<Any>("unknown").firstOrNull())
