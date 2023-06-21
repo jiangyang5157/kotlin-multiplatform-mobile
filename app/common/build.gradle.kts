@@ -4,6 +4,7 @@ plugins {
     id("kotlin-android")
     id("com.android.library")
     `maven-publish`
+    kotlin("plugin.serialization") version Version.JetbrainsKotlin
 }
 
 afterEvaluate {
@@ -78,6 +79,7 @@ dependencies {
     implementation(Dep.Material)
     implementation(Dep.LifecycleRuntime)
     implementation(Dep.CoroutinesAndroid)
+    implementation(Dep.KotlinxSerializationJson)
 
     testImplementation(Dep.Junit)
 

@@ -18,6 +18,7 @@ object Version {
     const val JetbrainsKotlin = "1.7.20"
     const val JetbrainsKotlinx = "1.6.4"
     const val JetbrainsKotlinxDateTime = "0.4.0"
+    const val JetbrainsKotlinxSerializationJson = "1.5.0"
 
     const val AndroidToolsBuild = "7.3.1"
     const val AndroidSupport = "28.0.0"
@@ -81,8 +82,10 @@ object Dep {
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.JetbrainsKotlinx}"
     const val CoroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.JetbrainsKotlinx}"
-    const val KotlinxDatetime =
+    const val KotlinxDateTime =
         "org.jetbrains.kotlinx:kotlinx-datetime:${Version.JetbrainsKotlinxDateTime}"
+    const val KotlinxSerializationJson =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.JetbrainsKotlinxSerializationJson}"
 
     const val ComposeUi = "androidx.compose.ui:ui:${Version.AndroidxCompose}"
     const val ComposeUiText = "androidx.compose.ui:ui-text:${Version.AndroidxCompose}"
