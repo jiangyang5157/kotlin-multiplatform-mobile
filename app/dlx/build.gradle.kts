@@ -6,18 +6,30 @@ plugins {
 kotlin {
     android()
 
+    android {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = Config.KotlinJvmTarget
+            }
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "dlx"
         }
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                //put your multiplatform dependencies here
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -47,7 +59,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gmail.jiangyang5157.kma"
+    namespace = "com.gmail.jiangyang5157.dlx"
     compileSdk = Config.CompileSdkVersion
     defaultConfig {
         minSdk = Config.MinSdkVersion
