@@ -45,4 +45,4 @@ include(":demo-transaction")
 
 include(":shared") // TODO YangJ: Remove this
 include(":androidApp") // TODO YangJ: Remove this and iosApp
-include(":dlx")
+include(":puzzle")
