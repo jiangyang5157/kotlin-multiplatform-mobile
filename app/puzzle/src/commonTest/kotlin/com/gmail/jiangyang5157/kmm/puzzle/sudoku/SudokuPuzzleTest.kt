@@ -53,7 +53,7 @@ internal object SudokuTemplate {
     object Length_1_1 {
         val data = SudokuPuzzle(
             length = 1,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 1),
             )
         )
@@ -77,7 +77,7 @@ internal object SudokuTemplate {
     object Length_4_0 {
         val data = SudokuPuzzle(
             length = 4,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 1, value = 0),
@@ -137,7 +137,7 @@ internal object SudokuTemplate {
     object Length_4_3 {
         val data = SudokuPuzzle(
             length = 4,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 1, value = 0),
@@ -202,7 +202,7 @@ internal object SudokuTemplate {
     object Length_9_0 {
         val data = SudokuPuzzle(
             length = 9,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
@@ -407,7 +407,7 @@ internal object SudokuTemplate {
     object Length_9_1 {
         val data = SudokuPuzzle(
             length = 9,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
@@ -612,7 +612,7 @@ internal object SudokuTemplate {
     object Length_9_2 {
         val data = SudokuPuzzle(
             length = 9,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 3),
@@ -817,7 +817,7 @@ internal object SudokuTemplate {
     object Length_9_188 {
         val data = SudokuPuzzle(
             length = 9,
-            cells = listOf(
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),

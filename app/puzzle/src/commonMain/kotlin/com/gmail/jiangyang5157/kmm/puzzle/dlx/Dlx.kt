@@ -167,14 +167,14 @@ internal typealias DlxSolution = MutableList<DlxCell?> // TODO YangJ: ?
 internal class Dlx private constructor() {
 
     private lateinit var solution: DlxSolution
-    private lateinit var columns: List<DlxColumn>
+    private lateinit var columns: Array<DlxColumn>
 
     fun columnSize(): Int {
         return columns.size
     }
 
-    fun peekColumn(): List<DlxColumn> {
-        return columns.toList()
+    fun peekColumn(): Array<DlxColumn> {
+        return columns.copyOf()
     }
 
     fun peekSolution(): List<DlxCell?> {
@@ -199,13 +199,13 @@ internal class Dlx private constructor() {
 
     fun reset(size: Int) {
         solution = mutableListOf()
-        columns = emptyList()
+        columns = emptyArray()
 
         if (size < 0) return
 
         // column 0 as head
         val correctSize = size + 1
-        columns = (0 until correctSize).map { DlxColumn(index = it) }
+        columns = Array(correctSize) { i -> DlxColumn(index = i) }
 
         // index: 0
         var it = columns[0]
