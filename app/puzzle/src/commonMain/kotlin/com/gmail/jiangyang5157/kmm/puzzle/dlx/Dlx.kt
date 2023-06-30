@@ -178,14 +178,9 @@ class Dlx private constructor() {
 
     private lateinit var columns: Array<DlxColumn>
 
-    /** list of [DlxCell.row] */
-    private lateinit var solution: Array<DlxCell?>
-
     fun columnSize(): Int = columns.size
 
     fun peekColumn(): Array<DlxColumn> = columns.copyOf()
-
-    fun peekSolution(): List<DlxCell> = solution.filterNotNull()
 
     override fun toString(): String {
         if (!this::columns.isInitialized ||
@@ -200,7 +195,7 @@ class Dlx private constructor() {
             it = it.right()
             columnToString.append("\n")
         }
-        return "Dlx(\ncolumns=\n$columnToString,\nsolution=$solution)"
+        return "Dlx(\ncolumns=\n$columnToString)"
     }
 
     fun reset(size: Int) {
@@ -289,13 +284,15 @@ class Dlx private constructor() {
         }
     }
 
+    /** list of [DlxCell.row] used in [solve] lifecycle */
+    private lateinit var solution: Array<DlxCell?>
     fun solve(accept: (row: List<DlxCell>) -> Boolean): Boolean {
         if (columns.isEmpty()) return false
 
         val head = columns[0]
 
         var it: DlxColumn = head.right()!!
-        if (it == head) return accept(peekSolution())
+        if (it == head) return accept(solution.filterNotNull())
 
         // find the column has minimum size, it improves overall performance by compare with linear iterator
         var targetColumn = it

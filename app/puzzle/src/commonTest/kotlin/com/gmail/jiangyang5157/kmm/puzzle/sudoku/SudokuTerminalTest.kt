@@ -200,9 +200,10 @@ internal object SudokuTerminalTemplate {
      */
     object Length_1_1 {
         val data = SudokuTerminal(
-            length = 1, cells = arrayOf(
+            length = 1,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 1),
-            )
+            ),
         )
         const val json = """
     {
@@ -223,7 +224,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_4_0 {
         val data = SudokuTerminal(
-            length = 4, cells = arrayOf(
+            length = 4,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 1, value = 0),
@@ -243,7 +245,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 2, value = 0),
                 SudokuCell(block = 3, value = 4),
                 SudokuCell(block = 3, value = 3),
-            )
+            ),
         )
         const val json = """
     {
@@ -282,7 +284,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_4_3 {
         val data = SudokuTerminal(
-            length = 4, cells = arrayOf(
+            length = 4,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 1, value = 0),
@@ -302,7 +305,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 2, value = 0),
                 SudokuCell(block = 3, value = 0),
                 SudokuCell(block = 3, value = 3),
-            )
+            ),
         )
         const val json = """
     {
@@ -346,7 +349,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_9_0 {
         val data = SudokuTerminal(
-            length = 9, cells = arrayOf(
+            length = 9,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
@@ -436,7 +440,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
-            )
+            ),
         )
         const val json = """
     {
@@ -550,7 +554,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_9_1 {
         val data = SudokuTerminal(
-            length = 9, cells = arrayOf(
+            length = 9,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
@@ -640,7 +645,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
-            )
+            ),
         )
         const val json = """
     {
@@ -754,7 +759,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_9_2 {
         val data = SudokuTerminal(
-            length = 9, cells = arrayOf(
+            length = 9,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 3),
@@ -844,7 +850,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 8, value = 6),
                 SudokuCell(block = 8, value = 4),
                 SudokuCell(block = 8, value = 2),
-            )
+            ),
         )
         const val json = """
     {
@@ -958,7 +964,8 @@ internal object SudokuTerminalTemplate {
      */
     object Length_9_188 {
         val data = SudokuTerminal(
-            length = 9, cells = arrayOf(
+            length = 9,
+            cells = arrayOf(
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
                 SudokuCell(block = 0, value = 0),
@@ -1048,7 +1055,7 @@ internal object SudokuTerminalTemplate {
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
                 SudokuCell(block = 8, value = 0),
-            )
+            ),
         )
         const val json = """
     {

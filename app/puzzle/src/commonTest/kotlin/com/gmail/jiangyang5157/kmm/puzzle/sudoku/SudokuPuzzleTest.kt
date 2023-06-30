@@ -23,8 +23,8 @@ class SudokuPuzzleTest {
         println("#### puzzle=$puzzle")
         println("#### dlx=${puzzle.dlx}")
 
-        puzzle.solve {
-            println("#### puzzle.solve=$it")
+        puzzle.solve { terminal ->
+            println("#### puzzle.solve=$terminal")
             false
         }
     }

@@ -55,16 +55,16 @@ data class SudokuPuzzle(
         }
     }
 
-    fun solve(accept: (SudokuTerminal) -> Boolean) {
-        dlx.solve {
-            println("#### solve=$it")
+    fun solve(accept: (terminal: SudokuTerminal) -> Boolean) {
+        dlx.solve { cells ->
+            println("#### solve=$cells")
             val terminalClone = terminal.copy()
             val terminalLength = terminalClone.length
-            it.forEach {
+            cells.forEach { cell ->
                 val nodeRowColumnIndex =
-                    it!!.row.column.index // [cellConstraintOffset + 1, rowConstraintOffset]
+                    cell.row.column.index // [cellConstraintOffset + 1, rowConstraintOffset]
                 val nodeRowRightColumnIndex =
-                    it.row.right<DlxCell>()!!.column.index // [rowConstraintOffset + 1, columnConstraintOffset]
+                    cell.row.right<DlxCell>()!!.column.index // [rowConstraintOffset + 1, columnConstraintOffset]
                 val index = nodeRowColumnIndex - 1 // [0, terminalSize - 1]
                 val value = nodeRowRightColumnIndex % terminalLength + 1 // [0, terminalLength - 1]
                 terminalClone.cells[index].value = value

@@ -10,7 +10,6 @@ class DlxTest {
     fun `Dlx create`() {
         val dlx = Dlx(10)
         assertTrue(dlx.columnSize() == 11)
-        assertTrue(dlx.peekSolution().isEmpty())
     }
 
     @Test
