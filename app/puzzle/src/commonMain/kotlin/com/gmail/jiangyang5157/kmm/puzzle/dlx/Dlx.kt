@@ -299,7 +299,7 @@ class Dlx private constructor() {
         var ret = false
         targetColumn.cover()
         solution += listOf(null)
-        println("#### targetColumn=${targetColumn.index} - $this")
+        println("#### targetColumn=${targetColumn.index}")
 
         val oLen = solution.size
         var j = targetColumn.down!!
