@@ -44,7 +44,7 @@ data class SudokuTerminal(
         var index = 0
         for (i in 0 until length) {
             for (j in 0 until length) {
-                cellsToString.append("${cells[index]},")
+                cellsToString.append("${cells[index].valueToString()},")
                 index++
             }
             cellsToString.append("\n")
@@ -89,6 +89,10 @@ data class SudokuCell(
     @SerialName("block") val block: Int = -1, // [0, )
     @SerialName("value") var value: Int = 0, // 0: none
 ) {
+
+    fun valueToString(): String {
+        return "$value"
+    }
 
     override fun toString(): String {
         return "$value[$block]"

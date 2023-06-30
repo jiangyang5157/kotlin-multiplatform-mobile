@@ -72,7 +72,8 @@ data class SudokuPuzzle(
                 val nodeRowRightColumnIndex =
                     cell.row.right<DlxCell>()!!.column.index // [rowConstraintOffset + 1, columnConstraintOffset]
                 val index = nodeRowColumnIndex - 1 // [0, terminalSize - 1]
-                val value = nodeRowRightColumnIndex % terminalLength + 1 // [0, terminalLength - 1]
+                val value =
+                    (nodeRowRightColumnIndex - 1) % terminalLength + 1 // [0, terminalLength - 1]
                 terminalClone.cells[index].value = value
             }
             accept(terminalClone)
