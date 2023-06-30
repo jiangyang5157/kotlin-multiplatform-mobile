@@ -169,17 +169,11 @@ internal class Dlx private constructor() {
     private lateinit var solution: DlxSolution
     private lateinit var columns: Array<DlxColumn>
 
-    fun columnSize(): Int {
-        return columns.size
-    }
+    fun columnSize(): Int = columns.size
 
-    fun peekColumn(): Array<DlxColumn> {
-        return columns.copyOf()
-    }
+    fun peekColumn(): Array<DlxColumn> = columns.copyOf()
 
-    fun peekSolution(): List<DlxCell?> {
-        return solution.toList()
-    }
+    fun peekSolution(): List<DlxCell?> = solution.toList()
 
     override fun toString(): String {
         if (!this::columns.isInitialized ||
