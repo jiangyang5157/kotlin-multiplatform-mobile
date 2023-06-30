@@ -56,20 +56,15 @@ class DlxCell : DlxNode() {
     // first cell in the row
     lateinit var row: DlxCell
 
-//    fun rowToString(): String {
-//        if (!this::column.isInitialized ||
-//            !this::row.isInitialized
-//        ) return "DlxCell(ERROR: member is not Initialized)"
-//
-//        val ret = StringBuilder()
-//        var it = row
-//        val last = row.left<DlxCell>()
-//        while (it != last) {
-//            ret.append("${it.column.index}, ")
-//            it = it.right()!!
-//        }
-//        return "row by column index: [${ret}]"
-//    }
+    fun buildRowCells(): List<DlxCell> {
+        val ret = mutableListOf(row)
+        var it: DlxCell? = row.right()
+        while (it != null && it != row) {
+            ret.add(it)
+            it = it.right()
+        }
+        return ret.toList()
+    }
 
     override fun toString(): String {
         if (!this::column.isInitialized ||
@@ -175,18 +170,18 @@ internal fun DlxColumn.uncover() {
     left?.right = this
 }
 
-typealias DlxSolution = MutableList<DlxCell?> // TODO YangJ: ?
-
 class Dlx private constructor() {
 
-    private lateinit var solution: DlxSolution
     private lateinit var columns: Array<DlxColumn>
+
+    /** list of [DlxCell.row] */
+    private lateinit var solution: Array<DlxCell?>
 
     fun columnSize(): Int = columns.size
 
     fun peekColumn(): Array<DlxColumn> = columns.copyOf()
 
-    fun peekSolution(): List<DlxCell?> = solution.toList()
+    fun peekSolution(): List<DlxCell> = solution.filterNotNull()
 
     override fun toString(): String {
         if (!this::columns.isInitialized ||
@@ -205,7 +200,7 @@ class Dlx private constructor() {
     }
 
     fun reset(size: Int) {
-        solution = mutableListOf()
+        solution = emptyArray()
         columns = emptyArray()
 
         if (size < 0) return
@@ -290,13 +285,13 @@ class Dlx private constructor() {
         }
     }
 
-    fun solve(accept: (row: DlxSolution) -> Boolean): Boolean {
+    fun solve(accept: (row: List<DlxCell>) -> Boolean): Boolean {
         if (columns.isEmpty()) return false
 
         val head = columns[0]
 
         var it: DlxColumn = head.right()!!
-        if (it == head) return accept(solution)
+        if (it == head) return accept(peekSolution())
 
         // find the column has minimum size, it improves overall performance by compare with linear iterator
         var targetColumn = it
@@ -338,7 +333,7 @@ class Dlx private constructor() {
             j = j.down!!
         }
 
-        solution = solution.dropLast(1).toMutableList()
+        solution = solution.dropLast(1).toTypedArray()
         targetColumn.uncover()
         return ret
     }
