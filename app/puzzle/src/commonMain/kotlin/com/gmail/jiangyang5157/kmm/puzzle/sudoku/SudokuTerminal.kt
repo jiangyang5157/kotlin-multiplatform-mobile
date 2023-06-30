@@ -87,8 +87,9 @@ data class SudokuTerminal(
 @Serializable
 data class SudokuCell(
     @SerialName("block") val block: Int = -1, // [0, )
-    @SerialName("value") val value: Int = 0, // 0: none
+    @SerialName("value") var value: Int = 0, // 0: none
 ) {
+
     override fun toString(): String {
         return "$value[$block]"
     }

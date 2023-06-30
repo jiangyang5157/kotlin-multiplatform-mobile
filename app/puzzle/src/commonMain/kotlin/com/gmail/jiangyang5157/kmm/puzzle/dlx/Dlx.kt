@@ -16,7 +16,7 @@ Dancing Links (Algorithm X) data struct.
                             |           |           |
 */
 
-internal open class DlxNode(
+open class DlxNode(
     var up: DlxNode? = null,
     var down: DlxNode? = null,
     var left: DlxNode? = null,
@@ -52,7 +52,7 @@ internal inline fun <reified T : DlxNode> DlxNode.down(): T? = down as? T
 internal inline fun <reified T : DlxNode> DlxNode.left(): T? = left as? T
 internal inline fun <reified T : DlxNode> DlxNode.right(): T? = right as? T
 
-internal class DlxCell : DlxNode() {
+class DlxCell : DlxNode() {
 
     // the column this cell belongs to
     lateinit var column: DlxColumn
@@ -91,7 +91,7 @@ internal class DlxCell : DlxNode() {
     }
 }
 
-internal class DlxColumn(
+class DlxColumn(
     // index of this column
     val index: Int = -1,
     // size of cells belongs to this column
@@ -162,9 +162,9 @@ internal fun DlxColumn.uncover() {
     left?.right = this
 }
 
-internal typealias DlxSolution = MutableList<DlxCell?> // TODO YangJ: ?
+typealias DlxSolution = MutableList<DlxCell?> // TODO YangJ: ?
 
-internal class Dlx private constructor() {
+class Dlx private constructor() {
 
     private lateinit var solution: DlxSolution
     private lateinit var columns: Array<DlxColumn>
@@ -224,7 +224,7 @@ internal class Dlx private constructor() {
     }
 
     // append row of cells to the bottom by a list of column indexes, note that column 0 is head
-    fun feed(columnIndexes: List<Int>) {
+    fun feed(columnIndexes: Array<Int>) {
         if (columns.isEmpty()) return
         columnIndexes.forEach {
             if (it < 1) return // head is not for feed
