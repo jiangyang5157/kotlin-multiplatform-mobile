@@ -99,4 +99,13 @@ class SudokuPuzzleTest {
         assertEquals(188, found)
         assertEquals(false, puzzle.withUniqueSolution())
     }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuPuzzle withUniqueSolution`() {
+        val elapsed: Duration = measureTime {
+            SudokuPuzzle.withUniqueSolution(9, 8, 70)
+        }
+        println("SudokuPuzzle withUniqueSolution - Measuring solve time: $elapsed")
+    }
 }

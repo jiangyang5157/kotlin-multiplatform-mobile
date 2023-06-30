@@ -39,12 +39,25 @@ data class SudokuTerminal(
         right(index).let { if (it == -1) null else it },
     )
 
+    fun simpleString(): String {
+        val cellsToString = StringBuilder()
+        var index = 0
+        for (i in 0 until length) {
+            for (j in 0 until length) {
+                cellsToString.append("${cells[index].simpleString()},")
+                index++
+            }
+            cellsToString.append("\n")
+        }
+        return "SudokuTerminal(\nlength=$length,\ncells=\n$cellsToString)"
+    }
+
     override fun toString(): String {
         val cellsToString = StringBuilder()
         var index = 0
         for (i in 0 until length) {
             for (j in 0 until length) {
-                cellsToString.append("${cells[index].valueToString()},")
+                cellsToString.append("${cells[index]},")
                 index++
             }
             cellsToString.append("\n")
@@ -90,7 +103,7 @@ data class SudokuCell(
     @SerialName("value") var value: Int = 0, // 0: none
 ) {
 
-    fun valueToString(): String {
+    fun simpleString(): String {
         return "$value"
     }
 

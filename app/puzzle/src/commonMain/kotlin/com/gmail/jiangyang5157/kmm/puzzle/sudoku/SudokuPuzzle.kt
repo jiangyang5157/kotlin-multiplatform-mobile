@@ -3,6 +3,7 @@ package com.gmail.jiangyang5157.kmm.puzzle.sudoku
 import com.gmail.jiangyang5157.kmm.puzzle.dlx.Dlx
 import com.gmail.jiangyang5157.kmm.puzzle.dlx.DlxCell
 import com.gmail.jiangyang5157.kmm.puzzle.dlx.right
+import kotlin.math.sqrt
 
 data class SudokuPuzzle(
     private val terminal: SudokuTerminal,
@@ -99,6 +100,43 @@ data class SudokuPuzzle(
     }
 
     companion object {
+
+        fun withUniqueSolution(
+            length: Int,
+            minGiven: Int,
+            minBlockGiven: Int,
+        ): SudokuPuzzle {
+            val terminal = SudokuTerminal(length)
+            val terminalLength = terminal.length
+            val terminalSize = terminal.cells.size
+            val square = sqrt(terminalLength.toFloat()).toInt()
+
+            var trys = 0
+            while (true) {
+                trys++
+                println("withUniqueSolution trys=$trys")
+                val copy = terminal.copy()
+
+                // feed block
+                for (i in 0 until terminalSize) {
+                    val row = copy.row(i)
+                    val column = copy.column(i)
+                    val cell = copy.cells[i]
+                    cell.block = (row / square) * square + column / square
+                }
+
+                // feed random digits into diagonal squares
+                // TODO YangJ
+
+                SudokuPuzzle(copy).first()?.let {
+                    // dig out some values also make sure it still with unique solution
+                    // TODO YangJ
+
+                    println("#### copy=${copy}")
+                    return SudokuPuzzle(it)
+                }
+            }
+        }
 
 
     }
