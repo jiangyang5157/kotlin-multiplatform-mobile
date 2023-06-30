@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kmm.dlx
+package com.gmail.jiangyang5157.shared.common.data.dlx
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -145,6 +145,7 @@ class DlxTest {
         dlx.feed(arrayOf(4))
         dlx.solve {
             fail()
+            @Suppress("UNREACHABLE_CODE")
             false
         }
     }

@@ -30,7 +30,7 @@ kotlin {
             dependencies {
                 //put your multiplatform dependencies here
                 implementation(Dep.KotlinxSerializationJson)
-                implementation(project(":dlx"))
+                implementation(project(":shared-common"))
             }
         }
         val commonTest by getting {

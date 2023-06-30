@@ -20,7 +20,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "dlx"
+            baseName = "shared-common"
         }
     }
 
@@ -60,7 +60,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gmail.jiangyang5157.dlx"
+    namespace = "com.gmail.jiangyang5157.shared.common"
     compileSdk = Config.CompileSdkVersion
     defaultConfig {
         minSdk = Config.MinSdkVersion

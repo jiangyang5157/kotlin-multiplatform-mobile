@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kmm.dlx
+package com.gmail.jiangyang5157.shared.common.data.dlx
 
 /*
 Dancing Links (Algorithm X) data struct.
