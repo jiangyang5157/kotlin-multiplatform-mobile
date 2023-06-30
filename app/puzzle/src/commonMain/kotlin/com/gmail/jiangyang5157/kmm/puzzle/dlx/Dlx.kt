@@ -23,10 +23,6 @@ open class DlxNode(
     var right: DlxNode? = null,
 ) {
 
-    override fun toString(): String {
-        return "DlxNode(up=$up, down=$down, left=$left, right=$right)"
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is DlxNode) return false
@@ -60,11 +56,26 @@ class DlxCell : DlxNode() {
     // first cell in the row
     lateinit var row: DlxCell
 
+//    fun rowToString(): String {
+//        if (!this::column.isInitialized ||
+//            !this::row.isInitialized
+//        ) return "DlxCell(ERROR: member is not Initialized)"
+//
+//        val ret = StringBuilder()
+//        var it = row
+//        val last = row.left<DlxCell>()
+//        while (it != last) {
+//            ret.append("${it.column.index}, ")
+//            it = it.right()!!
+//        }
+//        return "row by column index: [${ret}]"
+//    }
+
     override fun toString(): String {
         if (!this::column.isInitialized ||
             !this::row.isInitialized
         ) return "DlxCell(ERROR: member is not Initialized)"
-        return "DlxCell(column=$column, row=$row, up=$up, down=$down, left=$left, right=$right)"
+        return "DlxCell(column=${column.index}[${column.size}])"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -99,7 +110,7 @@ class DlxColumn(
 ) : DlxNode() {
 
     override fun toString(): String {
-        return "DlxColumn(index=$index, size=$size)"
+        return "DlxColumn($index[$size])"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -128,7 +139,7 @@ class DlxColumn(
 
 // remove the column
 internal fun DlxColumn.cover() {
-    println("cover $index[$size]")
+    println("cover column $index")
     right?.left = left
     left?.right = right
 
@@ -147,7 +158,7 @@ internal fun DlxColumn.cover() {
 
 // add the column back
 internal fun DlxColumn.uncover() {
-    println("uncover $index[$size]")
+    println("uncover column $index")
     var i = up
     while (i != null && i != this) {
         var j: DlxCell = i.left()!!
@@ -190,7 +201,7 @@ class Dlx private constructor() {
             it = it.right()
             columnToString.append("\n")
         }
-        return "Dlx(\nhead=$head,\ncolumns=\n$columnToString,\nsolution=$solution)"
+        return "Dlx(\ncolumns=\n$columnToString,\nsolution=$solution)"
     }
 
     fun reset(size: Int) {
@@ -279,7 +290,7 @@ class Dlx private constructor() {
         }
     }
 
-    fun solve(accept: (DlxSolution) -> Boolean): Boolean {
+    fun solve(accept: (row: DlxSolution) -> Boolean): Boolean {
         if (columns.isEmpty()) return false
 
         val head = columns[0]
@@ -302,21 +313,21 @@ class Dlx private constructor() {
         targetColumn.cover()
         solution += listOf(null)
 
-        val oLen = solution.size
+        val solutionSize = solution.size
         var j = targetColumn.down!!
         while (j != targetColumn) {
             if (ret) {
                 break
             }
 
-            solution[oLen - 1] = j as DlxCell
+            solution[solutionSize - 1] = j as DlxCell
             var i: DlxCell = j.right()!!
             while (i != j) {
                 i.column.cover()
                 i = i.right()!!
             }
             ret = solve(accept)
-            j = solution[oLen - 1] as DlxCell
+            j = solution[solutionSize - 1] as DlxCell
             targetColumn = j.column
 
             i = j.left()!!
@@ -327,7 +338,7 @@ class Dlx private constructor() {
             j = j.down!!
         }
 
-        solution = solution.take(oLen - 1).toMutableList()
+        solution = solution.dropLast(1).toMutableList()
         targetColumn.uncover()
         return ret
     }
