@@ -5,7 +5,7 @@ import com.gmail.jiangyang5157.kmm.puzzle.dlx.DlxCell
 import com.gmail.jiangyang5157.kmm.puzzle.dlx.right
 
 data class SudokuPuzzle(
-    val terminal: SudokuTerminal,
+    private val terminal: SudokuTerminal,
 ) {
     lateinit var dlx: Dlx
 
@@ -62,6 +62,15 @@ data class SudokuPuzzle(
         }
     }
 
+    fun withUniqueSolution(): Boolean {
+        var found = 0
+        dlx.solve {
+            found++
+            found > 1
+        }
+        return found == 1
+    }
+
     fun solve(accept: (terminal: SudokuTerminal) -> Boolean) {
         dlx.solve { cells ->
             val terminalClone = terminal.copy()
@@ -80,12 +89,17 @@ data class SudokuPuzzle(
         }
     }
 
-    fun hasUniqueSolution(): Boolean {
-        var found = 0
-        dlx.solve {
-            found++
-            found > 1
+    fun first(): SudokuTerminal? {
+        var ret: SudokuTerminal? = null
+        solve {
+            ret = it
+            true
         }
-        return found == 1
+        return ret
+    }
+
+    companion object {
+
+
     }
 }
