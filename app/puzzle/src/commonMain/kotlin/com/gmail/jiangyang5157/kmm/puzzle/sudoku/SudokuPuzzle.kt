@@ -106,88 +106,93 @@ data class SudokuPuzzle(
             minSubGiven: Int,
             minTotalGiven: Int,
         ): SudokuTerminal {
-            var trys = 0
+            var round = 0
             while (true) {
-                trys++
-                println("withUniqueSolution trys=$trys")
+                // it will be unlikely need a seconder round
+                round++
+                println("SudokuPuzzle.withUniqueSolution round=$round")
+
+                // initialize blank terminal with block and value unassigned
                 val terminal = SudokuTerminal(length)
+
                 val terminalLength = terminal.length
                 val terminalSize = terminal.cells.size
-                val square = sqrt(terminalLength.toFloat()).toInt()
 
-                // feed block
+                // block length, eg: block length is 3 in a length=9 (9x9) puzzle
+                val blockLength = sqrt(terminalLength.toFloat()).toInt()
+
+                // feed terminal block
                 for (i in 0 until terminalSize) {
                     val row = terminal.row(i)
                     val column = terminal.column(i)
                     val cell = terminal.cells[i]
-                    cell.block = (row / square) * square + column / square
+                    cell.block = (row / blockLength) * blockLength + column / blockLength
                 }
-//                println("#### feed block=${terminal}")
 
-                // feed random values into diagonal squares
-                val blockIndexes = mutableMapOf<Int, MutableMap<Int, Boolean>>()
+                // feed random values into diagonal block of terminal
+                val blockState = mutableMapOf<Int, MutableMap<Int, Boolean>>()
                 val tmp = IntArray(terminalLength) { i -> i + 1 }
-                for (i in 0 until terminalLength step square + 1) {
+                for (i in 0 until terminalLength step blockLength + 1) {
                     tmp.shuffle()
                     for (j in 0 until terminalLength) {
-                        val k = (i / square) * square
-                        val row = j / square + k
-                        val column = j % square + k
+                        val k = (i / blockLength) * blockLength
+                        val row = j / blockLength + k
+                        val column = j % blockLength + k
                         val index = terminal.index(row, column)
-                        if (!blockIndexes.containsKey(terminal.cells[index].block)) {
-                            blockIndexes[terminal.cells[index].block] = mutableMapOf()
+                        val cell = terminal.cells[index]
+                        val cellBlock = cell.block
+
+                        if (!blockState.containsKey(cellBlock)) {
+                            blockState[cellBlock] = mutableMapOf()
                         }
-                        if (blockIndexes[terminal.cells[index].block]!![tmp[j]] != null) {
+                        if (blockState[cellBlock]?.get(tmp[j]) != null) {
                             continue
                         }
-                        terminal.cells[index].value = tmp[j]
-                        blockIndexes[terminal.cells[index].block]!![tmp[j]] = true
+
+                        cell.value = tmp[j]
+                        blockState[cellBlock]?.set(tmp[j], true)
                     }
                 }
-//                println("#### feed random values=${terminal}")
 
+                // build a completed terminal by using the first solution, it will be unlikely 0 solution here
                 SudokuPuzzle(terminal).first()?.let { first ->
-                    // dig out values also make sure it still with unique solution
+                    // dig out values one by one and make sure it still with unique solution in the process
                     var remainTotalGiven = terminalSize
                     val remainRowGiven = IntArray(terminalLength) { terminalLength }
                     val remainColumnGiven = IntArray(terminalLength) { terminalLength }
 
-                    val tmp1 = IntArray(terminalLength) { i -> i }
-                    val tmp2 = IntArray(terminalLength) { i -> i }
+                    val rowIndexes = IntArray(terminalLength) { i -> i }
+                    val columnIndexes = IntArray(terminalLength) { i -> i }
                     for (i in 0 until terminalLength) {
-                        val row = tmp1[i]
-                        tmp2.shuffle()
+                        val row = rowIndexes[i]
+                        columnIndexes.shuffle()
                         for (j in 0 until terminalLength) {
-                            val col = tmp2[j]
+                            val column = columnIndexes[j]
                             when {
-                                remainTotalGiven <= minTotalGiven -> continue
-                                remainColumnGiven[col] <= minSubGiven -> continue
                                 remainRowGiven[row] <= minSubGiven -> continue
+                                remainColumnGiven[column] <= minSubGiven -> continue
+                                remainTotalGiven <= minTotalGiven -> continue
                                 else -> {
-                                    val cell = first.cell(row, col)
-                                    val cache = cell.value
-                                    cell.value = 0 // clear the value
-
+                                    val cell = first.cell(row, column)
+                                    val valueBackup = cell.value
+                                    cell.value = 0
                                     if (SudokuPuzzle(first).withUniqueSolution()) {
-//                                        println("#### clear the value OK")
-                                        remainTotalGiven--
-                                        remainColumnGiven[col]--
+//                                        println("#### clear the value")
                                         remainRowGiven[row]--
+                                        remainColumnGiven[column]--
+                                        remainTotalGiven--
                                     } else {
 //                                        println("#### revert the value")
-                                        cell.value = cache // revert the value
+                                        cell.value = valueBackup
                                     }
                                 }
                             }
                         }
                     }
-//                    println("#### dig out values=${terminal}")
 
                     return terminal
                 }
             }
         }
-
-
     }
 }

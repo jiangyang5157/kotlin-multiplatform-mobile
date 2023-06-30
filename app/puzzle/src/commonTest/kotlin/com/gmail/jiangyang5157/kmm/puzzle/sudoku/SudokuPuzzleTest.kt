@@ -104,17 +104,16 @@ class SudokuPuzzleTest {
     @Test
     fun `SudokuPuzzle withUniqueSolution`() {
         var terminal: SudokuTerminal
-        val elapsed: Duration = measureTime {
+        var elapsed: Duration = measureTime {
             terminal = SudokuPuzzle.withUniqueSolution(9, 1, 18)
             println("#### SudokuPuzzle.withUniqueSolution=\n${terminal.simpleString()}")
         }
-        val puzzle = SudokuPuzzle(terminal)
         println("SudokuPuzzle withUniqueSolution - Measuring solve time: $elapsed")
-        assertEquals(true, puzzle.withUniqueSolution())
+        assertEquals(true, SudokuPuzzle(terminal).withUniqueSolution())
 
-        val elapsed2: Duration = measureTime {
-            println("#### SudokuPuzzle solve=\n${puzzle.first()?.simpleString()}")
+        elapsed = measureTime {
+            println("#### SudokuPuzzle solve=\n${SudokuPuzzle(terminal).first()?.simpleString()}")
         }
-        println("SudokuPuzzle solved - Measuring solve time: $elapsed2")
+        println("SudokuPuzzle solved - Measuring solve time: $elapsed")
     }
 }
