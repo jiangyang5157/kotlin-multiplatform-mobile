@@ -25,10 +25,11 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(1, found)
+        assertEquals(true, puzzle.hasUniqueSolution())
     }
 
     @Test
-    fun `SudokuPuzzle Length_4_3 has 0 solutions`() {
+    fun `SudokuPuzzle Length_4_0 has 0 solutions`() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_0.data)
         var found = 0
         puzzle.solve {
@@ -36,6 +37,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(0, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -47,6 +49,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(3, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -58,6 +61,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(0, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -69,6 +73,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(1, found)
+        assertEquals(true, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
@@ -84,6 +89,7 @@ class SudokuPuzzleTest {
         }
         println("SudokuPuzzle Length_9_2 has 2 solutions - Measuring solve time: $elapsed")
         assertEquals(2, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
@@ -99,5 +105,6 @@ class SudokuPuzzleTest {
         }
         println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time: $elapsed")
         assertEquals(188, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 }
