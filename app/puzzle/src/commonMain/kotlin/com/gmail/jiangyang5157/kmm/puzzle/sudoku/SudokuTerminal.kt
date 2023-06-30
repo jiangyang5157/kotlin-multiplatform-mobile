@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SudokuPuzzle(
-    @SerialName("length") val length: Int, // [1, ), edge length indicating the puzzle terminal size: length x length
+data class SudokuTerminal(
+    @SerialName("length") val length: Int, // [1, ), edge length indicating the terminal size: length x length
     @SerialName("cells") val cells: Array<SudokuCell>, // left-to-right and up-to-down, size = length * length
 ) {
 
@@ -49,13 +49,13 @@ data class SudokuPuzzle(
             }
             cellsToString.append("\n")
         }
-        return "SudokuPuzzle(\nlength=$length,\ncells=\n$cellsToString)"
+        return "SudokuTerminal(\nlength=$length,\ncells=\n$cellsToString)"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || this::class != other::class) return false
-        other as SudokuPuzzle
+        other as SudokuTerminal
         if (length != other.length) return false
         if (!cells.contentEquals(other.cells)) return false
         return true
@@ -69,9 +69,9 @@ data class SudokuPuzzle(
 
     companion object {
 
-        operator fun invoke(length: Int): SudokuPuzzle {
+        operator fun invoke(length: Int): SudokuTerminal {
             if (length < 1) throw IllegalArgumentException("length should bigger than 1")
-            return SudokuPuzzle(
+            return SudokuTerminal(
                 length = length,
                 cells = Array(length * length) {
                     SudokuCell(
