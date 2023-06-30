@@ -7,30 +7,15 @@ import kotlin.test.fail
 class DlxTest {
 
     @Test
-    fun `Dlx create`() {
-        val dlx = Dlx(10)
-        assertTrue(dlx.columnSize() == 11)
-    }
-
-    @Test
-    fun `Dlx reset with positive size`() {
-        val dlx = Dlx(10)
-        assertTrue(dlx.columnSize() == 11)
-        dlx.feed(arrayOf(1, 2, 3, 4))
-        dlx.feed(arrayOf(2, 3, 4, 5))
-        dlx.feed(arrayOf(7, 8, 9, 10))
-        dlx.reset(1)
-        assertTrue(dlx.columnSize() == 2)
-        dlx.reset(0)
+    fun `Dlx with 0`() {
+        val dlx = Dlx(0)
         assertTrue(dlx.columnSize() == 1)
     }
 
     @Test
-    fun `Dlx reset with negative size`() {
-        val dlx = Dlx(-1)
-        assertTrue(dlx.columnSize() == 0)
-        dlx.reset(-2)
-        assertTrue(dlx.columnSize() == 0)
+    fun `Dlx with 10`() {
+        val dlx = Dlx(10)
+        assertTrue(dlx.columnSize() == 11)
     }
 
     @Test

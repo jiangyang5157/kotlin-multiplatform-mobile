@@ -176,15 +176,14 @@ class Dlx private constructor() {
 
     private lateinit var columns: Array<DlxColumn>
 
+    /** list of [DlxCell.row] used in [solve] lifecycle */
+    private var solution: Array<DlxCell?> = emptyArray()
+
     fun columnSize(): Int = columns.size
 
     fun peekColumn(): Array<DlxColumn> = columns.copyOf()
 
     override fun toString(): String {
-        if (!this::columns.isInitialized ||
-            !this::solution.isInitialized
-        ) return "Dlx(ERROR: member is not Initialized)"
-
         val columnToString = StringBuilder()
         val head: DlxColumn? = if (columns.isEmpty()) null else columns[0]
         var it: DlxColumn? = head?.right()
@@ -196,7 +195,7 @@ class Dlx private constructor() {
         return "Dlx(\ncolumns=\n$columnToString)"
     }
 
-    fun reset(size: Int) {
+    private fun initialize(size: Int) {
         solution = emptyArray()
         columns = emptyArray()
 
@@ -231,6 +230,7 @@ class Dlx private constructor() {
     // append row of cells to the bottom by a list of column indexes, note that column 0 is head
     fun feed(columnIndexes: Array<Int>) {
         if (columns.isEmpty()) return
+
         columnIndexes.forEach {
             if (it < 1) return // head is not for feed
             if (it > columns.size - 1) return // contains column index out of bound
@@ -276,14 +276,14 @@ class Dlx private constructor() {
     companion object {
 
         operator fun invoke(size: Int): Dlx {
+            if (size < 0) throw IllegalArgumentException()
+
             val ret = Dlx()
-            ret.reset(size)
+            ret.initialize(size)
             return ret
         }
     }
 
-    /** list of [DlxCell.row] used in [solve] lifecycle */
-    private lateinit var solution: Array<DlxCell?>
     fun solve(accept: (row: List<DlxCell>) -> Boolean): Boolean {
         if (columns.isEmpty()) return false
 
@@ -305,7 +305,7 @@ class Dlx private constructor() {
 
         var ret = false
         targetColumn.cover()
-        solution += listOf(null)
+        solution = solution + null
 
         val solutionSize = solution.size
         var j = targetColumn.down!!

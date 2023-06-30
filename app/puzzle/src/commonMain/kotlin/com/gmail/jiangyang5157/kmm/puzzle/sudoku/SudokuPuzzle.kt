@@ -10,7 +10,7 @@ data class SudokuPuzzle(
     lateinit var dlx: Dlx
 
     init {
-        reset()
+        initialize()
     }
 
     /*
@@ -20,7 +20,7 @@ data class SudokuPuzzle(
     3. Each column must has [1, 9]: 9 * 9 = 81 constraints in column 163-243
     4. Each block must has [1, 9]: 9 * 9 = 81 constraints in column 244-324
     */
-    fun reset() {
+    private fun initialize() {
         val terminalSize = terminal.cells.size
         val terminalLength = terminal.length
         val cellConstraintOffset = 0
