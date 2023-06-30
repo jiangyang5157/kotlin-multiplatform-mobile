@@ -2,6 +2,7 @@ package com.gmail.jiangyang5157.kmm.puzzle.dlx
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 class DlxTest {
 
@@ -83,7 +84,7 @@ class DlxTest {
     }
 
     @Test
-    fun `Dlx solve 4`() {
+    fun `Dlx solve 4 with 2 solutions`() {
         /*
         Example:
         {1,2,3,4}
@@ -104,16 +105,14 @@ class DlxTest {
         dlx.feed(arrayOf(4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println(
-                    "#### Dlx solved: ${cell.buildRowCells().joinToString(", ") { it.toString() }}"
-                )
+                println("#### Dlx solved: ${cell.rowCellsToString()}}")
             }
             false
         }
     }
 
     @Test
-    fun `Dlx solve 7`() {
+    fun `Dlx solve 7 with 2 solutions`() {
         /*
         Example:
         {1,2,3,4,5,6,7}
@@ -140,10 +139,28 @@ class DlxTest {
         dlx.feed(arrayOf(1, 4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println(
-                    "#### Dlx solved: ${cell.buildRowCells().joinToString(", ") { it.toString() }}"
-                )
+                println("#### Dlx solved: ${cell.rowCellsToString()}}")
             }
+            false
+        }
+    }
+
+    @Test
+    fun `Dlx solve 4 with 0 solution`() {
+        /*
+        Example:
+        {1,2,3,4}
+
+        set-1 = {1,2}
+        set-4 = {4}
+
+        Solutions: NA
+        */
+        val dlx = Dlx(4)
+        dlx.feed(arrayOf(1, 2))
+        dlx.feed(arrayOf(4))
+        dlx.solve {
+            fail()
             false
         }
     }

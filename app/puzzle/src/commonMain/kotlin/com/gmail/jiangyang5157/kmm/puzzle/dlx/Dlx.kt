@@ -56,7 +56,7 @@ class DlxCell : DlxNode() {
     // first cell in the row
     lateinit var row: DlxCell
 
-    fun buildRowCells(): List<DlxCell> {
+    fun rowCells(): List<DlxCell> {
         val ret = mutableListOf(row)
         var it: DlxCell? = row.right()
         while (it != null && it != row) {
@@ -64,6 +64,10 @@ class DlxCell : DlxNode() {
             it = it.right()
         }
         return ret.toList()
+    }
+
+    fun rowCellsToString(): String {
+        return rowCells().joinToString(", ") { it.toString() }
     }
 
     override fun toString(): String {
