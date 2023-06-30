@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kmm.puzzle.dlx
+package com.gmail.jiangyang5157.kmm.dlx
 
 import kotlin.test.Test
 import kotlin.test.assertTrue

@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version Version.JetbrainsKotlin
     id("com.android.library")
 }
 
@@ -21,7 +20,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "puzzle"
+            baseName = "dlx"
         }
     }
 
@@ -30,7 +29,6 @@ kotlin {
             dependencies {
                 //put your multiplatform dependencies here
                 implementation(Dep.KotlinxSerializationJson)
-                implementation(project(":dlx"))
             }
         }
         val commonTest by getting {
@@ -62,7 +60,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gmail.jiangyang5157.puzzle"
+    namespace = "com.gmail.jiangyang5157.dlx"
     compileSdk = Config.CompileSdkVersion
     defaultConfig {
         minSdk = Config.MinSdkVersion

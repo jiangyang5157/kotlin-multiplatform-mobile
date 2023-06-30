@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kmm.puzzle.dlx
+package com.gmail.jiangyang5157.kmm.dlx
 
 /*
 Dancing Links (Algorithm X) data struct.
@@ -43,10 +43,10 @@ open class DlxNode(
     }
 }
 
-internal inline fun <reified T : DlxNode> DlxNode.up(): T? = up as? T
-internal inline fun <reified T : DlxNode> DlxNode.down(): T? = down as? T
-internal inline fun <reified T : DlxNode> DlxNode.left(): T? = left as? T
-internal inline fun <reified T : DlxNode> DlxNode.right(): T? = right as? T
+inline fun <reified T : DlxNode> DlxNode.up(): T? = up as? T
+inline fun <reified T : DlxNode> DlxNode.down(): T? = down as? T
+inline fun <reified T : DlxNode> DlxNode.left(): T? = left as? T
+inline fun <reified T : DlxNode> DlxNode.right(): T? = right as? T
 
 class DlxCell : DlxNode() {
 

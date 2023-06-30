@@ -1,8 +1,8 @@
 package com.gmail.jiangyang5157.kmm.puzzle.sudoku
 
-import com.gmail.jiangyang5157.kmm.puzzle.dlx.Dlx
-import com.gmail.jiangyang5157.kmm.puzzle.dlx.DlxCell
-import com.gmail.jiangyang5157.kmm.puzzle.dlx.right
+import com.gmail.jiangyang5157.kmm.dlx.Dlx
+import com.gmail.jiangyang5157.kmm.dlx.DlxCell
+import com.gmail.jiangyang5157.kmm.dlx.right
 import kotlin.math.sqrt
 
 data class SudokuPuzzle(
