@@ -103,9 +103,18 @@ class SudokuPuzzleTest {
     @OptIn(ExperimentalTime::class)
     @Test
     fun `SudokuPuzzle withUniqueSolution`() {
+        var terminal: SudokuTerminal
         val elapsed: Duration = measureTime {
-            SudokuPuzzle.withUniqueSolution(9, 8, 70)
+            terminal = SudokuPuzzle.withUniqueSolution(9, 1, 18)
+            println("#### SudokuPuzzle.withUniqueSolution=\n${terminal.simpleString()}")
         }
+        val puzzle = SudokuPuzzle(terminal)
         println("SudokuPuzzle withUniqueSolution - Measuring solve time: $elapsed")
+        assertEquals(true, puzzle.withUniqueSolution())
+
+        val elapsed2: Duration = measureTime {
+            println("#### SudokuPuzzle solve=\n${puzzle.first()?.simpleString()}")
+        }
+        println("SudokuPuzzle solved - Measuring solve time: $elapsed2")
     }
 }
