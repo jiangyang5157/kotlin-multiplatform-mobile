@@ -21,7 +21,6 @@ class SudokuPuzzleTest {
 //        ...3
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_3.data)
         println("#### puzzle=$puzzle")
-        println("#### dlx=${puzzle.dlx}")
 
         puzzle.solve { terminal ->
             println("#### puzzle.solve=$terminal")

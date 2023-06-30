@@ -104,7 +104,7 @@ class DlxTest {
         dlx.feed(arrayOf(4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println("#### Dlx solved: ${cell.rowCellsToString()}}")
+                println("Dlx solved: ${cell.rowCellsToString()}}")
             }
             false
         }
@@ -138,7 +138,7 @@ class DlxTest {
         dlx.feed(arrayOf(1, 4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println("#### Dlx solved: ${cell.rowCellsToString()}}")
+                println("Dlx solved: ${cell.rowCellsToString()}}")
             }
             false
         }

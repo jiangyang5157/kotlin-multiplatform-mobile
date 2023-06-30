@@ -138,7 +138,6 @@ class DlxColumn(
 
 // remove the column
 internal fun DlxColumn.cover() {
-    println("cover column $index")
     right?.left = left
     left?.right = right
 
@@ -157,7 +156,6 @@ internal fun DlxColumn.cover() {
 
 // add the column back
 internal fun DlxColumn.uncover() {
-    println("uncover column $index")
     var i = up
     while (i != null && i != this) {
         var j: DlxCell = i.left()!!

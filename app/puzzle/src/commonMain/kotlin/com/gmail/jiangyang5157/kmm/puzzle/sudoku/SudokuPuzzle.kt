@@ -13,13 +13,20 @@ data class SudokuPuzzle(
         reset()
     }
 
+    /*
+    Constraints example: 9 x 9 puzzle
+    1. Each cell must has a digit: 9 * 9 = 81 constraints in column 1-81
+    2. Each row must has [1, 9]: 9 * 9 = 81 constraints in column 82-162
+    3. Each column must has [1, 9]: 9 * 9 = 81 constraints in column 163-243
+    4. Each block must has [1, 9]: 9 * 9 = 81 constraints in column 244-324
+    */
     fun reset() {
         val terminalSize = terminal.cells.size
         val terminalLength = terminal.length
         val cellConstraintOffset = 0
         val rowConstraintOffset = cellConstraintOffset + terminalSize
-        val columnConstraintOffset = cellConstraintOffset + terminalSize
-        val blockConstraintOffset = cellConstraintOffset + terminalSize
+        val columnConstraintOffset = rowConstraintOffset + terminalSize
+        val blockConstraintOffset = columnConstraintOffset + terminalSize
         val dlxSize = blockConstraintOffset + terminalSize
 
         dlx = Dlx(dlxSize)
@@ -29,7 +36,7 @@ data class SudokuPuzzle(
             val rowIndex = terminal.row(i)
             val columnIndex = terminal.column(i)
 
-            if (cellValue in 1 until terminalLength) {
+            if (cellValue in 1..terminalLength) {
                 // has value
                 dlx.feed(
                     arrayOf(
@@ -41,7 +48,7 @@ data class SudokuPuzzle(
                 )
             } else {
                 // no value, consider all possible values
-                for (n in 1 until terminalLength) {
+                for (n in 1..terminalLength) {
                     dlx.feed(
                         arrayOf(
                             cellConstraintOffset + i + 1,
@@ -57,7 +64,6 @@ data class SudokuPuzzle(
 
     fun solve(accept: (terminal: SudokuTerminal) -> Boolean) {
         dlx.solve { cells ->
-            println("#### solve=$cells")
             val terminalClone = terminal.copy()
             val terminalLength = terminalClone.length
             cells.forEach { cell ->
@@ -68,7 +74,6 @@ data class SudokuPuzzle(
                 val index = nodeRowColumnIndex - 1 // [0, terminalSize - 1]
                 val value = nodeRowRightColumnIndex % terminalLength + 1 // [0, terminalLength - 1]
                 terminalClone.cells[index].value = value
-
             }
             accept(terminalClone)
         }
@@ -77,7 +82,6 @@ data class SudokuPuzzle(
     fun hasUniqueSolution(): Boolean {
         var found = 0
         dlx.solve {
-            println("#### hasUniqueSolution=$it")
             found++
             found > 1
         }
