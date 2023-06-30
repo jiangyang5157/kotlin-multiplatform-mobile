@@ -13,10 +13,19 @@ class SudokuPuzzleTest {
         assertEquals(3, puzzle.terminal.cells[2].value)
     }
 
-//    @Test
-//    fun `SudokuPuzzle Length_4_3 has no unique solution`() {
-//        val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_3.data)
-//        assertEquals(false, puzzle.hasUniqueSolution())
-//    }
+    @Test
+    fun `SudokuPuzzle Length_4_3 has no unique solution`() {
+//        ....
+//        .4..
+//        2...
+//        ...3
+        val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_3.data)
+        println("#### puzzle=$puzzle")
+        println("#### dlx=${puzzle.dlx}")
 
+        puzzle.solve {
+            println("#### puzzle.solve=$it")
+            false
+        }
+    }
 }

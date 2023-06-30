@@ -128,6 +128,7 @@ class DlxColumn(
 
 // remove the column
 internal fun DlxColumn.cover() {
+    println("cover $index[$size]")
     right?.left = left
     left?.right = right
 
@@ -146,6 +147,7 @@ internal fun DlxColumn.cover() {
 
 // add the column back
 internal fun DlxColumn.uncover() {
+    println("uncover $index[$size]")
     var i = up
     while (i != null && i != this) {
         var j: DlxCell = i.left()!!
@@ -180,15 +182,15 @@ class Dlx private constructor() {
             !this::solution.isInitialized
         ) return "Dlx(ERROR: member is not Initialized)"
 
+        val columnToString = StringBuilder()
         val head: DlxColumn? = if (columns.isEmpty()) null else columns[0]
-        var columnsToString = "head=$head"
-
         var it: DlxColumn? = head?.right()
         while (it != null && it != head) {
-            columnsToString += ", $it"
+            columnToString.append("${it.index}[${it.size}]")
             it = it.right()
+            columnToString.append("\n")
         }
-        return "Dlx(columns=$columnsToString, solution=$solution)"
+        return "Dlx(\nhead=$head,\ncolumns=\n$columnToString,\nsolution=$solution)"
     }
 
     fun reset(size: Int) {
@@ -299,7 +301,6 @@ class Dlx private constructor() {
         var ret = false
         targetColumn.cover()
         solution += listOf(null)
-        println("#### targetColumn=${targetColumn.index}")
 
         val oLen = solution.size
         var j = targetColumn.down!!

@@ -7,7 +7,7 @@ import com.gmail.jiangyang5157.kmm.puzzle.dlx.right
 data class SudokuPuzzle(
     val terminal: SudokuTerminal,
 ) {
-    private lateinit var dlx: Dlx
+    lateinit var dlx: Dlx
 
     init {
         reset()
@@ -57,6 +57,7 @@ data class SudokuPuzzle(
 
     fun solve(accept: (SudokuTerminal) -> Boolean) {
         dlx.solve {
+            println("#### solve=$it")
             val terminalClone = terminal.copy()
             val terminalLength = terminalClone.length
             it.forEach {
@@ -76,6 +77,7 @@ data class SudokuPuzzle(
     fun hasUniqueSolution(): Boolean {
         var found = 0
         dlx.solve {
+            println("#### hasUniqueSolution=$it")
             found++
             found > 1
         }
