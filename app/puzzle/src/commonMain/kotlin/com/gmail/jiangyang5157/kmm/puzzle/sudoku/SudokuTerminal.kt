@@ -86,7 +86,7 @@ data class SudokuTerminal(
 
 @Serializable
 data class SudokuCell(
-    @SerialName("block") val block: Int = -1, // [0, )
+    @SerialName("block") var block: Int = -1, // [0, )
     @SerialName("value") var value: Int = 0, // 0: none
 ) {
 
