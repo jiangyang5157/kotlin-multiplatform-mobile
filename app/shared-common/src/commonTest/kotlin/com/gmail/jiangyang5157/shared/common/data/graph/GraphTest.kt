@@ -195,21 +195,21 @@ class GraphTest {
 
         println(graph)
 
-        assertEquals(8, graph.nodes.size)
-        assertEquals(3, graph.sourcesMap["A"]?.size)
-        assertEquals(4, graph.targetsMap["A"]?.size)
-        assertNotNull(graph.getEdge("A", "B"))
+        assertEquals(8, graph.size())
+        assertEquals(3, graph.sources("A")?.size)
+        assertEquals(4, graph.targets("A")?.size)
+        assertNotNull(graph.edge("A", "B"))
 
         graph.deleteEdge("A", "B")
-        assertEquals(8, graph.nodes.size)
-        assertEquals(3, graph.sourcesMap["A"]?.size)
-        assertEquals(3, graph.targetsMap["A"]?.size)
-        assertNull(graph.getEdge("A", "B"))
+        assertEquals(8, graph.size())
+        assertEquals(3, graph.sources("A")?.size)
+        assertEquals(3, graph.targets("A")?.size)
+        assertNull(graph.edge("A", "B"))
 
         graph.deleteNode("A")
-        assertEquals(7, graph.nodes.size)
-        assertNull(graph.getNode("A"))
-        assertNull(graph.sourcesMap["A"])
-        assertNull(graph.targetsMap["A"])
+        assertEquals(7, graph.size())
+        assertNull(graph.node("A"))
+        assertNull(graph.sources("A"))
+        assertNull(graph.targets("A"))
     }
 }

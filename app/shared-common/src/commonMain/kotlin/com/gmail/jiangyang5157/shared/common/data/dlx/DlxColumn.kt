@@ -7,6 +7,46 @@ class DlxColumn(
     var size: Int = 0,
 ) : DlxNode() {
 
+    /**
+     * Unlink the column
+     */
+    fun cover() {
+        right?.left = left
+        left?.right = right
+
+        var i = down
+        while (i != null && i != this) {
+            var j: DlxCell = i.right()!!
+            while (j != i) {
+                j.down?.up = j.up
+                j.up?.down = j.down
+                j.column.size--
+                j = j.right()!!
+            }
+            i = i.down
+        }
+    }
+
+    /**
+     * Link the column
+     */
+    fun uncover() {
+        var i = up
+        while (i != null && i != this) {
+            var j: DlxCell = i.left()!!
+            while (j != i) {
+                j.down?.up = j
+                j.up?.down = j
+                j.column.size++
+                j = j.left()!!
+            }
+            i = i.up
+        }
+
+        right?.left = this
+        left?.right = this
+    }
+
     override fun toString(): String {
         return "DlxColumn(index=$index, size=$size)"
     }
@@ -33,40 +73,4 @@ class DlxColumn(
         hashCode += 31 * this.right.hashCode()
         return hashCode
     }
-}
-
-// unlink the column
-internal fun DlxColumn.cover() {
-    right?.left = left
-    left?.right = right
-
-    var i = down
-    while (i != null && i != this) {
-        var j: DlxCell = i.right()!!
-        while (j != i) {
-            j.down?.up = j.up
-            j.up?.down = j.down
-            j.column.size--
-            j = j.right()!!
-        }
-        i = i.down
-    }
-}
-
-// link the column
-internal fun DlxColumn.uncover() {
-    var i = up
-    while (i != null && i != this) {
-        var j: DlxCell = i.left()!!
-        while (j != i) {
-            j.down?.up = j
-            j.up?.down = j
-            j.column.size++
-            j = j.left()!!
-        }
-        i = i.up
-    }
-
-    right?.left = this
-    left?.right = this
 }

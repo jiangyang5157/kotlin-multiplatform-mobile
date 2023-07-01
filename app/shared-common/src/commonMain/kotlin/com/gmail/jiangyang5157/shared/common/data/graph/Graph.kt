@@ -8,35 +8,31 @@ open class Graph<T> {
     /**
      * nodes HashMap<Node.id, Node> stores all nodes.
      */
-    val nodes: HashMap<T, Node<T>> = HashMap()
+    private val nodes: HashMap<T, Node<T>> = HashMap()
 
     /**
      * sourcesMap HashMap<Node.id, HashMap<Node.id, Edge>>  maps a node to parents with edge.
      */
-    val sourcesMap: HashMap<T, HashMap<T, Edge>> = HashMap()
+    private val sourcesMap: HashMap<T, HashMap<T, Edge>> = HashMap()
 
     /**
      * targetsMap HashMap<Node.id, HashMap<Node.id, Edge>>  maps a node to children with edge.
      */
-    val targetsMap: HashMap<T, HashMap<T, Edge>> = HashMap()
+    private val targetsMap: HashMap<T, HashMap<T, Edge>> = HashMap()
 
     override fun toString(): String {
         return "Graph(\n\t\tnodes=$nodes,\n\t\tsources=$sourcesMap,\n\t\ttargets=$targetsMap,\n)"
     }
 
-    fun getNode(id: T): Node<T>? {
-        return nodes[id]
-    }
+    fun size(): Int = nodes.size
 
-    fun getSources(id: T): HashMap<T, Edge>? {
-        return sourcesMap[id]
-    }
+    fun node(id: T): Node<T>? = nodes[id]
 
-    fun getTargets(id: T): HashMap<T, Edge>? {
-        return targetsMap[id]
-    }
+    fun sources(id: T): HashMap<T, Edge>? = sourcesMap[id]
 
-    fun getEdge(src: T, tgt: T): Edge? {
+    fun targets(id: T): HashMap<T, Edge>? = targetsMap[id]
+
+    fun edge(src: T, tgt: T): Edge? {
         val children = targetsMap[src] ?: return null
         return children[tgt]
     }
@@ -50,11 +46,7 @@ open class Graph<T> {
         sourcesMap.remove(id)
         targetsMap.remove(id)
 
-        // Remove edges which source is the node
-        sourcesMap.forEach {
-            it.value.remove(id)
-        }
-
+        // remove edges which source is the node
         sourcesMap.forEach {
             it.value.remove(id)
         }
@@ -75,12 +67,6 @@ open class Graph<T> {
         }
         sourcesMap[tgt]!![src] = edge
         targetsMap[src]!![tgt] = edge
-    }
-
-    fun addEdge(src: T, tgt: T) {
-        addEdge(
-            src, tgt, Edge()
-        )
     }
 
     fun deleteEdge(src: T, tgt: T) {
