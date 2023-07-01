@@ -3,7 +3,6 @@ package com.gmail.jiangyang5157.shared.puzzle.sudoku
 import com.gmail.jiangyang5157.shared.common.data.dlx.Dlx
 import com.gmail.jiangyang5157.shared.common.data.dlx.DlxCell
 import com.gmail.jiangyang5157.shared.common.data.dlx.right
-import kotlin.math.sqrt
 
 data class SudokuPuzzle(
     val terminal: SudokuTerminal,
@@ -104,107 +103,5 @@ data class SudokuPuzzle(
             found > 1// break when 2 solution found
         }
         return found == 1
-    }
-
-    companion object {
-
-        /**
-         * Build SudokuTerminal has unique solution
-         */
-        fun buildTerminal(
-            length: Int,
-            minSubGiven: Int,
-            minTotalGiven: Int,
-        ): SudokuTerminal {
-            if (length < 1) throw IllegalArgumentException("length $length is not allow")
-            if (minSubGiven < 1) throw IllegalArgumentException("minSubGiven $minSubGiven is not allow")
-            if (minTotalGiven < 1) throw IllegalArgumentException("minTotalGiven $minTotalGiven is not allow")
-
-            var round = 0
-            while (true) {
-                // it will be unlikely need a seconder round
-                round++
-                println("#### SudokuPuzzle.buildTerminal round=$round")
-
-                // initialize blank terminal with block and value unassigned
-                val terminal = SudokuTerminal(length)
-                val terminalLength = terminal.length
-                val terminalSize = terminal.cells.size
-                // block length, eg: block length is 3 in a length=9 (9x9) puzzle
-                val blockLength = sqrt(terminalLength.toFloat()).toInt()
-
-                // feed terminal blocks
-                for (i in 0 until terminalSize) {
-                    val row = terminal.rowIndex(i)
-                    val column = terminal.columnIndex(i)
-                    val cell = terminal.cells[i]
-                    cell.block = (row / blockLength) * blockLength + column / blockLength
-                }
-
-                // feed random values into diagonal block of terminal
-                val blockState = mutableMapOf<Int, MutableMap<Int, Boolean>>()
-                val tmp = IntArray(terminalLength) { i -> i + 1 }
-                for (i in 0 until terminalLength step blockLength + 1) {
-                    tmp.shuffle()
-                    for (j in 0 until terminalLength) {
-                        val k = (i / blockLength) * blockLength
-                        val row = j / blockLength + k
-                        val column = j % blockLength + k
-                        val index = terminal.index(row, column)
-                        val cell = terminal.cells[index]
-                        val cellBlock = cell.block
-
-                        if (!blockState.containsKey(cellBlock)) {
-                            blockState[cellBlock] = mutableMapOf()
-                        }
-                        if (blockState[cellBlock]?.get(tmp[j]) != null) {
-                            continue
-                        }
-
-                        cell.value = tmp[j]
-                        blockState[cellBlock]?.set(tmp[j], true)
-                    }
-                }
-
-                // build a completed terminal by using the first solution, it will be unlikely 0 solution here
-                SudokuPuzzle(terminal).solve()?.let { result ->
-                    // dig out values one by one and make sure it still has unique solution in the process
-                    var remainTotalGiven = terminalSize
-                    val remainRowGiven = IntArray(terminalLength) { terminalLength }
-                    val remainColumnGiven = IntArray(terminalLength) { terminalLength }
-
-                    val rowIndexes = IntArray(terminalLength) { i -> i }
-                    val columnIndexes = IntArray(terminalLength) { i -> i }
-                    for (i in 0 until terminalLength) {
-                        val row = rowIndexes[i]
-                        columnIndexes.shuffle()
-                        for (j in 0 until terminalLength) {
-                            val column = columnIndexes[j]
-                            when {
-                                remainRowGiven[row] <= minSubGiven -> continue
-                                remainColumnGiven[column] <= minSubGiven -> continue
-                                remainTotalGiven <= minTotalGiven -> continue
-                                else -> {
-                                    val resultCell = result.cell(row, column)
-                                    val resultValueBackup = resultCell.value
-                                    resultCell.value = 0
-                                    if (SudokuPuzzle(result).hasUniqueSolution()) {
-//                                        println("#### clear the value")
-                                        remainRowGiven[row]--
-                                        remainColumnGiven[column]--
-                                        remainTotalGiven--
-                                    } else {
-//                                        ("#### revert the value")
-                                        resultCell.value = resultValueBackup
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    return result
-                }
-            }
-        }
     }
 }

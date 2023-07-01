@@ -156,16 +156,4 @@ class SudokuPuzzleTest {
         assertEquals(false, puzzle.hasUniqueSolution())
         assertEquals(terminal, puzzle.terminal)
     }
-
-    @OptIn(ExperimentalTime::class)
-    @Test
-    fun `SudokuPuzzle buildTerminal`() {
-        var terminal: SudokuTerminal
-        val elapsed: Duration = measureTime {
-            terminal = SudokuPuzzle.buildTerminal(9, 1, 18)
-            println("#### SudokuPuzzle.buildTerminal=\n${terminal.toValueString()}")
-        }
-        println("SudokuPuzzle buildTerminal - Measuring solve time: $elapsed")
-        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
-    }
 }
