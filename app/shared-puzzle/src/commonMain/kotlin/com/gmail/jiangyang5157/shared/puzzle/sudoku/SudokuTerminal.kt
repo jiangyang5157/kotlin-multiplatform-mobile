@@ -132,33 +132,30 @@ data class SudokuTerminal(
                     }
 
                     SudokuBlockMode.Irregular -> {
+                        val graph = SudokuGraph(terminal)
 
+                        // unlink different blocks
+                        for (i in 0 until terminalLength) {
+                            for (j in 0 until terminalLength) {
+                                if (i < terminalLength - 1 && (i + 1) % blockLength == 0) {
+                                    val top = terminal.index(i, j)
+                                    val bottom = terminal.index(i + 1, j)
+                                    graph.unlink(top, bottom)
+                                    graph.unlink(bottom, top)
+                                }
+                                if (j < terminalLength - 1 && (j + 1) % blockLength == 0) {
+                                    val left = terminal.index(i, j)
+                                    val right = terminal.index(i, j + 1)
+                                    graph.unlink(left, right)
+                                    graph.unlink(right, left)
+                                }
+                            }
+                        }
 
-//                        g := NewGraph(t)
-//                        // unlink between blocks
-//                        for i := 0; i < t.E; i++ {
-//                            for j := 0; j < t.E; j++ {
-//                            if i < t.E-1 && (i+1)%square == 0 {
-//                                top, bottom := Index2Id(t.Index(i, j)), Index2Id(t.Index(i+1, j))
-//                                unlink(g, top, bottom)
-//                                unlink(g, bottom, top)
-//                            }
-//                            if j < t.E-1 && (j+1)%square == 0 {
-//                                left, right := Index2Id(t.Index(i, j)), Index2Id(t.Index(i, j+1))
-//                                unlink(g, left, right)
-//                                unlink(g, right, left)
-//                            }
-//                        }
-//                        }
-//
-//                        attempts := len(t.C) / square
-//                        for i := 0; i < attempts; i++ {
-//                            if !swap(t, g) {
-//                                i--
-//                            }
-//                        }
-//
-//                        func swap(t *TerminalJson, g graph.Graph) bool {
+                        fun swap(): Boolean {
+                            return true
+
+// func swap(t *TerminalJson, g graph.Graph) bool {
 //
 //                            // Gen random aIndex and bIndex
 //                            aIndex, bIndex := -1, -1
@@ -251,6 +248,15 @@ data class SudokuTerminal(
 //
 //                            return true
 //                        }
+                        }
+
+                        val swapAttempts = terminalSize / blockLength
+                        var swapIndex = 0
+                        while (swapIndex < swapAttempts) {
+                            if (swap()) {
+                                swapIndex++
+                            }
+                        }
                     }
                 }
 
