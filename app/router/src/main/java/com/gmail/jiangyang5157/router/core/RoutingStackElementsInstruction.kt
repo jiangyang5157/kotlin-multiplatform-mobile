@@ -12,9 +12,6 @@ typealias RoutingStackElementsInstruction<T> = List<RoutingStack.Element<T>>.() 
 @RoutingStackDsl
 interface RoutingStackElementsInstructionExecutor<T : Route, R> {
 
-    /**
-     * @see RoutingStackInstruction
-     */
     fun routingStackElementsInstruction(instruction: RoutingStackElementsInstruction<T>): R
 }
 
