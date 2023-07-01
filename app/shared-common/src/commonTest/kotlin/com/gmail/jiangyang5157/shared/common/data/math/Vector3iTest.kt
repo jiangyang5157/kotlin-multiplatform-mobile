@@ -1,5 +1,8 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.data.math
 
+import com.gmail.jiangyang5157.shared.common.math.Vector3i
+import kotlin.math.sqrt
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -9,7 +12,7 @@ import kotlin.test.assertTrue
  */
 class Vector3iTest {
 
-    @org.junit.Test
+    @Test
     fun test_constructor() {
         val empty = Vector3i()
         assertEquals(0, empty.x)
@@ -27,7 +30,7 @@ class Vector3iTest {
         assertEquals(3, threeVal.z)
     }
 
-    @org.junit.Test
+    @Test
     fun test_equality() {
         assertEquals(Vector3i(), Vector3i())
         assertNotEquals(Vector3i(), Vector3i(1))
@@ -36,7 +39,7 @@ class Vector3iTest {
         assertTrue(Vector3i() !== Vector3i())
     }
 
-    @org.junit.Test
+    @Test
     fun test_overrider_operator() {
         val a = Vector3i(10, 10, 10)
         val b = Vector3i(-2, 2, 1)
@@ -57,26 +60,26 @@ class Vector3iTest {
         assertEquals(Vector3i(1, 1, 1), a / 10)
     }
 
-    @org.junit.Test
+    @Test
     fun test_length() {
         val x = 1
         val y = 2
         val z = 2
-        val length = Math.sqrt((x * x + y * y + z * z).toDouble())
+        val length = sqrt((x * x + y * y + z * z).toDouble())
         assertEquals(length, Vector3i(x, y, z).length)
     }
 
-    @org.junit.Test
+    @Test
     fun test_normalize() {
         val x = 1
         val y = 2
         val z = 2
-        val length = Math.sqrt((x * x + y * y + z * z).toDouble())
+        val length = sqrt((x * x + y * y + z * z).toDouble())
         val normalize = Vector3i((x / length).toInt(), (y / length).toInt(), (z / length).toInt())
         assertEquals(normalize, Vector3i(x, y, z).normalize)
     }
 
-    @org.junit.Test
+    @Test
     fun test_dot() {
         val x1 = 1
         val y1 = 2
@@ -88,7 +91,7 @@ class Vector3iTest {
         assertEquals(dot.toDouble(), Vector3i(x1, y1, z1).dot(Vector3i(x2, y2, z2)))
     }
 
-    @org.junit.Test
+    @Test
     fun test_cross() {
         val x1 = 1
         val y1 = 2

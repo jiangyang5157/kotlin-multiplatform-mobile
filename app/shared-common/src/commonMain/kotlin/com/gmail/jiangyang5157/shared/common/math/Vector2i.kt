@@ -1,4 +1,9 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.math
+
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * Created by Yang Jiang on April 24, 2018
@@ -30,7 +35,7 @@ data class Vector2i(override val x: Int, override val y: Int) : Vector2<Int> {
         Vector2i((x / double).toInt(), (y / double).toInt())
 
     override val length: Double
-        get() = Math.sqrt(this.dot(this))
+        get() = sqrt(this.dot(this))
 
     override val normalize: Vector2i
         get() = this / length
@@ -38,11 +43,11 @@ data class Vector2i(override val x: Int, override val y: Int) : Vector2<Int> {
     override fun dot(other: Vector2<Int>): Double = (x * other.x + y * other.y).toDouble()
     override fun cross(other: Vector2<Int>): Double = (x * other.y + y * other.x).toDouble()
 
-    override fun alpha(): Double = Math.atan2(y.toDouble(), x.toDouble())
+    override fun alpha(): Double = atan2(y.toDouble(), x.toDouble())
 
     override fun rotate(radian: Double): Vector2i {
-        val cosRadian = Math.cos(radian)
-        val sinRadian = Math.sin(radian)
+        val cosRadian = cos(radian)
+        val sinRadian = sin(radian)
         return Vector2i(
             (x * cosRadian - y * sinRadian).toInt(),
             (x * sinRadian + y * cosRadian).toInt()

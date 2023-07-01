@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.math
 
 /**
  * Created by Yang Jiang on April 22, 2018

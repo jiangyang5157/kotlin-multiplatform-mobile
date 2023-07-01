@@ -1,6 +1,7 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.data.math
 
-import org.junit.Test
+import com.gmail.jiangyang5157.shared.common.math.Point2d
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue

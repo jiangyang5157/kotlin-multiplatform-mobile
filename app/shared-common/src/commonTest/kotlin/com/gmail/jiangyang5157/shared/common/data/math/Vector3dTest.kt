@@ -1,5 +1,8 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.data.math
 
+import com.gmail.jiangyang5157.shared.common.math.Vector3d
+import kotlin.math.sqrt
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -9,7 +12,7 @@ import kotlin.test.assertTrue
  */
 class Vector3dTest {
 
-    @org.junit.Test
+    @Test
     fun test_constructor() {
         val empty = Vector3d()
         assertEquals(0.0, empty.x)
@@ -27,7 +30,7 @@ class Vector3dTest {
         assertEquals(3.0, threeVal.z)
     }
 
-    @org.junit.Test
+    @Test
     fun test_equality() {
         assertEquals(Vector3d(), Vector3d())
         assertNotEquals(Vector3d(), Vector3d(1.1))
@@ -36,7 +39,7 @@ class Vector3dTest {
         assertTrue(Vector3d() !== Vector3d())
     }
 
-    @org.junit.Test
+    @Test
     fun test_overrider_operator() {
         val a = Vector3d(10.0, 10.0, 10.0)
         val b = Vector3d(-2.0, 2.0, 1.0)
@@ -60,26 +63,26 @@ class Vector3dTest {
         assertEquals(Vector3d(1.0, 1.0, 1.0), a / 10)
     }
 
-    @org.junit.Test
+    @Test
     fun test_length() {
         val x = 1.5
         val y = 2.5
         val z = 2.5
-        val length = Math.sqrt(x * x + y * y + z * z)
+        val length = sqrt(x * x + y * y + z * z)
         assertEquals(length, Vector3d(x, y, z).length)
     }
 
-    @org.junit.Test
+    @Test
     fun test_normalize() {
         val x = 1.5
         val y = 2.5
         val z = 2.5
-        val length = Math.sqrt(x * x + y * y + z * z)
+        val length = sqrt(x * x + y * y + z * z)
         val normalize = Vector3d(x / length, y / length, z / length)
         assertEquals(normalize, Vector3d(x, y, z).normalize)
     }
 
-    @org.junit.Test
+    @Test
     fun test_dot() {
         val x1 = 1.5
         val y1 = 2.5
@@ -91,7 +94,7 @@ class Vector3dTest {
         assertEquals(dot, Vector3d(x1, y1, z1).dot(Vector3d(x2, y2, z2)))
     }
 
-    @org.junit.Test
+    @Test
     fun test_cross() {
         val x1 = 1.5
         val y1 = 2.5

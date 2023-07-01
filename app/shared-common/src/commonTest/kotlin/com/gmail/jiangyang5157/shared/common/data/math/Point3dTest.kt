@@ -1,5 +1,7 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.data.math
 
+import com.gmail.jiangyang5157.shared.common.math.Point3d
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -9,7 +11,7 @@ import kotlin.test.assertTrue
  */
 class Point3dTest {
 
-    @org.junit.Test
+    @Test
     fun test_constructor() {
         val empty = Point3d()
         assertEquals(0.0, empty.x)
@@ -27,7 +29,7 @@ class Point3dTest {
         assertEquals(3.0, threeVal.z)
     }
 
-    @org.junit.Test
+    @Test
     fun test_equality() {
         assertEquals(Point3d(), Point3d())
         assertNotEquals(Point3d(), Point3d(1.1))

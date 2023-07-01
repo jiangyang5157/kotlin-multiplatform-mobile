@@ -1,5 +1,8 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.math
 
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
@@ -33,11 +36,11 @@ data class Vector2d(override val x: Double, override val y: Double) : Vector2<Do
     override fun dot(other: Vector2<Double>): Double = x * other.x + y * other.y
     override fun cross(other: Vector2<Double>): Double = x * other.y + y * other.x
 
-    override fun alpha(): Double = Math.atan2(y, x)
+    override fun alpha(): Double = atan2(y, x)
 
     override fun rotate(radian: Double): Vector2d {
-        val cosRadian = Math.cos(radian)
-        val sinRadian = Math.sin(radian)
+        val cosRadian = cos(radian)
+        val sinRadian = sin(radian)
         return Vector2d(
             x * cosRadian - y * sinRadian,
             x * sinRadian + y * cosRadian

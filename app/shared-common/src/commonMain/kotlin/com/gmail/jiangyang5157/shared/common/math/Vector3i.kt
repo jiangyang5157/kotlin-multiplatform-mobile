@@ -1,6 +1,10 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.math
 
 import kotlin.math.acos
+import kotlin.math.asin
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
@@ -47,8 +51,8 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
         x * other.y - y * other.x
     )
 
-    override fun alpha(): Double = Math.atan2(y.toDouble(), x.toDouble())
-    override fun delta(): Double = Math.asin(z / length)
+    override fun alpha(): Double = atan2(y.toDouble(), x.toDouble())
+    override fun delta(): Double = asin(z / length)
 
     override fun radian(other: Vector3<Int>): Double {
         var r = dot(other) * (1.0 / (length * other.length))
@@ -62,8 +66,8 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
     }
 
     override fun xRotation(radian: Double): Vector3i {
-        val sin = Math.sin(radian)
-        val cos = Math.cos(radian)
+        val sin = sin(radian)
+        val cos = cos(radian)
         return Vector3i(
             x,
             (y * cos + z * sin).toInt(),
@@ -72,8 +76,8 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
     }
 
     override fun yRotation(radian: Double): Vector3i {
-        val sin = Math.sin(radian)
-        val cos = Math.cos(radian)
+        val sin = sin(radian)
+        val cos = cos(radian)
         return Vector3i(
             (x * cos - z * sin).toInt(),
             y,
@@ -82,8 +86,8 @@ data class Vector3i(override val x: Int, override val y: Int, override val z: In
     }
 
     override fun zRotation(radian: Double): Vector3i {
-        val sin = Math.sin(radian)
-        val cos = Math.cos(radian)
+        val sin = sin(radian)
+        val cos = cos(radian)
         return Vector3i(
             (x * cos + y * sin).toInt(),
             (x * -sin + y * cos).toInt(),

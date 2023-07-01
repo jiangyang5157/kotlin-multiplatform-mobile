@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.ext
+package com.gmail.jiangyang5157.shared.common.ext
 
 interface EnumWithKey<T : Enum<T>, K> {
     val T.key: K

@@ -1,5 +1,8 @@
-package com.gmail.jiangyang5157.kit.math
+package com.gmail.jiangyang5157.shared.common.data.math
 
+import com.gmail.jiangyang5157.shared.common.math.Vector2d
+import kotlin.math.sqrt
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -9,7 +12,7 @@ import kotlin.test.assertTrue
  */
 class Vector2dTest {
 
-    @org.junit.Test
+    @Test
     fun test_constructor() {
         val empty = Vector2d()
         assertEquals(0.0, empty.x)
@@ -24,7 +27,7 @@ class Vector2dTest {
         assertEquals(2.0, twoVal.y)
     }
 
-    @org.junit.Test
+    @Test
     fun test_equality() {
         assertEquals(Vector2d(), Vector2d())
         assertNotEquals(Vector2d(), Vector2d(1.1))
@@ -33,7 +36,7 @@ class Vector2dTest {
         assertTrue(Vector2d() !== Vector2d())
     }
 
-    @org.junit.Test
+    @Test
     fun test_overrider_operator() {
         val a = Vector2d(10.0, 10.0)
         val b = Vector2d(-2.0, 2.0)
@@ -57,24 +60,24 @@ class Vector2dTest {
         assertEquals(Vector2d(1.0, 1.0), a / 10)
     }
 
-    @org.junit.Test
+    @Test
     fun test_length() {
         val x = 1.5
         val y = 2.5
-        val length = Math.sqrt(x * x + y * y)
+        val length = sqrt(x * x + y * y)
         assertEquals(length, Vector2d(x, y).length)
     }
 
-    @org.junit.Test
+    @Test
     fun test_normalize() {
         val x = 1.5
         val y = 2.5
-        val length = Math.sqrt(x * x + y * y)
+        val length = sqrt(x * x + y * y)
         val normalize = Vector2d(x / length, y / length)
         assertEquals(normalize, Vector2d(x, y).normalize)
     }
 
-    @org.junit.Test
+    @Test
     fun test_dot() {
         val x1 = 1.5
         val y1 = 2.5
@@ -84,7 +87,7 @@ class Vector2dTest {
         assertEquals(dot, Vector2d(x1, y1).dot(Vector2d(x2, y2)))
     }
 
-    @org.junit.Test
+    @Test
     fun test_cross() {
         val x1 = 1.5
         val y1 = 2.5
