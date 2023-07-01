@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.data
+package com.gmail.jiangyang5157.shared.common.data
 
 import kotlin.random.Random
 
@@ -11,7 +11,6 @@ import kotlin.random.Random
  * - [Key] sub-implementations cannot override the behaviour of the [equals] or [hashCode] function
  * - [Key] implementations are required to be immutable and not changing over time.
  */
-@Deprecated("use [Key] from shared-common")
 open class Key(open val value: String = randomKeyValue()) {
 
     final override fun equals(other: Any?): Boolean {

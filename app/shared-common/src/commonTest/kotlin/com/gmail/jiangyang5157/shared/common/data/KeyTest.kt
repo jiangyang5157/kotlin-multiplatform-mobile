@@ -1,6 +1,6 @@
-package com.gmail.jiangyang5157.kit.data
+package com.gmail.jiangyang5157.shared.common.data
 
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

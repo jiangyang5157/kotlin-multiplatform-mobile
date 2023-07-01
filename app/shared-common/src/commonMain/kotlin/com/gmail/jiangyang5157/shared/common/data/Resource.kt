@@ -1,11 +1,10 @@
-package com.gmail.jiangyang5157.kit.data
+package com.gmail.jiangyang5157.shared.common.data
 
 /**
  * Created by Yang Jiang on July 11, 2019
  *
  * A data wrapper that indicates the data state.
  */
-@Deprecated("use [Resource] from shared-common")
 sealed class Resource<out T : Any, out E : Any> {
 
     /**
