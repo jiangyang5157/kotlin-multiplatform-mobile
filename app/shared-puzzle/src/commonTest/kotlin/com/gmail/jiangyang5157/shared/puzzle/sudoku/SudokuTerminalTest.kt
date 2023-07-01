@@ -283,6 +283,32 @@ class SudokuTerminalTest {
         println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
         assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
     }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuTerminal withUniqueSolution length 4 - 4-16`() {
+        val length = 4
+        var terminal: SudokuTerminal
+        val elapsed: Duration = measureTime {
+            terminal = SudokuTerminal.withUniqueSolution(length = length)
+            println("#### SudokuTerminal.withUniqueSolution($length)=\n${terminal.toValueString()}${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
+        }
+        println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
+        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuTerminal withUniqueSolution length 16 - 90-256`() {
+        val length = 16
+        var terminal: SudokuTerminal
+        val elapsed: Duration = measureTime {
+            terminal = SudokuTerminal.withUniqueSolution(length = length)
+            println("#### SudokuTerminal.withUniqueSolution($length)=\n${terminal.toValueString()}${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
+        }
+        println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
+        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
+    }
 }
 
 internal object SudokuTerminalTemplate {

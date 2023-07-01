@@ -16,7 +16,11 @@ data class SudokuTerminal(
 ) {
 
     init {
-        if (length < 1) throw IllegalArgumentException("length $length is not allow")
+        if (length < 1) throw IllegalArgumentException("length $length less than 1 is not allow")
+        if (length != sqrt(length.toFloat()).toInt()
+                .let { it * it }
+        ) throw IllegalArgumentException("length $length is not allow, try 4, 9, 16")
+        if (length > 16) throw IllegalArgumentException("length $length bigger than 16 is not allow, due to performance concerns when solving the puzzle: length=4 (~90ms), length=9 (~100ms), length=16 (~1000ms)")
         if (cells.size != length * length) throw IllegalArgumentException("cells size should be ${length * length}")
     }
 
@@ -90,12 +94,15 @@ data class SudokuTerminal(
          */
         fun withUniqueSolution(
             length: Int,
-            minTotalGiven: Int = 17, // The minimum number of “given” cells to solve a Sudoku is 17. This was proven in 2012 by a research team from Ireland.
+            minTotalGiven: Int = when (length) {
+                9 -> 17// The minimum number of “given” cells to solve a Sudoku is 17. This was proven in 2012 by a research team from Ireland.
+                else -> 0
+            },
             minSubGiven: Int = 0,
         ): SudokuTerminal {
-            if (length < 1) throw IllegalArgumentException("length $length is not allow")
-            if (minTotalGiven < 0) throw IllegalArgumentException("minTotalGiven $minTotalGiven is not allow")
-            if (minSubGiven < 0) throw IllegalArgumentException("minSubGiven $minSubGiven is not allow")
+            if (length < 1) throw IllegalArgumentException("length $length less then 1 is not allow")
+            if (minTotalGiven < 0) throw IllegalArgumentException("minTotalGiven $minTotalGiven less than 0 is not allow")
+            if (minSubGiven < 0) throw IllegalArgumentException("minSubGiven $minSubGiven less than 0 is not allow")
 
             var round = 0
             while (true) {

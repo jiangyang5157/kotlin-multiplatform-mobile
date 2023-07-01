@@ -61,7 +61,7 @@ class Dlx(size: Int) {
     // append row of cells to the bottom by a list of column indexes, note that column 0 is head
     fun feed(columnIndexes: Array<Int>) {
         columnIndexes.forEach {
-            if (it < 1) throw IllegalArgumentException("index $it is not allow")
+            if (it < 1) throw IllegalArgumentException("index $it less than 1 is not allow")
             if (it > columns.size - 1) throw IllegalArgumentException("index $it out of bound")
         }
 
