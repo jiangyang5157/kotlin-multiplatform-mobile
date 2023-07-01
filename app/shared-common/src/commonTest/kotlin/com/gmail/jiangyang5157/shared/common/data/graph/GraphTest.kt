@@ -1,5 +1,6 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -58,7 +59,7 @@ class GraphTest {
         }
     },
      */
-    @org.junit.Test
+    @Test
     fun test_graph() {
         val graph =
             Graph<String>()

@@ -1,6 +1,6 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**

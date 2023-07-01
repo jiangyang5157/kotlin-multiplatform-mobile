@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
 /**
  * Created by Yang Jiang on June 28, 2017
@@ -6,7 +6,7 @@ package com.gmail.jiangyang5157.kit.data.graph
 open class Node<out T>(val id: T) {
 
     override fun toString(): String {
-        return "Node(id=$id)"
+        return "Node($id)"
     }
 
     override fun equals(other: Any?): Boolean {

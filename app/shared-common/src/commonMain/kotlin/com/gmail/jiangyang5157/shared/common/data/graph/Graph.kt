@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
 /**
  * Created by Yang Jiang on June 28, 2017
@@ -21,11 +21,7 @@ open class Graph<T> {
     val targetsMap: HashMap<T, HashMap<T, Edge>> = HashMap()
 
     override fun toString(): String {
-        return "Graph(\n" +
-                "\t\tnodes=$nodes,\n" +
-                "\t\tsourcesMap=$sourcesMap,\n" +
-                "\t\ttargetsMap=$targetsMap\n" +
-                ")"
+        return "Graph(\n\t\tnodes=$nodes,\n\t\tsources=$sourcesMap,\n\t\ttargets=$targetsMap,\n)"
     }
 
     fun getNode(id: T): Node<T>? {
@@ -55,13 +51,17 @@ open class Graph<T> {
         targetsMap.remove(id)
 
         // Remove edges which source is the node
-        sourcesMap.forEach { _, parents ->
-            parents.remove(id)
+        sourcesMap.forEach {
+            it.value.remove(id)
+        }
+
+        sourcesMap.forEach {
+            it.value.remove(id)
         }
 
         // remove edges which target is the node
-        targetsMap.forEach { _, children ->
-            children.remove(id)
+        targetsMap.forEach {
+            it.value.remove(id)
         }
     }
 
@@ -79,8 +79,7 @@ open class Graph<T> {
 
     fun addEdge(src: T, tgt: T) {
         addEdge(
-            src, tgt,
-            Edge()
+            src, tgt, Edge()
         )
     }
 

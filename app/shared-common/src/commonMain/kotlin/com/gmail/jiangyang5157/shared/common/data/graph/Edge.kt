@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
 /**
  * Created by Yang Jiang on June 28, 2017
@@ -6,6 +6,6 @@ package com.gmail.jiangyang5157.kit.data.graph
 open class Edge(var w: Double = 0.0) {
 
     override fun toString(): String {
-        return "Edge(w=$w)"
+        return "Edge($w)"
     }
 }

@@ -1,5 +1,6 @@
-package com.gmail.jiangyang5157.kit.data.graph
+package com.gmail.jiangyang5157.shared.common.data.graph
 
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
@@ -9,7 +10,7 @@ import kotlin.test.assertTrue
  */
 class NodeTest {
 
-    @org.junit.Test
+    @Test
     fun test_id_Int() {
         val id = 1
         val node: Node<Int> =
@@ -17,7 +18,7 @@ class NodeTest {
         assertEquals(id, node.id)
     }
 
-    @org.junit.Test
+    @Test
     fun test_id_Double() {
         val id = 1.1
         val node: Node<Double> =
@@ -25,7 +26,7 @@ class NodeTest {
         assertEquals(id, node.id)
     }
 
-    @org.junit.Test
+    @Test
     fun test_id_String() {
         val id = "A"
         val node: Node<String> =
@@ -33,7 +34,7 @@ class NodeTest {
         assertEquals(id, node.id)
     }
 
-    @org.junit.Test
+    @Test
     fun test_equality() {
         assertEquals(
             Node("A"),
