@@ -202,7 +202,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 0 - 25-81 - 150ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 0 - 25-81`() {
         val length = 9
         val minSubGiven = 0
         var terminal: SudokuTerminal
@@ -216,7 +216,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 4 - 28-81 - 120ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 4 - 28-81`() {
         val length = 9
         val minSubGiven = 4
         var terminal: SudokuTerminal
@@ -230,7 +230,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 5 - 38-81 - 110ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 5 - 38-81`() {
         val length = 9
         val minSubGiven = 5
         var terminal: SudokuTerminal
@@ -244,7 +244,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 6 - 48-81 - 100ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 6 - 48-81`() {
         val length = 9
         val minSubGiven = 6
         var terminal: SudokuTerminal
@@ -258,7 +258,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 7 - 58-81 - 90ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 7 - 58-81`() {
         val length = 9
         val minSubGiven = 7
         var terminal: SudokuTerminal
@@ -272,7 +272,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 8 - 68-81 - 80ms`() {
+    fun `SudokuTerminal withUniqueSolution minSubGiven 8 - 68-81`() {
         val length = 9
         val minSubGiven = 8
         var terminal: SudokuTerminal

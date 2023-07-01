@@ -198,3 +198,7 @@ internal fun SudokuTerminal.toValueString(): String {
     }
     return "$cellsToString"
 }
+
+fun SudokuTerminal.solve(): SudokuTerminal? {
+    return SudokuPuzzle(this).solve()
+}
