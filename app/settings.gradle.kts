@@ -44,4 +44,4 @@ include(":transaction_presentation_2")
 include(":demo-transaction")
 
 include(":shared-common")
-include(":puzzle")
+include(":shared-puzzle")

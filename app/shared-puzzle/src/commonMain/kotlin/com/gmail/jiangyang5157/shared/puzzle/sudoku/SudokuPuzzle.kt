@@ -1,4 +1,4 @@
-package com.gmail.jiangyang5157.kmm.puzzle.sudoku
+package com.gmail.jiangyang5157.shared.puzzle.sudoku
 
 import com.gmail.jiangyang5157.shared.common.data.dlx.Dlx
 import com.gmail.jiangyang5157.shared.common.data.dlx.DlxCell

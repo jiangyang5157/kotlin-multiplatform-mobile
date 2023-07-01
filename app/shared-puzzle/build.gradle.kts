@@ -21,7 +21,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "puzzle"
+            baseName = "shared-puzzle"
         }
     }
 
@@ -62,7 +62,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gmail.jiangyang5157.puzzle"
+    namespace = "com.gmail.jiangyang5157.shared.puzzle"
     compileSdk = Config.CompileSdkVersion
     defaultConfig {
         minSdk = Config.MinSdkVersion
