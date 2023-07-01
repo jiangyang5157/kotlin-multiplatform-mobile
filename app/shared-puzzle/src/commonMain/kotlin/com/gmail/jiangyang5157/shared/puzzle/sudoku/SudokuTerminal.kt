@@ -6,6 +6,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 @Serializable
 data class SudokuTerminal(
@@ -153,7 +154,15 @@ data class SudokuTerminal(
                         }
 
                         fun swap(): Boolean {
-                            return true
+//                            val aIndex = Random.nextInt(terminalSize)
+//                            val aNeighbourIndexes = terminal.neighbourIndexes(aIndex)
+//                            aNeighbourIndexes.shuffled()
+//                            for (aNeighbourIndex in aNeighbourIndexes) {
+//                                if (terminal.cells[aNeighbourIndex].block != terminal.cells[aIndex].block) {
+//                                    val random = Random.nextInt(terminalLength)
+////                                    traversal.
+//                                }
+//                            }
 
 // func swap(t *TerminalJson, g graph.Graph) bool {
 //
@@ -163,16 +172,16 @@ data class SudokuTerminal(
 //                            aNbs := t.Neighbours(aIndex)
 //                            aNbs = disorderDigits(aNbs)
 //                            for _, aNb := range aNbs {
-//                            if t.C[aNb].B != t.C[aIndex].B {
-//                                random := rand.Intn(t.E)
-//                                traversal.Dfs(g, Index2Id(aNb), func(nd graph.Node) bool {
-//                                    bIndex = Id2Index(nd.Id())
-//                                    random--
-//                                    return random < 0
-//                                })
-//                                break
-//                            }
-//                        }
+    //                            if t.C[aNb].B != t.C[aIndex].B {
+    //                                random := rand.Intn(t.E)
+    //                                traversal.Dfs(g, Index2Id(aNb), func(nd graph.Node) bool {
+    //                                    bIndex = Id2Index(nd.Id())
+    //                                    random--
+    //                                    return random < 0
+    //                                })
+    //                                break
+    //                            }
+//                              }
 //                            if aIndex == -1 || bIndex == -1 {
 //                                return false
 //                            }
@@ -248,6 +257,7 @@ data class SudokuTerminal(
 //
 //                            return true
 //                        }
+                            return true
                         }
 
                         val swapAttempts = terminalSize / blockLength
