@@ -3,7 +3,7 @@ package com.gmail.jiangyang5157.shared.common.data.graph
 /**
  * Created by Yang Jiang on June 28, 2017
  */
-open class Node<out T>(val id: T) {
+open class Node<out T>(open val id: T) {
 
     override fun toString(): String {
         return "Node($id)"
