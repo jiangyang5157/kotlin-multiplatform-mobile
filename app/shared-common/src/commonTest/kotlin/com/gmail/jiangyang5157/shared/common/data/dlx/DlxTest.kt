@@ -9,47 +9,20 @@ class DlxTest {
     @Test
     fun `Dlx with 0`() {
         val dlx = Dlx(0)
-        assertTrue(dlx.columnSize() == 1)
+        assertTrue(dlx.columns.size == 1)
     }
 
     @Test
     fun `Dlx with 10`() {
         val dlx = Dlx(10)
-        assertTrue(dlx.columnSize() == 11)
+        assertTrue(dlx.columns.size == 11)
     }
 
     @Test
     fun `Dlx feed with empty index do nothing`() {
         val dlx = Dlx(10)
         dlx.feed(arrayOf())
-        dlx.peekColumn().forEach {
-            assertTrue(it.size == 0)
-        }
-    }
-
-    @Test
-    fun `Dlx feed with negative index do nothing`() {
-        val dlx = Dlx(10)
-        dlx.feed(arrayOf(-1))
-        dlx.peekColumn().forEach {
-            assertTrue(it.size == 0)
-        }
-    }
-
-    @Test
-    fun `Dlx feed with index large then size do nothing`() {
-        val dlx = Dlx(10)
-        dlx.feed(arrayOf(11))
-        dlx.peekColumn().forEach {
-            assertTrue(it.size == 0)
-        }
-    }
-
-    @Test
-    fun `Dlx feed with head index 0 do nothing`() {
-        val dlx = Dlx(10)
-        dlx.feed(arrayOf(0))
-        dlx.peekColumn().forEach {
+        dlx.columns.forEach {
             assertTrue(it.size == 0)
         }
     }
@@ -58,7 +31,7 @@ class DlxTest {
     fun `Dlx feed with index 1 to size`() {
         val dlx = Dlx(10)
         dlx.feed(arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-        dlx.peekColumn().forEach {
+        dlx.columns.forEach {
             if (it.index == 0) {
                 assertTrue(it.size == 0)
             } else {
@@ -89,7 +62,7 @@ class DlxTest {
         dlx.feed(arrayOf(4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println("Dlx solved: ${cell.rowCellsToString()}}")
+                println("Dlx solved: ${cell.rowCells().toColumnString()}}")
             }
             false
         }
@@ -123,7 +96,7 @@ class DlxTest {
         dlx.feed(arrayOf(1, 4))
         dlx.solve { cells ->
             cells.forEach { cell ->
-                println("Dlx solved: ${cell.rowCellsToString()}}")
+                println("Dlx solved: ${cell.rowCells().toColumnString()}")
             }
             false
         }

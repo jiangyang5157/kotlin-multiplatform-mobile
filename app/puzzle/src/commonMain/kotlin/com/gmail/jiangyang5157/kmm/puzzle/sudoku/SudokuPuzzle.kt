@@ -6,39 +6,36 @@ import com.gmail.jiangyang5157.shared.common.data.dlx.right
 import kotlin.math.sqrt
 
 data class SudokuPuzzle(
-    private val terminal: SudokuTerminal,
+    val terminal: SudokuTerminal,
 ) {
-    lateinit var dlx: Dlx
+    private val dlx: Dlx
 
-    init {
-        initialize()
-    }
+    init {/*
+        Init dlx and feed with constraints.
 
-    /*
-    Constraints example: 9 x 9 puzzle
-    1. Each cell must has a digit: 9 * 9 = 81 constraints in column 1-81
-    2. Each row must has [1, 9]: 9 * 9 = 81 constraints in column 82-162
-    3. Each column must has [1, 9]: 9 * 9 = 81 constraints in column 163-243
-    4. Each block must has [1, 9]: 9 * 9 = 81 constraints in column 244-324
-    */
-    private fun initialize() {
-        val terminalSize = terminal.cells.size
+        Constraints example: 9 x 9 puzzle
+        1. Each cell must has a digit: 9 * 9 = 81 constraints in column 1-81
+        2. Each row must has [1, 9]: 9 * 9 = 81 constraints in column 82-162
+        3. Each column must has [1, 9]: 9 * 9 = 81 constraints in column 163-243
+        4. Each block must has [1, 9]: 9 * 9 = 81 constraints in column 244-324
+        */
         val terminalLength = terminal.length
+        val terminalSize = terminal.cells.size
         val cellConstraintOffset = 0
         val rowConstraintOffset = cellConstraintOffset + terminalSize
         val columnConstraintOffset = rowConstraintOffset + terminalSize
         val blockConstraintOffset = columnConstraintOffset + terminalSize
         val dlxSize = blockConstraintOffset + terminalSize
-
         dlx = Dlx(dlxSize)
+
         for (i in 0 until terminalSize) {
             val cell = terminal.cells[i]
             val cellValue = cell.value
-            val rowIndex = terminal.row(i)
-            val columnIndex = terminal.column(i)
+            val rowIndex = terminal.rowIndex(i)
+            val columnIndex = terminal.columnIndex(i)
 
             if (cellValue in 1..terminalLength) {
-                // has value
+                // has value, feed constraints on this value
                 dlx.feed(
                     arrayOf(
                         cellConstraintOffset + i + 1,
@@ -48,7 +45,7 @@ data class SudokuPuzzle(
                     )
                 )
             } else {
-                // no value, consider all possible values
+                // no value, feed constraints on all possible values'
                 for (n in 1..terminalLength) {
                     dlx.feed(
                         arrayOf(
@@ -63,18 +60,13 @@ data class SudokuPuzzle(
         }
     }
 
-    fun withUniqueSolution(): Boolean {
-        var found = 0
-        dlx.solve {
-            found++
-            found > 1
-        }
-        return found == 1
-    }
-
+    /**
+     * Solve puzzle without impacting original terminal
+     * @param accept given a completed solved terminal, it returns true to stop finding next solution
+     */
     fun solve(accept: (terminal: SudokuTerminal) -> Boolean) {
         dlx.solve { cells ->
-            val terminalClone = terminal.copy()
+            val terminalClone = terminal.deepCopy()
             val terminalLength = terminalClone.length
             cells.forEach { cell ->
                 val nodeRowColumnIndex =
@@ -90,7 +82,10 @@ data class SudokuPuzzle(
         }
     }
 
-    fun first(): SudokuTerminal? {
+    /**
+     * Solve puzzle and return first found solution
+     */
+    fun solve(): SudokuTerminal? {
         var ret: SudokuTerminal? = null
         solve {
             ret = it
@@ -99,32 +94,49 @@ data class SudokuPuzzle(
         return ret
     }
 
+    /**
+     * Return true if this puzzle has unique solution
+     */
+    fun hasUniqueSolution(): Boolean {
+        var found = 0
+        dlx.solve {
+            found++
+            found > 1// break when 2 solution found
+        }
+        return found == 1
+    }
+
     companion object {
 
-        fun withUniqueSolution(
+        /**
+         * Build SudokuTerminal has unique solution
+         */
+        fun buildTerminal(
             length: Int,
             minSubGiven: Int,
             minTotalGiven: Int,
         ): SudokuTerminal {
+            if (length < 1) throw IllegalArgumentException("length $length is not allow")
+            if (minSubGiven < 1) throw IllegalArgumentException("minSubGiven $minSubGiven is not allow")
+            if (minTotalGiven < 1) throw IllegalArgumentException("minTotalGiven $minTotalGiven is not allow")
+
             var round = 0
             while (true) {
                 // it will be unlikely need a seconder round
                 round++
-                println("SudokuPuzzle.withUniqueSolution round=$round")
+                println("#### SudokuPuzzle.buildTerminal round=$round")
 
                 // initialize blank terminal with block and value unassigned
                 val terminal = SudokuTerminal(length)
-
                 val terminalLength = terminal.length
                 val terminalSize = terminal.cells.size
-
                 // block length, eg: block length is 3 in a length=9 (9x9) puzzle
                 val blockLength = sqrt(terminalLength.toFloat()).toInt()
 
-                // feed terminal block
+                // feed terminal blocks
                 for (i in 0 until terminalSize) {
-                    val row = terminal.row(i)
-                    val column = terminal.column(i)
+                    val row = terminal.rowIndex(i)
+                    val column = terminal.columnIndex(i)
                     val cell = terminal.cells[i]
                     cell.block = (row / blockLength) * blockLength + column / blockLength
                 }
@@ -155,8 +167,8 @@ data class SudokuPuzzle(
                 }
 
                 // build a completed terminal by using the first solution, it will be unlikely 0 solution here
-                SudokuPuzzle(terminal).first()?.let { first ->
-                    // dig out values one by one and make sure it still with unique solution in the process
+                SudokuPuzzle(terminal).solve()?.let { result ->
+                    // dig out values one by one and make sure it still has unique solution in the process
                     var remainTotalGiven = terminalSize
                     val remainRowGiven = IntArray(terminalLength) { terminalLength }
                     val remainColumnGiven = IntArray(terminalLength) { terminalLength }
@@ -173,24 +185,24 @@ data class SudokuPuzzle(
                                 remainColumnGiven[column] <= minSubGiven -> continue
                                 remainTotalGiven <= minTotalGiven -> continue
                                 else -> {
-                                    val cell = first.cell(row, column)
-                                    val valueBackup = cell.value
-                                    cell.value = 0
-                                    if (SudokuPuzzle(first).withUniqueSolution()) {
+                                    val resultCell = result.cell(row, column)
+                                    val resultValueBackup = resultCell.value
+                                    resultCell.value = 0
+                                    if (SudokuPuzzle(result).hasUniqueSolution()) {
 //                                        println("#### clear the value")
                                         remainRowGiven[row]--
                                         remainColumnGiven[column]--
                                         remainTotalGiven--
                                     } else {
-//                                        println("#### revert the value")
-                                        cell.value = valueBackup
+//                                        ("#### revert the value")
+                                        resultCell.value = resultValueBackup
                                     }
                                 }
                             }
                         }
                     }
 
-                    return terminal
+                    return result
                 }
             }
         }

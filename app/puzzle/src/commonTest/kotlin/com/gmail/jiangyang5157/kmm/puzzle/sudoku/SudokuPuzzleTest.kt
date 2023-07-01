@@ -2,6 +2,7 @@ package com.gmail.jiangyang5157.kmm.puzzle.sudoku
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -17,7 +18,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(1, found)
-        assertEquals(true, puzzle.withUniqueSolution())
+        assertEquals(true, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -29,7 +30,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(0, found)
-        assertEquals(false, puzzle.withUniqueSolution())
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -41,7 +42,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(3, found)
-        assertEquals(false, puzzle.withUniqueSolution())
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -53,7 +54,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(0, found)
-        assertEquals(false, puzzle.withUniqueSolution())
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @Test
@@ -65,7 +66,7 @@ class SudokuPuzzleTest {
             false
         }
         assertEquals(1, found)
-        assertEquals(true, puzzle.withUniqueSolution())
+        assertEquals(true, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
@@ -81,7 +82,7 @@ class SudokuPuzzleTest {
         }
         println("SudokuPuzzle Length_9_2 has 2 solutions - Measuring solve time: $elapsed")
         assertEquals(2, found)
-        assertEquals(false, puzzle.withUniqueSolution())
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
@@ -97,23 +98,74 @@ class SudokuPuzzleTest {
         }
         println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time: $elapsed")
         assertEquals(188, found)
-        assertEquals(false, puzzle.withUniqueSolution())
+        assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuPuzzle withUniqueSolution`() {
-        var terminal: SudokuTerminal
-        var elapsed: Duration = measureTime {
-            terminal = SudokuPuzzle.withUniqueSolution(9, 1, 18)
-            println("#### SudokuPuzzle.withUniqueSolution=\n${terminal.simpleString()}")
+    fun `SudokuPuzzle Length_9_188 has 188 solutions and solve for first found`() {
+        val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_188.data)
+        var terminal: SudokuTerminal?
+        val elapsed: Duration = measureTime {
+            terminal = puzzle.solve()
         }
-        println("SudokuPuzzle withUniqueSolution - Measuring solve time: $elapsed")
-        assertEquals(true, SudokuPuzzle(terminal).withUniqueSolution())
+        println("SudokuPuzzle Length_9_188 has 188 solutions and solve for first found - Measuring solve time: $elapsed")
+        assertNotNull(terminal)
+    }
 
-        elapsed = measureTime {
-            println("#### SudokuPuzzle solve=\n${SudokuPuzzle(terminal).first()?.simpleString()}")
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuPuzzle Length_9_188 has 188 solutions and solve many times without impact original terminal`() {
+        val terminal = SudokuTerminalTemplate.Length_9_188.data
+        val puzzle = SudokuPuzzle(terminal)
+        assertEquals(terminal, puzzle.terminal)
+
+        var found = 0
+        var elapsed: Duration = measureTime {
+            puzzle.solve {
+                found++
+                false
+            }
         }
-        println("SudokuPuzzle solved - Measuring solve time: $elapsed")
+        println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time 1: $elapsed")
+        assertEquals(188, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
+        assertEquals(terminal, puzzle.terminal)
+
+        found = 0
+        elapsed = measureTime {
+            puzzle.solve {
+                found++
+                false
+            }
+        }
+        println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time 2: $elapsed")
+        assertEquals(188, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
+        assertEquals(terminal, puzzle.terminal)
+
+        found = 0
+        elapsed = measureTime {
+            puzzle.solve {
+                found++
+                false
+            }
+        }
+        println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time 3: $elapsed")
+        assertEquals(188, found)
+        assertEquals(false, puzzle.hasUniqueSolution())
+        assertEquals(terminal, puzzle.terminal)
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuPuzzle buildTerminal`() {
+        var terminal: SudokuTerminal
+        val elapsed: Duration = measureTime {
+            terminal = SudokuPuzzle.buildTerminal(9, 1, 18)
+            println("#### SudokuPuzzle.buildTerminal=\n${terminal.toValueString()}")
+        }
+        println("SudokuPuzzle buildTerminal - Measuring solve time: $elapsed")
+        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
     }
 }

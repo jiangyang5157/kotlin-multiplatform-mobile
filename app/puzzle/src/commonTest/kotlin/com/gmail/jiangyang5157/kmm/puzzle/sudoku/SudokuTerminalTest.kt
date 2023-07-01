@@ -50,124 +50,133 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test row`() {
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.row(0))
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.row(8))
-        assertEquals(1, SudokuTerminalTemplate.Length_9_0.data.row(9))
-        assertEquals(7, SudokuTerminalTemplate.Length_9_0.data.row(71))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.row(72))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.row(80))
+    fun `SudokuTerminal test rowIndex`() {
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.rowIndex(0))
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.rowIndex(8))
+        assertEquals(1, SudokuTerminalTemplate.Length_9_0.data.rowIndex(9))
+        assertEquals(7, SudokuTerminalTemplate.Length_9_0.data.rowIndex(71))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.rowIndex(72))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.rowIndex(80))
     }
 
     @Test
-    fun `SudokuTerminal test column`() {
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.column(0))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.column(8))
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.column(9))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.column(71))
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.column(72))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.column(80))
+    fun `SudokuTerminal test columnIndex`() {
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.columnIndex(0))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.columnIndex(8))
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.columnIndex(9))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.columnIndex(71))
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.columnIndex(72))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.columnIndex(80))
     }
 
     @Test
-    fun `SudokuTerminal test up`() {
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(0))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(1))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(2))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(3))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(4))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(5))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(6))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(7))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.up(8))
+    fun `SudokuTerminal test upIndex`() {
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(0))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(1))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(2))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(3))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(4))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(5))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(6))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(7))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(8))
 
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.up(9))
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.up(17))
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.upIndex(9))
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.upIndex(17))
 
-        assertEquals(63, SudokuTerminalTemplate.Length_9_0.data.up(72))
-        assertEquals(71, SudokuTerminalTemplate.Length_9_0.data.up(80))
+        assertEquals(63, SudokuTerminalTemplate.Length_9_0.data.upIndex(72))
+        assertEquals(71, SudokuTerminalTemplate.Length_9_0.data.upIndex(80))
     }
 
     @Test
-    fun `SudokuTerminal test down`() {
-        assertEquals(9, SudokuTerminalTemplate.Length_9_0.data.down(0))
-        assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.down(8))
+    fun `SudokuTerminal test downIndex`() {
+        assertEquals(9, SudokuTerminalTemplate.Length_9_0.data.downIndex(0))
+        assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.downIndex(8))
 
-        assertEquals(79, SudokuTerminalTemplate.Length_9_0.data.down(70))
-        assertEquals(80, SudokuTerminalTemplate.Length_9_0.data.down(71))
+        assertEquals(79, SudokuTerminalTemplate.Length_9_0.data.downIndex(70))
+        assertEquals(80, SudokuTerminalTemplate.Length_9_0.data.downIndex(71))
 
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(72))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(73))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(74))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(75))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(76))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(77))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(78))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(79))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.down(80))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(72))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(73))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(74))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(75))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(76))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(77))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(78))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(79))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.downIndex(80))
     }
 
     @Test
-    fun `SudokuTerminal test left`() {
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(0))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(9))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(18))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(27))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(36))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(45))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(54))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(63))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.left(72))
+    fun `SudokuTerminal test leftIndex`() {
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(0))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(9))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(18))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(27))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(36))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(45))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(54))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(63))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(72))
 
-        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.left(1))
-        assertEquals(9, SudokuTerminalTemplate.Length_9_0.data.left(10))
-        assertEquals(18, SudokuTerminalTemplate.Length_9_0.data.left(19))
-        assertEquals(27, SudokuTerminalTemplate.Length_9_0.data.left(28))
-        assertEquals(36, SudokuTerminalTemplate.Length_9_0.data.left(37))
-        assertEquals(45, SudokuTerminalTemplate.Length_9_0.data.left(46))
-        assertEquals(54, SudokuTerminalTemplate.Length_9_0.data.left(55))
-        assertEquals(63, SudokuTerminalTemplate.Length_9_0.data.left(64))
-        assertEquals(72, SudokuTerminalTemplate.Length_9_0.data.left(73))
+        assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.leftIndex(1))
+        assertEquals(9, SudokuTerminalTemplate.Length_9_0.data.leftIndex(10))
+        assertEquals(18, SudokuTerminalTemplate.Length_9_0.data.leftIndex(19))
+        assertEquals(27, SudokuTerminalTemplate.Length_9_0.data.leftIndex(28))
+        assertEquals(36, SudokuTerminalTemplate.Length_9_0.data.leftIndex(37))
+        assertEquals(45, SudokuTerminalTemplate.Length_9_0.data.leftIndex(46))
+        assertEquals(54, SudokuTerminalTemplate.Length_9_0.data.leftIndex(55))
+        assertEquals(63, SudokuTerminalTemplate.Length_9_0.data.leftIndex(64))
+        assertEquals(72, SudokuTerminalTemplate.Length_9_0.data.leftIndex(73))
     }
 
     @Test
-    fun `SudokuTerminal test right`() {
-        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.right(7))
-        assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.right(16))
-        assertEquals(26, SudokuTerminalTemplate.Length_9_0.data.right(25))
-        assertEquals(35, SudokuTerminalTemplate.Length_9_0.data.right(34))
-        assertEquals(44, SudokuTerminalTemplate.Length_9_0.data.right(43))
-        assertEquals(53, SudokuTerminalTemplate.Length_9_0.data.right(52))
-        assertEquals(62, SudokuTerminalTemplate.Length_9_0.data.right(61))
-        assertEquals(71, SudokuTerminalTemplate.Length_9_0.data.right(70))
-        assertEquals(80, SudokuTerminalTemplate.Length_9_0.data.right(79))
+    fun `SudokuTerminal test rightIndex`() {
+        assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.rightIndex(7))
+        assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.rightIndex(16))
+        assertEquals(26, SudokuTerminalTemplate.Length_9_0.data.rightIndex(25))
+        assertEquals(35, SudokuTerminalTemplate.Length_9_0.data.rightIndex(34))
+        assertEquals(44, SudokuTerminalTemplate.Length_9_0.data.rightIndex(43))
+        assertEquals(53, SudokuTerminalTemplate.Length_9_0.data.rightIndex(52))
+        assertEquals(62, SudokuTerminalTemplate.Length_9_0.data.rightIndex(61))
+        assertEquals(71, SudokuTerminalTemplate.Length_9_0.data.rightIndex(70))
+        assertEquals(80, SudokuTerminalTemplate.Length_9_0.data.rightIndex(79))
 
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(8))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(17))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(26))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(35))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(44))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(53))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(62))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(71))
-        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.right(80))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(8))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(17))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(26))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(35))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(44))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(53))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(62))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(71))
+        assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.rightIndex(80))
     }
 
     @Test
-    fun `SudokuTerminal test neighbours`() {
-        assertEquals(listOf(9, 1), SudokuTerminalTemplate.Length_9_0.data.neighbours(0))
-        assertEquals(listOf(10, 0, 2), SudokuTerminalTemplate.Length_9_0.data.neighbours(1))
-        assertEquals(listOf(0, 18, 10), SudokuTerminalTemplate.Length_9_0.data.neighbours(9))
+    fun `SudokuTerminal test neighbourIndexes`() {
+        assertEquals(listOf(9, 1), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(0))
+        assertEquals(listOf(10, 0, 2), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(1))
+        assertEquals(listOf(0, 18, 10), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(9))
 
-        assertEquals(listOf(17, 7), SudokuTerminalTemplate.Length_9_0.data.neighbours(8))
+        assertEquals(listOf(17, 7), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(8))
 
-        assertEquals(listOf(31, 49, 39, 41), SudokuTerminalTemplate.Length_9_0.data.neighbours(40))
+        assertEquals(
+            listOf(31, 49, 39, 41),
+            SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(40)
+        )
 
-        assertEquals(listOf(63, 73), SudokuTerminalTemplate.Length_9_0.data.neighbours(72))
+        assertEquals(listOf(63, 73), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(72))
 
-        assertEquals(listOf(62, 80, 70), SudokuTerminalTemplate.Length_9_0.data.neighbours(71))
-        assertEquals(listOf(70, 78, 80), SudokuTerminalTemplate.Length_9_0.data.neighbours(79))
-        assertEquals(listOf(71, 79), SudokuTerminalTemplate.Length_9_0.data.neighbours(80))
+        assertEquals(
+            listOf(62, 80, 70),
+            SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(71)
+        )
+        assertEquals(
+            listOf(70, 78, 80),
+            SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(79)
+        )
+        assertEquals(listOf(71, 79), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(80))
     }
 
     @Test

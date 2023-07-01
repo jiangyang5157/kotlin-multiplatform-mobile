@@ -15,192 +15,11 @@ Dancing Links (Algorithm X) data struct.
                        -  Cell(row)-  Cell     -  Cell     -
                             |           |           |
 */
+class Dlx(size: Int) {
 
-open class DlxNode(
-    var up: DlxNode? = null,
-    var down: DlxNode? = null,
-    var left: DlxNode? = null,
-    var right: DlxNode? = null,
-) {
+    val columns: Array<DlxColumn>
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is DlxNode) return false
-        if (this.up != other.up) return false
-        if (this.down != other.down) return false
-        if (this.left != other.left) return false
-        if (this.right != other.right) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var hashCode = 31
-        hashCode += 31 * this.up.hashCode()
-        hashCode += 31 * this.down.hashCode()
-        hashCode += 31 * this.left.hashCode()
-        hashCode += 31 * this.right.hashCode()
-        return hashCode
-    }
-}
-
-inline fun <reified T : DlxNode> DlxNode.up(): T? = up as? T
-inline fun <reified T : DlxNode> DlxNode.down(): T? = down as? T
-inline fun <reified T : DlxNode> DlxNode.left(): T? = left as? T
-inline fun <reified T : DlxNode> DlxNode.right(): T? = right as? T
-
-class DlxCell : DlxNode() {
-
-    // the column this cell belongs to
-    lateinit var column: DlxColumn
-
-    // first cell in the row
-    lateinit var row: DlxCell
-
-    fun rowCells(): List<DlxCell> {
-        val ret = mutableListOf(row)
-        var it: DlxCell? = row.right()
-        while (it != null && it != row) {
-            ret.add(it)
-            it = it.right()
-        }
-        return ret.toList()
-    }
-
-    fun rowCellsToString(): String {
-        return rowCells().joinToString(", ") { it.toString() }
-    }
-
-    override fun toString(): String {
-        if (!this::column.isInitialized ||
-            !this::row.isInitialized
-        ) return "DlxCell(ERROR: member is not Initialized)"
-        return "DlxCell(column=${column.index}[${column.size}])"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is DlxCell) return false
-        if (this.column != other.column) return false
-        if (this.row != other.row) return false
-        if (this.up != other.up) return false
-        if (this.down != other.down) return false
-        if (this.left != other.left) return false
-        if (this.right != other.right) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var hashCode = 31
-        hashCode += 31 * this.column.hashCode()
-        hashCode += 31 * this.row.hashCode()
-        hashCode += 31 * this.up.hashCode()
-        hashCode += 31 * this.down.hashCode()
-        hashCode += 31 * this.left.hashCode()
-        hashCode += 31 * this.right.hashCode()
-        return hashCode
-    }
-}
-
-class DlxColumn(
-    // index of this column
-    val index: Int = -1,
-    // size of cells belongs to this column
-    var size: Int = 0,
-) : DlxNode() {
-
-    override fun toString(): String {
-        return "DlxColumn($index[$size])"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is DlxColumn) return false
-        if (this.index != other.index) return false
-        if (this.size != other.size) return false
-        if (this.up != other.up) return false
-        if (this.down != other.down) return false
-        if (this.left != other.left) return false
-        if (this.right != other.right) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var hashCode = 31
-        hashCode += 31 * this.index.hashCode()
-        hashCode += 31 * this.size.hashCode()
-        hashCode += 31 * this.up.hashCode()
-        hashCode += 31 * this.down.hashCode()
-        hashCode += 31 * this.left.hashCode()
-        hashCode += 31 * this.right.hashCode()
-        return hashCode
-    }
-}
-
-// remove the column
-internal fun DlxColumn.cover() {
-    right?.left = left
-    left?.right = right
-
-    var i = down
-    while (i != null && i != this) {
-        var j: DlxCell = i.right()!!
-        while (j != i) {
-            j.down?.up = j.up
-            j.up?.down = j.down
-            j.column.size--
-            j = j.right()!!
-        }
-        i = i.down
-    }
-}
-
-// add the column back
-internal fun DlxColumn.uncover() {
-    var i = up
-    while (i != null && i != this) {
-        var j: DlxCell = i.left()!!
-        while (j != i) {
-            j.down?.up = j
-            j.up?.down = j
-            j.column.size++
-            j = j.left()!!
-        }
-        i = i.up
-    }
-
-    right?.left = this
-    left?.right = this
-}
-
-class Dlx private constructor() {
-
-    private lateinit var columns: Array<DlxColumn>
-
-    /** list of [DlxCell.row] used in [solve] lifecycle */
-    private var solution: Array<DlxCell?> = emptyArray()
-
-    fun columnSize(): Int = columns.size
-
-    fun peekColumn(): Array<DlxColumn> = columns.copyOf()
-
-    override fun toString(): String {
-        val columnToString = StringBuilder()
-        val head: DlxColumn? = if (columns.isEmpty()) null else columns[0]
-        var it: DlxColumn? = head?.right()
-        while (it != null && it != head) {
-            columnToString.append("${it.index}[${it.size}]")
-            it = it.right()
-            columnToString.append("\n")
-        }
-        return "Dlx(\ncolumns=\n$columnToString)"
-    }
-
-    private fun initialize(size: Int) {
-        solution = emptyArray()
-        columns = emptyArray()
-
-        if (size < 0) return
-
+    init {
         // column 0 as head
         val correctSize = size + 1
         columns = Array(correctSize) { i -> DlxColumn(index = i) }
@@ -227,19 +46,28 @@ class Dlx private constructor() {
         }
     }
 
+    override fun toString(): String {
+        val columnString = StringBuilder()
+        val head: DlxColumn? = if (columns.isEmpty()) null else columns[0]
+        var it: DlxColumn? = head?.right()
+        while (it != null && it != head) {
+            columnString.append("${it.index},")
+            it = it.right()
+            columnString.append("\n")
+        }
+        return "Dlx(\n$columnString)"
+    }
+
     // append row of cells to the bottom by a list of column indexes, note that column 0 is head
     fun feed(columnIndexes: Array<Int>) {
-        if (columns.isEmpty()) return
-
         columnIndexes.forEach {
-            if (it < 1) return // head is not for feed
-            if (it > columns.size - 1) return // contains column index out of bound
+            if (it < 1) throw IllegalArgumentException("index $it is not allow")
+            if (it > columns.size - 1) throw IllegalArgumentException("index $it out of bound")
         }
 
-        val size = columnIndexes.size
-        val cells = (0 until size).map { DlxCell() }
-
-        for (i in 0 until size) {
+        val columnIndexSize = columnIndexes.size
+        val cells = (0 until columnIndexSize).map { DlxCell() }
+        for (i in 0 until columnIndexSize) {
             val columnIndex = columnIndexes[i]
             val column = columns[columnIndex]
             column.size++
@@ -251,79 +79,72 @@ class Dlx private constructor() {
             cell.up = column.up
             cell.down = column
 
-            val circularShiftLeftI = circularShiftLeft(i, size)
-            val circularShiftRightI = circularShiftRight(i, size)
-            cell.left = cells[circularShiftLeftI]
-            cell.right = cells[circularShiftRightI]
+            val leftIndex = leftIndex(i, columnIndexSize)
+            val rightIndex = rightIndex(i, columnIndexSize)
+            cell.left = cells[leftIndex]
+            cell.right = cells[rightIndex]
 
-            column.up?.down = cell
+            column.up!!.down = cell
             column.up = cell
-            cells[circularShiftLeftI].right = cell
-            cells[circularShiftRightI].left = cell
+            cells[leftIndex].right = cell
+            cells[rightIndex].left = cell
         }
     }
 
-    private fun circularShiftLeft(index: Int, length: Int): Int =
+    private fun leftIndex(index: Int, length: Int): Int =
         (index - 1).let {
             if (it < 0) length - 1 else it
         }
 
-    private fun circularShiftRight(index: Int, length: Int): Int =
+    private fun rightIndex(index: Int, length: Int): Int =
         (index + 1).let {
             if (it >= length) 0 else it
         }
 
-    companion object {
-
-        operator fun invoke(size: Int): Dlx {
-            if (size < 0) throw IllegalArgumentException()
-
-            val ret = Dlx()
-            ret.initialize(size)
-            return ret
-        }
-    }
-
+    /* list of [DlxCell.row] used in [solve] lifecycle, holding solutions */
+    private var tmp: Array<DlxCell?> = emptyArray()
     fun solve(accept: (row: List<DlxCell>) -> Boolean): Boolean {
-        if (columns.isEmpty()) return false
-
         val head = columns[0]
 
         var it: DlxColumn = head.right()!!
-        if (it == head) return accept(solution.filterNotNull())
+        if (it == head) {
+            // found solution, return a copy of [DlxCell.row] list
+            return accept(tmp.filterNotNull())
+        }
 
-        // find the column has minimum size, it improves overall performance by compare with linear iterator
+        // find the column with minimum size, it improves overall performance by compare with linear iterator
         var targetColumn = it
         var min = targetColumn.size
         while (it != head) {
             if (it.size < min) {
-                targetColumn = it
                 min = it.size
+                targetColumn = it
             }
             it = it.right()!!
         }
 
         var ret = false
         targetColumn.cover()
-        solution = solution + null
 
-        val solutionSize = solution.size
+        tmp += null
+        val solutionSize = tmp.size
         var j = targetColumn.down!!
         while (j != targetColumn) {
             if (ret) {
                 break
             }
 
-            solution[solutionSize - 1] = j as DlxCell
+            tmp[solutionSize - 1] = j as DlxCell
             var i: DlxCell = j.right()!!
             while (i != j) {
                 i.column.cover()
                 i = i.right()!!
             }
-            ret = solve(accept)
-            j = solution[solutionSize - 1] as DlxCell
-            targetColumn = j.column
 
+            ret = solve(accept)
+
+            j = tmp[solutionSize - 1] as DlxCell
+            targetColumn = j.column
             i = j.left()!!
             while (i != j) {
                 i.column.uncover()
@@ -331,8 +152,8 @@ class Dlx private constructor() {
             }
             j = j.down!!
         }
+        tmp = tmp.dropLast(1).toTypedArray()
 
-        solution = solution.dropLast(1).toTypedArray()
         targetColumn.uncover()
         return ret
     }

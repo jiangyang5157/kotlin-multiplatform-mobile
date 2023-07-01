@@ -2,67 +2,69 @@ package com.gmail.jiangyang5157.kmm.puzzle.sudoku
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Serializable
 data class SudokuTerminal(
-    @SerialName("length") val length: Int, // [1, ), edge length indicating the terminal size: length x length
-    @SerialName("cells") val cells: Array<SudokuCell>, // left-to-right and up-to-down, size = length * length
+    // [1, )
+    @SerialName("length") val length: Int,
+    // left-to-right and up-to-down
+    @SerialName("cells") val cells: Array<SudokuCell> = Array(length * length) { SudokuCell() },
 ) {
 
+    init {
+        if (length < 1) throw IllegalArgumentException("length $length is not allow")
+        if (cells.size != length * length) throw IllegalArgumentException("cells size should be ${length * length}")
+    }
+
+    fun deepCopy() : SudokuTerminal {
+        return Json.decodeFromString(Json.encodeToString(this))
+    }
+
     fun index(row: Int, column: Int): Int = row * length + column
+
     fun cell(row: Int, column: Int): SudokuCell = cells[index(row, column)]
 
-    fun row(index: Int): Int = index / length
+    fun rowIndex(index: Int): Int = index / length
 
-    fun column(index: Int): Int = index % length
+    fun columnIndex(index: Int): Int = index % length
 
-    fun up(index: Int): Int = (index - length).let {
+    fun upIndex(index: Int): Int = (index - length).let {
         if (it < 0) -1 else it
     }
 
-    fun down(index: Int): Int = (index + length).let {
+    fun downIndex(index: Int): Int = (index + length).let {
         if (it > cells.size - 1) -1 else it
     }
 
-    fun left(index: Int): Int = (index - 1).let {
-        if (it < 0 || row(it) != row(index)) -1 else it
+    fun leftIndex(index: Int): Int = (index - 1).let {
+        if (it < 0 || rowIndex(it) != rowIndex(index)) -1 else it
     }
 
-    fun right(index: Int): Int = (index + 1).let {
-        if (it > cells.size - 1 || row(it) != row(index)) -1 else it
+    fun rightIndex(index: Int): Int = (index + 1).let {
+        if (it > cells.size - 1 || rowIndex(it) != rowIndex(index)) -1 else it
     }
 
-    fun neighbours(index: Int): List<Int> = listOfNotNull(
-        up(index).let { if (it == -1) null else it },
-        down(index).let { if (it == -1) null else it },
-        left(index).let { if (it == -1) null else it },
-        right(index).let { if (it == -1) null else it },
+    fun neighbourIndexes(index: Int): List<Int> = listOfNotNull(
+        upIndex(index).let { if (it == -1) null else it },
+        downIndex(index).let { if (it == -1) null else it },
+        leftIndex(index).let { if (it == -1) null else it },
+        rightIndex(index).let { if (it == -1) null else it },
     )
 
-    fun simpleString(): String {
-        val cellsToString = StringBuilder()
-        var index = 0
-        for (i in 0 until length) {
-            for (j in 0 until length) {
-                cellsToString.append("${cells[index].simpleString()},")
-                index++
-            }
-            cellsToString.append("\n")
-        }
-        return "SudokuTerminal(\nlength=$length,\ncells=\n$cellsToString)"
-    }
-
     override fun toString(): String {
-        val cellsToString = StringBuilder()
+        val cellString = StringBuilder()
         var index = 0
         for (i in 0 until length) {
             for (j in 0 until length) {
-                cellsToString.append("${cells[index]},")
+                cellString.append("${cells[index]},")
                 index++
             }
-            cellsToString.append("\n")
+            cellString.append("\n")
         }
-        return "SudokuTerminal(\nlength=$length,\ncells=\n$cellsToString)"
+        return "SudokuTerminal(\nlength=$length,\ncells=\n$cellString)"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -79,35 +81,17 @@ data class SudokuTerminal(
         result = 31 * result + cells.contentHashCode()
         return result
     }
-
-    companion object {
-
-        operator fun invoke(length: Int): SudokuTerminal {
-            if (length < 1) throw IllegalArgumentException("length should bigger than 1")
-            return SudokuTerminal(
-                length = length,
-                cells = Array(length * length) {
-                    SudokuCell(
-                        block = -1,
-                        value = 0,
-                    )
-                },
-            )
-        }
-    }
 }
 
-@Serializable
-data class SudokuCell(
-    @SerialName("block") var block: Int = -1, // [0, )
-    @SerialName("value") var value: Int = 0, // 0: none
-) {
-
-    fun simpleString(): String {
-        return "$value"
+internal fun SudokuTerminal.toValueString(): String {
+    val cellsToString = StringBuilder()
+    var index = 0
+    for (i in 0 until length) {
+        for (j in 0 until length) {
+            cellsToString.append("${cells[index].toValueString()},")
+            index++
+        }
+        cellsToString.append("\n")
     }
-
-    override fun toString(): String {
-        return "$value[$block]"
-    }
+    return "$cellsToString"
 }
