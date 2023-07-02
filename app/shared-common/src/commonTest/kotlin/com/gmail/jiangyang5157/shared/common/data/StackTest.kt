@@ -1,7 +1,5 @@
-package com.gmail.jiangyang5157.shared.common.data.stack
+package com.gmail.jiangyang5157.shared.common.data
 
-import com.gmail.jiangyang5157.shared.common.data.Key
-import com.gmail.jiangyang5157.shared.common.data.toElement
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

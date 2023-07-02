@@ -1,52 +1,45 @@
 package com.gmail.jiangyang5157.shared.common.data.graph
 
-import com.gmail.jiangyang5157.shared.common.data.stack.Stack
-import com.gmail.jiangyang5157.shared.common.data.stack.clear
-import com.gmail.jiangyang5157.shared.common.data.stack.pop
-import com.gmail.jiangyang5157.shared.common.data.stack.push
+import com.gmail.jiangyang5157.shared.common.data.Stack
+import com.gmail.jiangyang5157.shared.common.data.pop
+import com.gmail.jiangyang5157.shared.common.data.push
 
-class Dfs<T>() {
+fun <T> Graph<T>.dfs(
+    nodeId: T,
+    visit: (node: Node<T>) -> Boolean,
+) {
+    if (node(nodeId) == null) throw IllegalArgumentException("Node id $nodeId not found")
 
-    private var stack = Stack.empty<T>()
+    dfs(Stack.from(nodeId), visit, hashMapOf())
+}
 
-    /**
-     * @param visit returns True to stop
-     */
-    fun dfs(graph: Graph<T>, nodeId: T, visit: (node: Node<T>) -> Boolean) {
-        if (graph.node(nodeId) == null) throw IllegalArgumentException("Node id $nodeId not found")
+fun <T> Graph<T>.dfs(
+    stack: Stack<T>,
+    visit: (node: Node<T>) -> Boolean,
+    visited: HashMap<T, Boolean>,
+) {
+    val id = stack.lastOrNull()?.value ?: return
+    val node = node(id) ?: return
 
-        stack = stack.push(nodeId)
-        dfs(graph, visit, HashMap())
-        stack = stack.clear()
+    visited[id] = true
+    val stop = visit(node)
+    if (stop) {
+        stack.pop()
+        return
     }
 
-    private fun dfs(
-        graph: Graph<T>, visit: (node: Node<T>) -> Boolean, visited: HashMap<T, Boolean>
-    ) {
-        if (stack.elements.isEmpty()) return
-
-        val id = stack.elements.last().value
-        val node = graph.node(id) ?: return
-
-        visited[id] = true
-        if (visit(node)) {
-            stack.pop()
-            return
-        }
-
-        val targets = graph.targets(id)
-        if (targets == null) {
-            stack.pop()
-            return
-        }
-
-        targets.forEach { target ->
-            val visitedTarget = visited[target.key]
-            if (visitedTarget != true) {
-                stack = stack push target.key
-                dfs(graph, visit, visited)
-            }
-        }
-        stack = stack.pop()
+    val targets = targets(id) ?: run {
+        stack.pop()
+        return
     }
+
+    targets.forEach { target ->
+        val visitedTarget = visited[target.key]
+        if (visitedTarget != true) {
+            stack push target.key
+            dfs(stack, visit, visited)
+        }
+    }
+
+    stack.pop()
 }
