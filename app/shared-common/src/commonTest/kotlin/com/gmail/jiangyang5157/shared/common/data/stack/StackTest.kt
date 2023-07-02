@@ -3,7 +3,6 @@ package com.gmail.jiangyang5157.shared.common.data.stack
 import com.gmail.jiangyang5157.shared.common.data.Key
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 class StackTest {
 
