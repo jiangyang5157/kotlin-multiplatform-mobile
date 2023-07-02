@@ -13,7 +13,7 @@ fun <T> Graph<T>.dfs(
     dfs(Stack.from(nodeId), visit, hashMapOf())
 }
 
-fun <T> Graph<T>.dfs(
+private fun <T> Graph<T>.dfs(
     stack: Stack<T>,
     visit: (node: Node<T>) -> Boolean,
     visited: HashMap<T, Boolean>,

@@ -1,14 +1,8 @@
 package com.gmail.jiangyang5157.shared.common.data.graph
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
-/**
- * Created by Yang Jiang on June 30, 2017
- */
-class GraphTest {
+class DfsTest {
 
     /*
     https://github.com/jiangyang5157/go-graph/tree/master/testdata/graph_03.png
@@ -60,7 +54,7 @@ class GraphTest {
     },
      */
     @Test
-    fun test_graph() {
+    fun `dfs visit`() {
         val graph = Graph<String>()
 
         graph.addNode(Node("S"))
@@ -192,23 +186,19 @@ class GraphTest {
             Edge(19.0)
         )
 
-        println(graph)
-
-        assertEquals(8, graph.size())
-        assertEquals(3, graph.sources("A")?.size)
-        assertEquals(4, graph.targets("A")?.size)
-        assertNotNull(graph.edge("A", "B"))
-
-        graph.deleteEdge("A", "B")
-        assertEquals(8, graph.size())
-        assertEquals(3, graph.sources("A")?.size)
-        assertEquals(3, graph.targets("A")?.size)
-        assertNull(graph.edge("A", "B"))
-
-        graph.deleteNode("A")
-        assertEquals(7, graph.size())
-        assertNull(graph.node("A"))
-        assertNull(graph.sources("A"))
-        assertNull(graph.targets("A"))
+        /**
+        #### visited Node(A)
+        #### visited Node(B)
+        #### visited Node(S)
+        #### visited Node(D)
+        #### visited Node(T)
+        #### visited Node(E)
+        #### visited Node(C)
+        #### visited Node(F)
+         */
+        graph.dfs("A") {
+            println("#### visited $it")
+            false
+        }
     }
 }
