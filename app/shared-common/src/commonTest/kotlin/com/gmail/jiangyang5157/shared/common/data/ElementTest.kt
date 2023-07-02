@@ -1,6 +1,9 @@
 package com.gmail.jiangyang5157.shared.common.data
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+import kotlin.test.assertNotSame
 
 class ElementTest {
 
@@ -64,5 +67,13 @@ class ElementTest {
             intElements[0],
             intElements[1],
         )
+    }
+
+    @Test
+    fun `copy equals but not same`() {
+        val element = 1.toElement(key = Key("1"))
+        val copy = element.copy()
+        assertEquals(element, copy)
+        assertNotSame(element, copy)
     }
 }
