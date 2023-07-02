@@ -11,16 +11,18 @@ import kotlin.random.Random
  * - [Key] sub-implementations cannot override the behaviour of the [equals] or [hashCode] function
  * - [Key] implementations are required to be immutable and not changing over time.
  */
-open class Key(open val value: String = randomKeyValue()) {
+data class Key(val value: String = randomKeyValue()) {
 
-    final override fun equals(other: Any?): Boolean {
+    override fun toString() = "Key($value)"
+
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Key) return false
         if (value != other.value) return false
         return true
     }
 
-    final override fun hashCode(): Int = value.hashCode()
+    override fun hashCode() = value.hashCode()
 
     companion object {
 

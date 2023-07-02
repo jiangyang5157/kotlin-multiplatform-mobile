@@ -1,19 +1,17 @@
-package com.gmail.jiangyang5157.shared.common.data.stack
+package com.gmail.jiangyang5157.shared.common.data
 
-import com.gmail.jiangyang5157.shared.common.data.Key
-
-data class StackElement<out T>(
+data class Element<out T>(
     val value: T,
     val key: Key = Key(),
 ) {
 
     override fun toString(): String {
-        return "StackElement(${key.value}, $value)"
+        return "Element($key, $value)"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is StackElement<*>) return false
+        if (other !is Element<*>) return false
         if (this.key != other.key) return false
         if (this.value != other.value) return false
         return true
@@ -27,8 +25,9 @@ data class StackElement<out T>(
     }
 }
 
-fun <T> Iterable<T>.toStackElements() =
-    this.map { element -> StackElement(element) }
+/**
+ * Convert values to Elements with unique Keys
+ */
+fun <T> Iterable<T>.toElements() = this.map { element -> Element(element) }
 
-fun <T> T.asStackElement(key: Key = Key()) =
-    StackElement(this, key)
+fun <T> T.toElement(key: Key = Key()) = Element(this, key)
