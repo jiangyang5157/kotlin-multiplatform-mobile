@@ -167,6 +167,7 @@ data class SudokuTerminal(
                                 if (terminal.cells[aNeighbourIndex].block != terminal.cells[aIndex].block) {
                                     var random = Random.nextInt(terminalLength)
                                     graph.dfs(aNeighbourIndex) { node ->
+                                        println("#### dfs $aNeighbourIndex: $node")
                                         bIndex = node.id
                                         random--
                                         random < 0
@@ -208,11 +209,13 @@ data class SudokuTerminal(
                             // Validate
                             var aValidation = 0
                             var bValidation = 0
-                            graph.dfs(aIndex) {
+                            graph.dfs(aIndex) { node ->
+                                println("#### dfs $aIndex: $node")
                                 bValidation++
                                 false
                             }
-                            graph.dfs(bIndex) {
+                            graph.dfs(bIndex) { node ->
+                                println("#### dfs $bIndex: $node")
                                 aValidation++
                                 false
                             }

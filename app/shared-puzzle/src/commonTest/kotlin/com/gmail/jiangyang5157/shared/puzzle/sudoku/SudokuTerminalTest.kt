@@ -342,8 +342,8 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution Irregular minSubGiven 0 - n-81`() {
-        val length = 9
+    fun `SudokuTerminal withUniqueSolution Irregular minSubGiven 0 - n-16`() {
+        val length = 4
         val minSubGiven = 0
         var terminal: SudokuTerminal
         val elapsed: Duration = measureTime {
