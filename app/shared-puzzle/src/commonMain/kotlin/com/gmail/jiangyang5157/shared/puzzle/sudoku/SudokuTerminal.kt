@@ -1,5 +1,6 @@
 package com.gmail.jiangyang5157.shared.puzzle.sudoku
 
+import com.gmail.jiangyang5157.shared.common.data.graph.dfs
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -154,109 +155,97 @@ data class SudokuTerminal(
                         }
 
                         fun swap(): Boolean {
-//                            val aIndex = Random.nextInt(terminalSize)
-//                            val aNeighbourIndexes = terminal.neighbourIndexes(aIndex)
-//                            aNeighbourIndexes.shuffled()
-//                            for (aNeighbourIndex in aNeighbourIndexes) {
-//                                if (terminal.cells[aNeighbourIndex].block != terminal.cells[aIndex].block) {
-//                                    val random = Random.nextInt(terminalLength)
-////                                    traversal.
-//                                }
-//                            }
+                            // generate random aIndex and bIndex
+                            var aIndex = -1
+                            var bIndex = -1
+                            aIndex = Random.nextInt(terminalSize)
 
-// func swap(t *TerminalJson, g graph.Graph) bool {
-//
-//                            // Gen random aIndex and bIndex
-//                            aIndex, bIndex := -1, -1
-//                            aIndex = rand.Intn(len(t.C))
-//                            aNbs := t.Neighbours(aIndex)
-//                            aNbs = disorderDigits(aNbs)
-//                            for _, aNb := range aNbs {
-    //                            if t.C[aNb].B != t.C[aIndex].B {
-    //                                random := rand.Intn(t.E)
-    //                                traversal.Dfs(g, Index2Id(aNb), func(nd graph.Node) bool {
-    //                                    bIndex = Id2Index(nd.Id())
-    //                                    random--
-    //                                    return random < 0
-    //                                })
-    //                                break
-    //                            }
-//                              }
-//                            if aIndex == -1 || bIndex == -1 {
-//                                return false
-//                            }
-//
-//                            // Swap aIndex and bIndex
-//                            aBlock, bBlock := t.C[aIndex].B, t.C[bIndex].B
-//                            aIndexId, bIndexId := Index2Id(aIndex), Index2Id(bIndex)
-//                            bNbs := t.Neighbours(bIndex)
-//
-//                            t.C[aIndex].B, t.C[bIndex].B = bBlock, aBlock
-//                            for _, aNb := range aNbs {
-//                            aNbId := Index2Id(aNb)
-//                            if t.C[aNb].B == aBlock {
-//                                unlink(g, aIndexId, aNbId)
-//                                unlink(g, aNbId, aIndexId)
-//                            }
-//                            if t.C[aNb].B == bBlock {
-//                                link(g, aIndexId, aNbId)
-//                                link(g, aNbId, aIndexId)
-//                            }
-//                        }
-//                            for _, bNb := range bNbs {
-//                            bNbId := Index2Id(bNb)
-//                            if t.C[bNb].B == bBlock {
-//                                unlink(g, bIndexId, bNbId)
-//                                unlink(g, bNbId, bIndexId)
-//                            }
-//                            if t.C[bNb].B == aBlock {
-//                                link(g, bIndexId, bNbId)
-//                                link(g, bNbId, bIndexId)
-//                            }
-//                        }
-//
-//                            // Validate
-//                            aValidation, bValidation := 0, 0
-//                            traversal.Dfs(g, aIndexId, func(nd graph.Node) bool {
-//                                bValidation++
-//                                return false
-//                            })
-//                            traversal.Dfs(g, bIndexId, func(nd graph.Node) bool {
-//                                aValidation++
-//                                return false
-//                            })
-//
-//                            if aValidation != t.E || bValidation != t.E {
-//
-//                                // Undo swap
-//                                t.C[aIndex].B, t.C[bIndex].B = aBlock, bBlock
-//                                for _, aNb := range aNbs {
-//                                aNbId := Index2Id(aNb)
-//                                if t.C[aNb].B == aBlock {
-//                                    link(g, aIndexId, aNbId)
-//                                    link(g, aNbId, aIndexId)
-//                                }
-//                                if t.C[aNb].B == bBlock {
-//                                    unlink(g, aIndexId, aNbId)
-//                                    unlink(g, aNbId, aIndexId)
-//                                }
-//                            }
-//                                for _, bNb := range bNbs {
-//                                bNbId := Index2Id(bNb)
-//                                if t.C[bNb].B == bBlock {
-//                                    link(g, bIndexId, bNbId)
-//                                    link(g, bNbId, bIndexId)
-//                                }
-//                                if t.C[bNb].B == aBlock {
-//                                    unlink(g, bIndexId, bNbId)
-//                                    unlink(g, bNbId, bIndexId)
-//                                }
-//                            }
-//                                return false
-//                            }
-//
-//                            return true
-//                        }
+                            val aNeighbourIndexes = terminal.neighbourIndexes(aIndex)
+                            aNeighbourIndexes.shuffled()
+
+                            for (aNeighbourIndex in aNeighbourIndexes) {
+                                if (terminal.cells[aNeighbourIndex].block != terminal.cells[aIndex].block) {
+                                    var random = Random.nextInt(terminalLength)
+                                    graph.dfs(aNeighbourIndex) { node ->
+                                        bIndex = node.id
+                                        random--
+                                        random < 0
+                                    }
+                                }
+
+                                if (aIndex == -1 || bIndex == -1) return false
+                            }
+
+                            // Swap aIndex and bIndex
+                            val aBlock = terminal.cells[aIndex].block
+                            val bBlock = terminal.cells[bIndex].block
+                            val bNeighbourIndexes = terminal.neighbourIndexes(bIndex)
+
+                            terminal.cells[aIndex].block = bBlock
+                            terminal.cells[bIndex].block = aBlock
+
+                            for (aNeighbourIndex in aNeighbourIndexes) {
+                                if (terminal.cells[aNeighbourIndex].block == aBlock) {
+                                    graph.unlink(aIndex, aNeighbourIndex)
+                                    graph.unlink(aNeighbourIndex, aIndex)
+                                }
+                                if (terminal.cells[aNeighbourIndex].block == bBlock) {
+                                    graph.link(aIndex, aNeighbourIndex)
+                                    graph.link(aNeighbourIndex, aIndex)
+                                }
+                            }
+                            for (bNeighbourIndex in bNeighbourIndexes) {
+                                if (terminal.cells[bNeighbourIndex].block == aBlock) {
+                                    graph.unlink(bIndex, bNeighbourIndex)
+                                    graph.unlink(bNeighbourIndex, bIndex)
+                                }
+                                if (terminal.cells[bNeighbourIndex].block == bBlock) {
+                                    graph.link(bIndex, bNeighbourIndex)
+                                    graph.link(bNeighbourIndex, bIndex)
+                                }
+                            }
+
+                            // Validate
+                            var aValidation = 0
+                            var bValidation = 0
+                            graph.dfs(aIndex) {
+                                bValidation++
+                                false
+                            }
+                            graph.dfs(bIndex) {
+                                aValidation++
+                                false
+                            }
+                            if (aValidation != terminalLength || bValidation != terminalLength) {
+
+                                // Undo swap
+                                terminal.cells[aIndex].block = aBlock
+                                terminal.cells[bIndex].block = bBlock
+
+                                for (aNeighbourIndex in aNeighbourIndexes) {
+                                    if (terminal.cells[aNeighbourIndex].block == aBlock) {
+                                        graph.link(aIndex, aNeighbourIndex)
+                                        graph.link(aNeighbourIndex, aIndex)
+                                    }
+                                    if (terminal.cells[aNeighbourIndex].block == bBlock) {
+                                        graph.unlink(aIndex, aNeighbourIndex)
+                                        graph.unlink(aNeighbourIndex, aIndex)
+                                    }
+                                }
+                                for (bNeighbourIndex in bNeighbourIndexes) {
+                                    if (terminal.cells[bNeighbourIndex].block == aBlock) {
+                                        graph.link(bIndex, bNeighbourIndex)
+                                        graph.link(bNeighbourIndex, bIndex)
+                                    }
+                                    if (terminal.cells[bNeighbourIndex].block == bBlock) {
+                                        graph.unlink(bIndex, bNeighbourIndex)
+                                        graph.unlink(bNeighbourIndex, bIndex)
+                                    }
+                                }
+
+                                return false
+                            }
+
                             return true
                         }
 
