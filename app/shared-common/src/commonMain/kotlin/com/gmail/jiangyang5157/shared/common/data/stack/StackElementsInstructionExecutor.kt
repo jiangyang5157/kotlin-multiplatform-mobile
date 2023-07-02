@@ -4,9 +4,6 @@ import com.gmail.jiangyang5157.shared.common.data.Key
 
 typealias StackElementsInstruction<T> = List<StackElement<T>>.() -> Iterable<StackElement<T>>
 
-@DslMarker
-annotation class StackElementsDsl
-
 @StackElementsDsl
 interface StackElementsInstructionExecutor<T, R> {
     fun stackElementsInstruction(instruction: StackElementsInstruction<T>): R
