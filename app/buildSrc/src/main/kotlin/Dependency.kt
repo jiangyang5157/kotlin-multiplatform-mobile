@@ -20,6 +20,7 @@ object Version {
     const val JetbrainsKotlinx = "1.6.4"
     const val JetbrainsKotlinxDateTime = "0.4.0"
     const val JetbrainsKotlinxSerializationJson = "1.5.0"
+    const val JetbrainsCompose = "1.3.0"
 
     const val AndroidToolsBuild = "7.3.1"
     const val AndroidSupport = "28.0.0"
@@ -35,12 +36,13 @@ object Version {
     const val AndroidxCompose = "1.3.0"
     const val AndroidxArchCore = "2.1.0"
     const val AndroidxLifecycle = "2.5.1"
-    const val AndroidxTest = "1.4.0"
+    const val AndroidxTestRules = "1.5.0"
+    const val AndroidxTestRunner = "1.5.2"
     const val AndroidxTestExt = "1.1.3"
     const val AndroidxTestEspresso = "3.4.0"
 
     const val GoogleGson = "2.9.1"
-    const val GoogleMaterial = "1.6.1"
+    const val GoogleMaterial = "1.9.0"
     const val GoogleDagger = "2.44"
 
     const val SquareUpRetrofit2 = "2.9.0"
@@ -124,8 +126,8 @@ object Dep {
     const val RoomKtx = "androidx.room:room-ktx:${Version.AndroidxRoom}"
     const val RoomCompiler = "androidx.room:room-compiler:${Version.AndroidxRoom}"
 
-    const val TestRunner = "androidx.test:runner:${Version.AndroidxTest}"
-    const val TestRules = "androidx.test:rules:${Version.AndroidxTest}"
+    const val TestRunner = "androidx.test:runner:${Version.AndroidxTestRunner}"
+    const val TestRules = "androidx.test:rules:${Version.AndroidxTestRules}"
 
     const val AndroidxJunit = "androidx.test.ext:junit:${Version.AndroidxTestExt}"
 

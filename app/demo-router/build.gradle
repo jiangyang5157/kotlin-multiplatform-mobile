@@ -5,10 +5,12 @@ plugins {
 }
 
 android {
+    namespace = "com.gmail.jiangyang5157.demo_router"
+    compileSdk = Config.CompileSdkVersion
+
     defaultConfig {
-        compileSdkVersion Config.CompileSdkVersion
-        minSdkVersion Config.MinSdkVersion
-        targetSdkVersion Config.TargetSdkVersion
+        minSdk = Config.MinSdkVersion
+        targetSdk = Config.TargetSdkVersion
         applicationId "com.gmail.jiangyang5157.demo_router"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode Config.VersionCode

@@ -31,10 +31,12 @@ afterEvaluate {
 }
 
 android {
+    namespace = "com.gmail.jiangyang5157.router"
+    compileSdk = Config.CompileSdkVersion
+
     defaultConfig {
-        compileSdkVersion Config.CompileSdkVersion
-        minSdkVersion Config.MinSdkVersion
-        targetSdkVersion Config.TargetSdkVersion
+        minSdk = Config.MinSdkVersion
+        targetSdk = Config.TargetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -62,7 +64,7 @@ dependencies {
 
     androidTestImplementation Dep.AndroidxJunit
     androidTestImplementation Dep.TestRunner
-    implementation project(':kit')
 
     // Internal
+    implementation project(':kit')
 }
