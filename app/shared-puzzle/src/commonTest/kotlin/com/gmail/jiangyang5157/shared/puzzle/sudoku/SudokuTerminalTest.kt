@@ -342,7 +342,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution Irregular minSubGiven 0 - n-16`() {
+    fun `SudokuTerminal withUniqueSolution Irregular length 4 minSubGiven 0 - 5-16`() {
         val length = 4
         val minSubGiven = 0
         var terminal: SudokuTerminal
@@ -352,7 +352,43 @@ class SudokuTerminalTest {
                 length,
                 minSubGiven = minSubGiven,
             )
-            println("#### SudokuTerminal.withUniqueSolution(Irregular, $length, $minSubGiven)=\n${terminal.toValueString()}${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
+            println("#### SudokuTerminal.withUniqueSolution(Irregular, $length, $minSubGiven)=\n$terminal\n${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
+        }
+        println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
+        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuTerminal withUniqueSolution Irregular length 9 minSubGiven 0 - 20-81`() {
+        val length = 9
+        val minSubGiven = 0
+        var terminal: SudokuTerminal
+        val elapsed: Duration = measureTime {
+            terminal = SudokuTerminal.withUniqueSolution(
+                SudokuBlockMode.Irregular,
+                length,
+                minSubGiven = minSubGiven,
+            )
+            println("#### SudokuTerminal.withUniqueSolution(Irregular, $length, $minSubGiven)=\n$terminal\n${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
+        }
+        println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
+        assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `SudokuTerminal withUniqueSolution Irregular length 9 minSubGiven 9 - 81-81`() {
+        val length = 9
+        val minSubGiven = 9
+        var terminal: SudokuTerminal
+        val elapsed: Duration = measureTime {
+            terminal = SudokuTerminal.withUniqueSolution(
+                SudokuBlockMode.Irregular,
+                length,
+                minSubGiven = minSubGiven,
+            )
+            println("#### SudokuTerminal.withUniqueSolution(Irregular, $length, $minSubGiven)=\n$terminal\n${length * length - terminal.cells.filter { it.value == 0 }.size}/${length * length}")
         }
         println("SudokuTerminal withUniqueSolution - Measuring solve time: $elapsed")
         assertEquals(true, SudokuPuzzle(terminal).hasUniqueSolution())

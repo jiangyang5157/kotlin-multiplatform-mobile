@@ -158,49 +158,50 @@ data class SudokuTerminal(
                             // generate random aIndex and bIndex
                             var aIndex = -1
                             var bIndex = -1
-                            aIndex = Random.nextInt(terminalSize)
 
+                            aIndex = Random.nextInt(terminalSize)
                             val aNeighbourIndexes = terminal.neighbourIndexes(aIndex)
                             aNeighbourIndexes.shuffled()
-
                             for (aNeighbourIndex in aNeighbourIndexes) {
-                                if (terminal.cells[aNeighbourIndex].block != terminal.cells[aIndex].block) {
+                                val aNeighbourCell = terminal.cells[aNeighbourIndex]
+                                if (aNeighbourCell.block != terminal.cells[aIndex].block) {
                                     var random = Random.nextInt(terminalLength)
                                     graph.dfs(aNeighbourIndex) { node ->
-                                        println("#### dfs $aNeighbourIndex: $node")
                                         bIndex = node.id
                                         random--
                                         random < 0
                                     }
+                                    break
                                 }
-
-                                if (aIndex == -1 || bIndex == -1) return false
                             }
+
+                            if (aIndex == -1 || bIndex == -1) return false
 
                             // Swap aIndex and bIndex
                             val aBlock = terminal.cells[aIndex].block
                             val bBlock = terminal.cells[bIndex].block
-                            val bNeighbourIndexes = terminal.neighbourIndexes(bIndex)
-
                             terminal.cells[aIndex].block = bBlock
                             terminal.cells[bIndex].block = aBlock
 
                             for (aNeighbourIndex in aNeighbourIndexes) {
-                                if (terminal.cells[aNeighbourIndex].block == aBlock) {
+                                val aNeighbourCell = terminal.cells[aNeighbourIndex]
+                                if (aNeighbourCell.block == aBlock) {
                                     graph.unlink(aIndex, aNeighbourIndex)
                                     graph.unlink(aNeighbourIndex, aIndex)
                                 }
-                                if (terminal.cells[aNeighbourIndex].block == bBlock) {
+                                if (aNeighbourCell.block == bBlock) {
                                     graph.link(aIndex, aNeighbourIndex)
                                     graph.link(aNeighbourIndex, aIndex)
                                 }
                             }
+                            val bNeighbourIndexes = terminal.neighbourIndexes(bIndex)
                             for (bNeighbourIndex in bNeighbourIndexes) {
-                                if (terminal.cells[bNeighbourIndex].block == aBlock) {
+                                val bNeighbourCell = terminal.cells[bNeighbourIndex]
+                                if (bNeighbourCell.block == bBlock) {
                                     graph.unlink(bIndex, bNeighbourIndex)
                                     graph.unlink(bNeighbourIndex, bIndex)
                                 }
-                                if (terminal.cells[bNeighbourIndex].block == bBlock) {
+                                if (bNeighbourCell.block == aBlock) {
                                     graph.link(bIndex, bNeighbourIndex)
                                     graph.link(bNeighbourIndex, bIndex)
                                 }
@@ -210,15 +211,14 @@ data class SudokuTerminal(
                             var aValidation = 0
                             var bValidation = 0
                             graph.dfs(aIndex) { node ->
-                                println("#### dfs $aIndex: $node")
                                 bValidation++
                                 false
                             }
                             graph.dfs(bIndex) { node ->
-                                println("#### dfs $bIndex: $node")
                                 aValidation++
                                 false
                             }
+
                             if (aValidation != terminalLength || bValidation != terminalLength) {
 
                                 // Undo swap
@@ -226,29 +226,29 @@ data class SudokuTerminal(
                                 terminal.cells[bIndex].block = bBlock
 
                                 for (aNeighbourIndex in aNeighbourIndexes) {
-                                    if (terminal.cells[aNeighbourIndex].block == aBlock) {
+                                    val aNeighbourCell = terminal.cells[aNeighbourIndex]
+                                    if (aNeighbourCell.block == aBlock) {
                                         graph.link(aIndex, aNeighbourIndex)
                                         graph.link(aNeighbourIndex, aIndex)
                                     }
-                                    if (terminal.cells[aNeighbourIndex].block == bBlock) {
+                                    if (aNeighbourCell.block == bBlock) {
                                         graph.unlink(aIndex, aNeighbourIndex)
                                         graph.unlink(aNeighbourIndex, aIndex)
                                     }
                                 }
                                 for (bNeighbourIndex in bNeighbourIndexes) {
-                                    if (terminal.cells[bNeighbourIndex].block == aBlock) {
+                                    val bNeighbourCell = terminal.cells[bNeighbourIndex]
+                                    if (bNeighbourCell.block == bBlock) {
                                         graph.link(bIndex, bNeighbourIndex)
                                         graph.link(bNeighbourIndex, bIndex)
                                     }
-                                    if (terminal.cells[bNeighbourIndex].block == bBlock) {
+                                    if (bNeighbourCell.block == aBlock) {
                                         graph.unlink(bIndex, bNeighbourIndex)
                                         graph.unlink(bNeighbourIndex, bIndex)
                                     }
                                 }
-
                                 return false
                             }
-
                             return true
                         }
 
@@ -262,28 +262,26 @@ data class SudokuTerminal(
                     }
                 }
 
-                // feed random values into diagonal block of terminal
+                // feed random values into diagonal blockLength x blockLength within same block
                 val blockState = mutableMapOf<Int, MutableMap<Int, Boolean>>()
                 val tmp = IntArray(terminalLength) { i -> i + 1 }
-                for (i in 0 until terminalLength step blockLength + 1) {
+                for (blockIndex in 0 until terminalLength step blockLength + 1) {
                     tmp.shuffle()
-                    for (j in 0 until terminalLength) {
-                        val k = (i / blockLength) * blockLength
-                        val row = j / blockLength + k
-                        val column = j % blockLength + k
+                    for (n in 0 until terminalLength) {
+                        val m = (blockIndex / blockLength) * blockLength
+                        val row = n / blockLength + m
+                        val column = n % blockLength + m
                         val index = terminal.index(row, column)
                         val cell = terminal.cells[index]
                         val cellBlock = cell.block
 
-                        if (!blockState.containsKey(cellBlock)) {
-                            blockState[cellBlock] = mutableMapOf()
-                        }
-                        if (blockState[cellBlock]?.get(tmp[j]) != null) {
-                            continue
-                        }
+                        if (cellBlock != blockIndex) continue
+                        if (!blockState.containsKey(cellBlock)) blockState[cellBlock] =
+                            mutableMapOf()
+                        if (blockState[cellBlock]?.get(tmp[n]) != null) continue
 
-                        cell.value = tmp[j]
-                        blockState[cellBlock]?.set(tmp[j], true)
+                        cell.value = tmp[n]
+                        blockState[cellBlock]?.set(tmp[n], true)
                     }
                 }
 
@@ -296,7 +294,6 @@ data class SudokuTerminal(
 
                     val indexes = IntArray(terminalSize) { i -> i }
                     indexes.shuffle()
-//                    println("#### indexes=${indexes.joinToString(",")}")
                     for (i in 0 until terminalSize) {
                         val index = indexes[i]
                         val rowIndex = result.rowIndex(index)
@@ -311,12 +308,10 @@ data class SudokuTerminal(
                                 val resultValueBackup = resultCell.value
                                 resultCell.value = 0
                                 if (SudokuPuzzle(result).hasUniqueSolution()) {
-//                                    println("#### clear the value")
                                     remainTotalGiven--
                                     remainRowGiven[rowIndex]--
                                     remainColumnGiven[columnIndex]--
                                 } else {
-//                                    println("#### revert the value")
                                     resultCell.value = resultValueBackup
                                 }
                             }
