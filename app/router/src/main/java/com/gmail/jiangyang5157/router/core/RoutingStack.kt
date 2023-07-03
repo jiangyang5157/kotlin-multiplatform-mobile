@@ -16,6 +16,7 @@ import com.gmail.jiangyang5157.router.core.RoutingStack.Element
  *
  * @see [RoutingStackElementsInstructionExecutor]
  */
+@Deprecated("use [Stack] from shared-common")
 interface RoutingStack<T : Route> :
     RoutingStackElementsInstructionExecutor<T, RoutingStack<T>>,
     Iterable<Element<T>> {
