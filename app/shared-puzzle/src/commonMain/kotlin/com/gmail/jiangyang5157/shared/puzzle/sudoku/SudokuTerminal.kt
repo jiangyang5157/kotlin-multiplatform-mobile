@@ -26,10 +26,6 @@ data class SudokuTerminal(
         if (cells.size != length * length) throw IllegalArgumentException("cells size should be ${length * length}")
     }
 
-    fun deepCopy(): SudokuTerminal {
-        return Json.decodeFromString(Json.encodeToString(this))
-    }
-
     fun index(row: Int, column: Int): Int = row * length + column
 
     fun cell(row: Int, column: Int): SudokuCell = cells[index(row, column)]
@@ -90,6 +86,8 @@ data class SudokuTerminal(
     }
 
     companion object {
+
+        fun from(json: String): SudokuTerminal = Json.decodeFromString(json)
 
         /**
          * Build SudokuTerminal has unique solution
@@ -338,6 +336,8 @@ internal fun SudokuTerminal.toValueString(): String {
     return "$cellsToString"
 }
 
-fun SudokuTerminal.solve(): SudokuTerminal? {
-    return SudokuPuzzle(this).solve()
-}
+fun SudokuTerminal.solve(): SudokuTerminal? = SudokuPuzzle(this).solve()
+
+fun SudokuTerminal.toJson(): String = Json.encodeToString(this)
+
+fun SudokuTerminal.deepCopy(): SudokuTerminal = SudokuTerminal.from(toJson())
