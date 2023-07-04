@@ -34,6 +34,7 @@ object Version {
     const val AndroidxNavigation = "2.5.2"
     const val AndroidxRoom = "2.4.3"
     const val AndroidxCompose = "1.3.0"
+    const val AndroidxComposeMaterial3 = "1.1.1"
     const val AndroidxArchCore = "2.1.0"
     const val AndroidxLifecycle = "2.5.1"
     const val AndroidxTestRules = "1.5.0"
@@ -103,6 +104,7 @@ object Dep {
     const val ComposeRuntimeLiveData =
         "androidx.compose.runtime:runtime-livedata:${Version.AndroidxCompose}"
     const val ComposeMaterial = "androidx.compose.material:material:${Version.AndroidxCompose}"
+    const val ComposeMaterial3 = "androidx.compose.material3:material3:${Version.AndroidxComposeMaterial3}"
     const val ComposeFoundation =
         "androidx.compose.foundation:foundation:${Version.AndroidxCompose}"
 

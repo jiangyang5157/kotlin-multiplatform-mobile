@@ -77,7 +77,7 @@ dependencies {
     implementation(Dep.Appcompat)
     implementation(Dep.Material)
     implementation(Dep.NavigationCompose)
-    implementation(Dep.ComposeMaterial)
+    implementation(Dep.ComposeMaterial3)
     implementation(Dep.ComposeRuntimeLiveData)
     implementation(Dep.ComposeUi)
     implementation(Dep.ComposeUiText)
