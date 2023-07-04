@@ -11,7 +11,6 @@ buildscript {
         classpath(BuildPlugin.Versions)
         classpath(BuildPlugin.Hilt)
         classpath(BuildPlugin.NavigationArgs)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     }
 }
 
