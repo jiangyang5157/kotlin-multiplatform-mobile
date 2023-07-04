@@ -2,10 +2,10 @@ import SwiftUI
 import sharedSudoku
 
 struct ContentView: View {
-	let greet = Greeting().greet()
+	let platform = MainKt.getPlatform()
 
 	var body: some View {
-		Text(greet)
+		Text(platform)
 	}
 }
 
