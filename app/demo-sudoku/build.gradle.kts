@@ -84,6 +84,8 @@ dependencies {
     implementation(Dep.ComposeUiToolingPreview)
     implementation(Dep.ComposeUiTooling)
 
+    implementation(platform(Dep.KotlinBom))
+
     debugImplementation(Dep.ComposeUiTestManifest)
 
     testImplementation(Dep.Junit)
