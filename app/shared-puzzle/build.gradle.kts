@@ -7,14 +7,6 @@ plugins {
 kotlin {
     android()
 
-    android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = Config.KotlinJvmTarget
-            }
-        }
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -63,7 +55,20 @@ kotlin {
 android {
     namespace = "com.gmail.jiangyang5157.shared.puzzle"
     compileSdk = Config.CompileSdkVersion
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
     defaultConfig {
         minSdk = Config.MinSdkVersion
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlin {
+        jvmToolchain(11)
     }
 }

@@ -10,41 +10,44 @@ object Config {
     const val VersionName = "1.0"
 
     const val KotlinJvmTarget = "1.8"
-    const val KotlinCompilerExtVersion = "1.3.2"
+    const val KotlinCompilerExtVersion = "1.3.2" // 1.4.8
 }
 
 object Version {
 
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val JetbrainsKotlin = "1.7.20"
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-bom
     const val JetbrainsKotlinBom = "1.8.0"
-    const val JetbrainsKotlinx = "1.6.4"
+    const val JetbrainsKotlinx = "1.7.2"
     const val JetbrainsKotlinxDateTime = "0.4.0"
-    const val JetbrainsKotlinxSerializationJson = "1.5.0"
+    const val JetbrainsKotlinxSerializationJson = "1.5.1"
     const val JetbrainsCompose = "1.3.0"
 
+    // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val AndroidToolsBuild = "7.3.1"
     const val AndroidSupport = "28.0.0"
 
-    const val AndroidxAppcompat = "1.5.1"
+    const val AndroidxAppcompat = "1.6.1"
     const val AndroidxActivity = "1.5.1"
-    const val AndroidxCore = "1.9.0"
+    const val AndroidxCore = "1.10.1"
     const val AndroidxConstraintlayout = "2.1.4"
-    const val AndroidxRecycleview = "1.2.1"
+    const val AndroidxRecycleview = "1.3.0"
     const val AndroidxHilt = "1.0.0"
     const val AndroidxNavigation = "2.5.2"
     const val AndroidxRoom = "2.4.3"
     const val AndroidxCompose = "1.3.0"
     const val AndroidxComposeMaterial3 = "1.1.1"
-    const val AndroidxArchCore = "2.1.0"
-    const val AndroidxLifecycle = "2.5.1"
+    const val AndroidxArchCore = "2.2.0"
+    const val AndroidxLifecycle = "2.6.1"
     const val AndroidxTestRules = "1.5.0"
     const val AndroidxTestRunner = "1.5.2"
-    const val AndroidxTestExt = "1.1.3"
-    const val AndroidxTestEspresso = "3.4.0"
+    const val AndroidxTestExt = "1.1.5"
+    const val AndroidxTestEspresso = "3.5.1"
 
-    const val GoogleGson = "2.9.1"
+    const val GoogleGson = "2.10.1"
     const val GoogleMaterial = "1.9.0"
-    const val GoogleDagger = "2.44"
+    const val GoogleDagger = "2.46.1"
 
     const val SquareUpRetrofit2 = "2.9.0"
     const val SquareUpPicasso = "2.71828"
@@ -56,7 +59,7 @@ object Version {
 
     const val DiffPlugSpotless = "6.11.0"
 
-    const val GithubBenManes = "0.43.0"
+    const val GithubBenManes = "0.47.0"
 }
 
 object BuildPlugin {
@@ -172,7 +175,7 @@ object Dep {
     fun isStableVersion(version: String): Boolean {
         val keywords = listOf("RELEASE", "FINAL", "GA")
         val hasKeyword = keywords.any {
-            version.toUpperCase(Locale.ROOT).contains(it)
+            version.uppercase(Locale.ROOT).contains(it)
         }
         val versionRegex = "^[0-9,.v-]+(-r)?$".toRegex()
         val matchesVersionRegex = versionRegex.matches(version)

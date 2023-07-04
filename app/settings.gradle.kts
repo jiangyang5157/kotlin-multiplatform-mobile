@@ -43,6 +43,6 @@ include(":transaction_presentation_1")
 include(":transaction_presentation_2")
 include(":demo-transaction")
 
-include(":shared-common")
-include(":shared-puzzle")
+include(":shared-common") // kmm
+include(":shared-puzzle") // kmm
 include(":demo-sudoku")
