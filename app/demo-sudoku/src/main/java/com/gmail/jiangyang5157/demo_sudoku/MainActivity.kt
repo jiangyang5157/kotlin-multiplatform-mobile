@@ -11,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.gmail.jiangyang5157.demo_sudoku.ui.theme.AppTheme
+import com.gmail.jiangyang5157.shared.puzzle.sudoku.SudokuBlockMode
+import com.gmail.jiangyang5157.shared.puzzle.sudoku.SudokuTerminal
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             AppTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,7 +25,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ContentView()
+                    val terminal = SudokuTerminal.withUniqueSolution(SudokuBlockMode.Square, 9)
+                    ContentView(terminal.toString())
                 }
             }
         }
@@ -30,8 +34,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ContentView() {
-    Text(text = "Hello Android!")
+fun ContentView(text: String) {
+    Text(text = text)
 }
 
 @Preview(showBackground = true)

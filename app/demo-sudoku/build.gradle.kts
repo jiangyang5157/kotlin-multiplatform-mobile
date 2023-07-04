@@ -96,4 +96,5 @@ dependencies {
     androidTestImplementation(Dep.ComposeUiTestJunit)
 
     // Internal
+    implementation(project(":shared-puzzle"))
 }
