@@ -45,3 +45,4 @@ include(":demo-transaction")
 
 include(":shared-common")
 include(":shared-puzzle")
+include(":demo-sudoku")
