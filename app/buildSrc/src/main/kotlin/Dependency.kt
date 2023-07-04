@@ -10,7 +10,7 @@ object Config {
     const val VersionName = "1.0"
 
     const val KotlinJvmTarget = "1.8"
-    const val KotlinCompilerExtVersion = "1.3.2" // 1.4.8
+    const val KotlinCompilerExtVersion = "1.3.2"
 }
 
 object Version {
@@ -19,7 +19,7 @@ object Version {
     const val JetbrainsKotlin = "1.7.20"
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-bom
     const val JetbrainsKotlinBom = "1.8.0"
-    const val JetbrainsKotlinx = "1.7.2"
+    const val JetbrainsKotlinx = "1.6.4"
     const val JetbrainsKotlinxDateTime = "0.4.0"
     const val JetbrainsKotlinxSerializationJson = "1.5.1"
     const val JetbrainsCompose = "1.3.0"
