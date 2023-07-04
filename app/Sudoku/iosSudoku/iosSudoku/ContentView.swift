@@ -1,11 +1,17 @@
+import Foundation
 import SwiftUI
 import sharedSudoku
 
-struct ContentView: View {
-	let platform = MainKt.getPlatform()
+struct ComposeView: UIViewControllerRepresentable {
+    func updaetUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+    func makeUIViewController(context: Context) -> some UIViewController {
+        MainKt.MainViewController()
+    }
+}
 
+struct ContentView: View {
 	var body: some View {
-		Text(platform)
+		ComposeView()
 	}
 }
 
