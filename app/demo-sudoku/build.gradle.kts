@@ -1,8 +1,11 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("kotlin-android")
     id("com.android.application")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -95,6 +98,15 @@ dependencies {
     androidTestImplementation(Dep.ComposeUiTest)
     androidTestImplementation(Dep.ComposeUiTestJunit)
 
+
+    // Dependency Injection
+    implementation(Dep.DaggerHilt)
+    kapt(Dep.DaggerHiltCompiler)
+    kapt(Dep.HiltCompiler)
+    androidTestImplementation(Dep.DaggerHiltTest)
+    kaptAndroidTest(Dep.DaggerHiltCompiler)
+
     // Internal
     implementation(project(":shared-puzzle"))
+    implementation(project(":shared-common"))
 }
