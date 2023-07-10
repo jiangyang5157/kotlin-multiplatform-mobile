@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.gmail.jiangyang5157.demo_sudoku.ui.theme.AppTheme
 
 @Composable
-fun SudokuView(
+fun SudokuBuilderView(
     text: String,
 ) {
     Text(text = text)
@@ -14,8 +14,8 @@ fun SudokuView(
 
 @Preview(showBackground = true)
 @Composable
-private fun SudokuView_Preview() {
+private fun SudokuBuilderView_Preview() {
     AppTheme {
-        SudokuView("Hello Android!")
+        SudokuBuilderView("Hello Android!")
     }
 }
