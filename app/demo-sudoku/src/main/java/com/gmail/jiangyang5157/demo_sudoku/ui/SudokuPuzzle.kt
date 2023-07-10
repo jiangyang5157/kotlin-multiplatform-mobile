@@ -1,7 +1,11 @@
 package com.gmail.jiangyang5157.demo_sudoku.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.gmail.jiangyang5157.demo_sudoku.ui.theme.AppTheme
 
@@ -9,7 +13,9 @@ import com.gmail.jiangyang5157.demo_sudoku.ui.theme.AppTheme
 fun SudokuPuzzleView(
     text: String,
 ) {
-    Text(text = text)
+    Column(Modifier.verticalScroll(rememberScrollState())) {
+        Text(text = text)
+    }
 }
 
 @Preview(showBackground = true)

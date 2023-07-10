@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.gmail.jiangyang5157.demo_sudoku.ui.SudokuBuilderView
 import com.gmail.jiangyang5157.demo_sudoku.ui.SudokuPuzzleView
+import com.gmail.jiangyang5157.shared.common.data.Key
 import com.gmail.jiangyang5157.shared.common.ext.getByKey
 import com.gmail.jiangyang5157.shared.puzzle.sudoku.SudokuBlockMode
 import com.gmail.jiangyang5157.shared.puzzle.sudoku.SudokuBlockMode.Companion.key
@@ -30,7 +31,7 @@ fun MainNavGraph(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    startRoute: String = MainNavDestRoute.SudokuBuilder.name,
+    startRoute: String = MainNavDestRoute.SudokuBuilder.key.value,
     navActions: MainNavActions = remember(navController) {
         MainNavActions(navController)
     },
@@ -45,7 +46,7 @@ fun MainNavGraph(
         startDestination = startRoute,
     ) {
         composable(
-            MainNavDestRoute.SudokuBuilder.name,
+            MainNavDestRoute.SudokuBuilder.key.value,
             arguments = listOf(
                 navArgument(MainNavDestRoute.SudokuBuilder.argBlockMode) {
                     type = NavType.StringType
@@ -71,7 +72,7 @@ fun MainNavGraph(
             }
         }
         composable(
-            MainNavDestRoute.SudokuPuzzle.name,
+            MainNavDestRoute.SudokuPuzzle.key.value,
             arguments = listOf(
                 navArgument(MainNavDestRoute.SudokuPuzzle.argBlockMode) {
                     type = NavType.StringType
@@ -99,18 +100,28 @@ fun MainNavGraph(
 }
 
 interface MainNavDestRoute {
-    val name: String
+    val key: Key
 
     object SudokuBuilder : MainNavDestRoute {
-        override val name: String = "SudokuBuilder"
+        val name = "SudokuBuilder"
         val argBlockMode = "BlockMode"
         val argLength = "Length"
+        override val key = Key(
+            name +
+                    "?${argBlockMode}={${argBlockMode}}" +
+                    "?${argLength}={${argLength}}"
+        )
     }
 
     object SudokuPuzzle : MainNavDestRoute {
-        override val name: String = "SudokuPuzzle"
+        val name = "SudokuPuzzle"
         val argBlockMode = "BlockMode"
         val argLength = "Length"
+        override val key = Key(
+            name +
+                    "?${argBlockMode}={${argBlockMode}}" +
+                    "?${argLength}={${argLength}}"
+        )
     }
 }
 
@@ -123,8 +134,10 @@ class MainNavActions(private val navController: NavHostController) {
         navController.navigate(
             MainNavDestRoute.SudokuBuilder.name +
                     "?${MainNavDestRoute.SudokuBuilder.argBlockMode}=${blockMode.key}" +
-                    "?${MainNavDestRoute.SudokuBuilder.argLength}=${length}"
-        )
+                    "?${MainNavDestRoute.SudokuBuilder.argLength}=$length"
+        ) {
+            
+        }
     }
 
     fun navigateToSudokuPuzzle(
@@ -134,7 +147,9 @@ class MainNavActions(private val navController: NavHostController) {
         navController.navigate(
             MainNavDestRoute.SudokuPuzzle.name +
                     "?${MainNavDestRoute.SudokuPuzzle.argBlockMode}=${blockMode.key}" +
-                    "?${MainNavDestRoute.SudokuPuzzle.argLength}=${length}"
-        )
+                    "?${MainNavDestRoute.SudokuPuzzle.argLength}=$length"
+        ) {
+            
+        }
     }
 }
