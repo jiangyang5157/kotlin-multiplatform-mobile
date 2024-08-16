@@ -2,8 +2,8 @@ import java.util.*
 
 object Config {
 
-    const val CompileSdkVersion = 33
-    const val TargetSdkVersion = 33
+    const val CompileSdkVersion = 35
+    const val TargetSdkVersion = 35
     const val MinSdkVersion = 24
 
     const val VersionCode = 1
