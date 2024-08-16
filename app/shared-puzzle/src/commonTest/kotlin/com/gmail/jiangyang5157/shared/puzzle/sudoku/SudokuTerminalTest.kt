@@ -11,49 +11,49 @@ import kotlin.time.measureTime
 class SudokuTerminalTest {
 
     @Test
-    fun `SudokuTerminal Length_1_1 from json`() {
+    fun SudokuTerminal_Length_1_1_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_1_1.json)
         assertEquals(data, SudokuTerminalTemplate.Length_1_1.data)
     }
 
     @Test
-    fun `SudokuTerminal Length_4_3 from json`() {
+    fun SudokuTerminal_Length_4_3_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_4_3.json)
         assertEquals(data, SudokuTerminalTemplate.Length_4_3.data)
     }
 
     @Test
-    fun `SudokuTerminal Length_9_0 from json`() {
+    fun SudokuTerminal_Length_9_0_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_9_0.json)
         assertEquals(data, SudokuTerminalTemplate.Length_9_0.data)
     }
 
     @Test
-    fun `SudokuTerminal Length_9_1 from json`() {
+    fun SudokuTerminal_Length_9_1_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_9_1.json)
         assertEquals(data, SudokuTerminalTemplate.Length_9_1.data)
     }
 
     @Test
-    fun `SudokuTerminal Length_9_2 from json`() {
+    fun SudokuTerminal_Length_9_2_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_9_2.json)
         assertEquals(data, SudokuTerminalTemplate.Length_9_2.data)
     }
 
     @Test
-    fun `SudokuTerminal Length_9_188 from json`() {
+    fun SudokuTerminal_Length_9_188_from_json() {
         val data = Json.decodeFromString<SudokuTerminal>(SudokuTerminalTemplate.Length_9_188.json)
         assertEquals(data, SudokuTerminalTemplate.Length_9_188.data)
     }
 
     @Test
-    fun `SudokuTerminal test index`() {
+    fun SudokuTerminal_test_index() {
         assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.index(0, 0))
         assertEquals(80, SudokuTerminalTemplate.Length_9_0.data.index(8, 8))
     }
 
     @Test
-    fun `SudokuTerminal test rowIndex`() {
+    fun SudokuTerminal_test_rowIndex() {
         assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.rowIndex(0))
         assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.rowIndex(8))
         assertEquals(1, SudokuTerminalTemplate.Length_9_0.data.rowIndex(9))
@@ -63,7 +63,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test columnIndex`() {
+    fun SudokuTerminal_test_columnIndex() {
         assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.columnIndex(0))
         assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.columnIndex(8))
         assertEquals(0, SudokuTerminalTemplate.Length_9_0.data.columnIndex(9))
@@ -73,7 +73,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test upIndex`() {
+    fun SudokuTerminal_test_upIndex() {
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(0))
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(1))
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.upIndex(2))
@@ -92,7 +92,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test downIndex`() {
+    fun SudokuTerminal_test_downIndex() {
         assertEquals(9, SudokuTerminalTemplate.Length_9_0.data.downIndex(0))
         assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.downIndex(8))
 
@@ -111,7 +111,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test leftIndex`() {
+    fun SudokuTerminal_test_leftIndex() {
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(0))
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(9))
         assertEquals(-1, SudokuTerminalTemplate.Length_9_0.data.leftIndex(18))
@@ -134,7 +134,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test rightIndex`() {
+    fun SudokuTerminal_test_rightIndex() {
         assertEquals(8, SudokuTerminalTemplate.Length_9_0.data.rightIndex(7))
         assertEquals(17, SudokuTerminalTemplate.Length_9_0.data.rightIndex(16))
         assertEquals(26, SudokuTerminalTemplate.Length_9_0.data.rightIndex(25))
@@ -157,7 +157,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test neighbourIndexes`() {
+    fun SudokuTerminal_test_neighbourIndexes() {
         assertEquals(listOf(9, 1), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(0))
         assertEquals(listOf(10, 0, 2), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(1))
         assertEquals(listOf(0, 18, 10), SudokuTerminalTemplate.Length_9_0.data.neighbourIndexes(9))
@@ -180,7 +180,7 @@ class SudokuTerminalTest {
     }
 
     @Test
-    fun `SudokuTerminal test toString`() {
+    fun SudokuTerminal_test_toString() {
         assertEquals(
             """
             SudokuTerminal(
@@ -202,7 +202,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 0 - 25-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_0_25_81() {
         val length = 9
         val minSubGiven = 0
         var terminal: SudokuTerminal
@@ -220,7 +220,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 4 - 28-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_4_28_81() {
         val length = 9
         val minSubGiven = 4
         var terminal: SudokuTerminal
@@ -238,7 +238,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 5 - 38-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_5_38_81() {
         val length = 9
         val minSubGiven = 5
         var terminal: SudokuTerminal
@@ -256,7 +256,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 6 - 48-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_6_48_81() {
         val length = 9
         val minSubGiven = 6
         var terminal: SudokuTerminal
@@ -274,7 +274,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 7 - 58-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_7_58_81() {
         val length = 9
         val minSubGiven = 7
         var terminal: SudokuTerminal
@@ -292,7 +292,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution minSubGiven 8 - 68-81`() {
+    fun SudokuTerminal_withUniqueSolution_minSubGiven_8_68_81() {
         val length = 9
         val minSubGiven = 8
         var terminal: SudokuTerminal
@@ -310,7 +310,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution length 4 - 4-16`() {
+    fun SudokuTerminal_withUniqueSolution_length_4_4_16() {
         val length = 4
         var terminal: SudokuTerminal
         val elapsed: Duration = measureTime {
@@ -326,7 +326,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution length 16 - 90-256`() {
+    fun SudokuTerminal_withUniqueSolution_length_16_90_256() {
         val length = 16
         var terminal: SudokuTerminal
         val elapsed: Duration = measureTime {
@@ -342,7 +342,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution Irregular length 4 minSubGiven 0 - 5-16`() {
+    fun SudokuTerminal_withUniqueSolution_Irregular_length_4_minSubGiven_0_5_16() {
         val length = 4
         val minSubGiven = 0
         var terminal: SudokuTerminal
@@ -360,7 +360,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution Irregular length 9 minSubGiven 0 - 20-81`() {
+    fun SudokuTerminal_withUniqueSolution_Irregular_length_9_minSubGiven_0_20_81() {
         val length = 9
         val minSubGiven = 0
         var terminal: SudokuTerminal
@@ -378,7 +378,7 @@ class SudokuTerminalTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuTerminal withUniqueSolution Irregular length 9 minSubGiven 9 - 81-81`() {
+    fun SudokuTerminal_withUniqueSolution_Irregular_length_9_minSubGiven_9_81_81() {
         val length = 9
         val minSubGiven = 9
         var terminal: SudokuTerminal

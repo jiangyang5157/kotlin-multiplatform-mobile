@@ -1,47 +1,43 @@
 package com.gmail.jiangyang5157.shared.common.data.dlx
 
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
 class DlxTest {
 
     @Test
-    fun `Dlx with 0`() {
+    fun dlx_with_0() {
         val dlx = Dlx(0)
         assertTrue(dlx.columns.size == 1)
     }
 
     @Test
-    fun `Dlx with 10`() {
+    fun dlx_with_10() {
         val dlx = Dlx(10)
         assertTrue(dlx.columns.size == 11)
     }
 
     @Test
-    fun `Dlx feed with empty index do nothing`() {
+    fun dlx_feed_with_empty_index_do_nothing() {
         val dlx = Dlx(10)
         dlx.feed(arrayOf())
-        dlx.columns.forEach {
-            assertTrue(it.size == 0)
-        }
+
+        assertTrue(dlx.columns.all { it.size == 0 })
     }
 
     @Test
-    fun `Dlx feed with index 1 to size`() {
+    fun dlx_feed_with_index_1_to_size() {
         val dlx = Dlx(10)
         dlx.feed(arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-        dlx.columns.forEach {
-            if (it.index == 0) {
-                assertTrue(it.size == 0)
-            } else {
-                assertTrue(it.size == 1)
-            }
-        }
+
+        assertEquals(0, dlx.columns[0].size)
+        assertTrue(dlx.columns.drop(1).all { it.size == 1 })
     }
 
     @Test
-    fun `Dlx solve 4 with 2 solutions`() {
+    fun dlx_solve_4_with_2_solutions() {
         /*
         Example:
         {1,2,3,4}
@@ -60,32 +56,21 @@ class DlxTest {
         dlx.feed(arrayOf(3, 4))
         dlx.feed(arrayOf(3))
         dlx.feed(arrayOf(4))
+
+        var solutionCount = 0
         dlx.solve { cells ->
             cells.forEach { cell ->
                 println("Dlx solved: ${cell.rowCells().toColumnString()}}")
             }
+            solutionCount++
             false
         }
+
+        assertEquals(2, solutionCount)
     }
 
     @Test
-    fun `Dlx solve 7 with 2 solutions`() {
-        /*
-        Example:
-        {1,2,3,4,5,6,7}
-
-        set-1 = {1,4,7}
-        set-2 = {1,4}
-        set-3 = {4,5,7}
-        set-4 = {3,5,6}
-        set-5 = {2,3,6,7}
-        set-6 = {2,7}
-        set-7 = {1,4}
-
-        Solutions:
-        {2,7}, {3,5,6}, {1,4} // set-6,4,2
-        {2,7}, {3,5,6}, {1,4} // set-6,4,7
-        */
+    fun dlx_solve_7_with_2_solutions() {
         val dlx = Dlx(7)
         dlx.feed(arrayOf(1, 4, 7))
         dlx.feed(arrayOf(1, 4))
@@ -94,16 +79,21 @@ class DlxTest {
         dlx.feed(arrayOf(2, 3, 6, 7))
         dlx.feed(arrayOf(2, 7))
         dlx.feed(arrayOf(1, 4))
+
+        var solutionCount = 0
         dlx.solve { cells ->
             cells.forEach { cell ->
                 println("Dlx solved: ${cell.rowCells().toColumnString()}")
             }
+            solutionCount++
             false
         }
+
+        assertEquals(2, solutionCount)
     }
 
     @Test
-    fun `Dlx solve 4 with 0 solution`() {
+    fun dlx_solve_4_with_0_solution() {
         /*
         Example:
         {1,2,3,4}
@@ -116,8 +106,9 @@ class DlxTest {
         val dlx = Dlx(4)
         dlx.feed(arrayOf(1, 2))
         dlx.feed(arrayOf(4))
+
         dlx.solve {
-            fail()
+            fail("No solutions should be found")
             @Suppress("UNREACHABLE_CODE")
             false
         }

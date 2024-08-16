@@ -25,13 +25,13 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `storage start with 0 size for each test`() = runTest {
+    fun storage_start_with_0_size_for_each_test() = runTest {
         Assert.assertEquals(0, storage.entities().first().size)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `entities returns map of key-values`() = runTest {
+    fun entities_returns_map_of_key_values_() = runTest {
         storage.put("string", "s1")
         storage.put("boolean", true)
         storage.put("int", 1)
@@ -44,14 +44,14 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `get() will not emit for non-existent key`() = runTest {
+    fun get_will_not_emit_for_non_existent_key() = runTest {
         Assert.assertEquals(0, storage.get<Any>("unknown").count())
         Assert.assertEquals(null, storage.get<Any>("unknown").firstOrNull())
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `put() would override previous value`() = runTest {
+    fun put_would_override_previous_value() = runTest {
         storage.put("int", 1)
         storage.put("int", 2)
         storage.put("string", "s1")
@@ -65,7 +65,7 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `get() returns reified value`() = runTest {
+    fun get_returns_reified_value() = runTest {
         storage.put("string", "s1")
         storage.put("boolean", true)
         storage.put("int", 1)
@@ -83,7 +83,7 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `get() returns data class`() = runTest {
+    fun get_returns_data_class() = runTest {
         storage.put("Data", Data("class1"))
 
         Assert.assertEquals(Data("class1"), storage.get<Data>("Data").first())
@@ -91,7 +91,7 @@ class InMemoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `get() cast to different type would throw ClassCastException`() = runTest {
+    fun get_cast_to_different_type_would_throw_ClassCastException() = runTest {
         storage.put("string", "s1")
 
         try {

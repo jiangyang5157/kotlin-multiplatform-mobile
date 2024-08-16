@@ -54,7 +54,7 @@ class DfsTest {
     },
      */
     @Test
-    fun `dfs visit`() {
+    fun dfs_visit() {
         val graph = Graph<String>()
 
         graph.addNode(Node("S"))

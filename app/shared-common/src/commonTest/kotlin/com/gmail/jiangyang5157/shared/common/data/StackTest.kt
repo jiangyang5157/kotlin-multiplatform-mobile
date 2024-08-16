@@ -7,7 +7,7 @@ import kotlin.test.assertNotEquals
 class StackTest {
 
     @Test
-    fun `from size++`() {
+    fun from_size() {
         val anyStack = Stack.from(
             1,
             1,
@@ -19,7 +19,7 @@ class StackTest {
     }
 
     @Test
-    fun `sameKey throw exception`() {
+    fun sameKey_throw_exception() {
         var exception: RuntimeException? = null
         try {
             Stack(
@@ -35,7 +35,7 @@ class StackTest {
     }
 
     @Test
-    fun `push sameValue diffKey size++`() {
+    fun push_sameValue_diffKey_size() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e13 = 1.toElement(key = Key("3"))
@@ -52,7 +52,7 @@ class StackTest {
     }
 
     @Test
-    fun `push sameValue sameKey size==`() {
+    fun push_sameValue_sameKey_size() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e13 = 1.toElement(key = Key("3"))
@@ -71,7 +71,7 @@ class StackTest {
     }
 
     @Test
-    fun `push diffValue sameKey size==`() {
+    fun push_diffValue_sameKey_size() {
         val e11 = 1.toElement(key = Key("1"))
         val e21 = 2.toElement(key = Key("1"))
         val e31 = 3.toElement(key = Key("1"))
@@ -88,7 +88,7 @@ class StackTest {
     }
 
     @Test
-    fun `clear all size=0`() {
+    fun clear_all_size() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e13 = 1.toElement(key = Key("3"))
@@ -108,7 +108,7 @@ class StackTest {
     }
 
     @Test
-    fun `clear value`() {
+    fun clear_value() {
         val e11 = 1.toElement(key = Key("1"))
         val e22 = 2.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -128,7 +128,7 @@ class StackTest {
     }
 
     @Test
-    fun `clear element size-1`() {
+    fun clear_element_size() {
         val e11 = 1.toElement(key = Key("1"))
         val e22 = 2.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -148,7 +148,7 @@ class StackTest {
     }
 
     @Test
-    fun `pushDistinct removed same value`() {
+    fun pushDistinct_removed_same_value() {
         val e11 = 1.toElement(key = Key("1"))
         val e22 = 2.toElement(key = Key("2"))
         val e33 = 3.toElement(key = Key("3"))
@@ -173,7 +173,7 @@ class StackTest {
     }
 
     @Test
-    fun `popUntil value removed same value`() {
+    fun popUntil_value_removed_same_value() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -193,7 +193,7 @@ class StackTest {
     }
 
     @Test
-    fun `popUntil element`() {
+    fun popUntil_element() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -213,7 +213,7 @@ class StackTest {
     }
 
     @Test
-    fun `pop to key`() {
+    fun pop_to_key() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -233,7 +233,7 @@ class StackTest {
     }
 
     @Test
-    fun `popUntilPredicate value`() {
+    fun popUntilPredicate_value() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -253,7 +253,7 @@ class StackTest {
     }
 
     @Test
-    fun `replaceTopWith element`() {
+    fun replaceTopWith_element() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))
@@ -277,7 +277,7 @@ class StackTest {
     }
 
     @Test
-    fun `replaceTopWith value`() {
+    fun replaceTopWith_value() {
         val e11 = 1.toElement(key = Key("1"))
         val e12 = 1.toElement(key = Key("2"))
         val e23 = 2.toElement(key = Key("3"))

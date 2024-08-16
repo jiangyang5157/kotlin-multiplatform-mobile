@@ -7,7 +7,7 @@ import org.junit.Test
 class AxisScaleUtilsTest {
 
     @Test
-    fun `RoundUpScale apply unexpected value throw exception`() {
+    fun RoundUpScale_apply_unexpected_value_throw_exception() {
         val value = -0.1
         try {
             RoundUpScale.Integer.apply(value)
@@ -17,7 +17,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Integer apply 0, 999,999,999,999_9`() {
+    fun RoundUpScale_Integer_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 1),
@@ -34,7 +34,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Ten apply 0, 999,999,999,999_9`() {
+    fun RoundUpScale_Ten_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 10),
@@ -51,7 +51,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Hundred apply 0,999,999,999,999_9`() {
+    fun RoundUpScale_Hundred_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 100),
@@ -68,7 +68,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Thousand apply 0, 999,999,999,999_9`() {
+    fun RoundUpScale_Thousand_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 1000),
@@ -85,7 +85,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Million apply 0, 999,999,999,999_9`() {
+    fun RoundUpScale_Million_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 1000000),
@@ -102,7 +102,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `RoundUpScale_Billion apply 0, 999,999,999,999_9`() {
+    fun RoundUpScale_Billion_apply_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 1000000000),
@@ -119,7 +119,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `AxisScaleUtils roundUp 0, 999,999,999,999_9`() {
+    fun AxisScaleUtils_roundUp_0_999_999_999_999_9() {
         val valueAndResult = listOf<Pair<Double, Long>>(
             Pair(0.0, 0),
             Pair(0.1, 1),
@@ -164,7 +164,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `factorToDivisor unexpected value throw exception`() {
+    fun factorToDivisor_unexpected_value_throw_exception() {
         val value = -1L
         try {
             AxisScaleUtils().factorToDivisor(value, 1)
@@ -174,7 +174,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `factorToDivisor unexpected factor throw exception`() {
+    fun factorToDivisor_unexpected_factor_throw_exception() {
         val factor1 = 0
         val factor2 = 10
         try {
@@ -190,7 +190,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `factorToDivisor with factor 1 value 0, 1000000000`() {
+    fun factorToDivisor_with_factor_1_value_0_1000000000() {
         Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(0, 1))
         Assert.assertEquals(1, AxisScaleUtils().factorToDivisor(10, 1))
         Assert.assertEquals(10, AxisScaleUtils().factorToDivisor(100, 1))
@@ -214,7 +214,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `factorToDivisor with factor 2 value 0, 1000000000`() {
+    fun factorToDivisor_with_factor_2_value_0_1000000000() {
         Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(0, 2))
         Assert.assertEquals(2, AxisScaleUtils().factorToDivisor(10, 2))
         Assert.assertEquals(20, AxisScaleUtils().factorToDivisor(100, 2))
@@ -238,7 +238,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `factorToDivisor with factor 9 value 0, 1000000000`() {
+    fun factorToDivisor_with_factor_9_value_0_1000000000() {
         Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(0, 9))
         Assert.assertEquals(9, AxisScaleUtils().factorToDivisor(10, 9))
         Assert.assertEquals(90, AxisScaleUtils().factorToDivisor(100, 9))
@@ -262,7 +262,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `roundUpForDivision unexpected value throw exception`() {
+    fun roundUpForDivision_unexpected_value_throw_exception() {
         val value = -1L
         try {
             AxisScaleUtils().roundUpForDivision(value, 1)
@@ -272,7 +272,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `roundUpForDivision unexpected divisor throw exception`() {
+    fun roundUpForDivision_unexpected_divisor_throw_exception() {
         val divisor = 0L
         try {
             AxisScaleUtils().roundUpForDivision(1, divisor)
@@ -282,7 +282,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `roundUpForDivision with divisor 3, 30, 3000 value 0, 60000`() {
+    fun roundUpForDivision_with_divisor_3_30_3000_value_0_60000() {
         Assert.assertEquals(3, AxisScaleUtils().roundUpForDivision(0, 3))
         Assert.assertEquals(3, AxisScaleUtils().roundUpForDivision(1, 3))
         Assert.assertEquals(3, AxisScaleUtils().roundUpForDivision(2, 3))
@@ -312,7 +312,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `roundUpForDivision with factor (3, 2), (30, 20)`() {
+    fun roundUpForDivision_with_factor_3_2_30_20() {
         Assert.assertEquals(Pair<Long, Long>(2, 2), AxisScaleUtils().roundUpForDivision(0, 3, 2))
         Assert.assertEquals(Pair<Long, Long>(2, 2), AxisScaleUtils().roundUpForDivision(1, 3, 2))
         Assert.assertEquals(Pair<Long, Long>(2, 2), AxisScaleUtils().roundUpForDivision(2, 3, 2))
@@ -384,7 +384,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `buildScaleList unexpected value throw exception`() {
+    fun buildScaleList_unexpected_value_throw_exception() {
         val value = -1L
         try {
             AxisScaleUtils().buildScaleList(value, 1)
@@ -394,7 +394,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `buildScaleList unexpected factor throw exception`() {
+    fun buildScaleList_unexpected_factor_throw_exception() {
         val factor1 = 0
         val factor2 = 10
         try {
@@ -410,7 +410,7 @@ class AxisScaleUtilsTest {
     }
 
     @Test
-    fun `buildScaleList with factor 3 value 0, 9000000`() {
+    fun buildScaleList_with_factor_3_value_0_9000000() {
         Assert.assertEquals(listOf<Long>(0, 1, 2, 3), AxisScaleUtils().buildScaleList(0, 3))
         Assert.assertEquals(listOf<Long>(0, 2, 4, 6), AxisScaleUtils().buildScaleList(6, 3))
         Assert.assertEquals(listOf<Long>(0, 20, 40, 60), AxisScaleUtils().buildScaleList(60, 3))

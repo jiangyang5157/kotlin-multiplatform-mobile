@@ -10,7 +10,7 @@ import kotlin.time.measureTime
 class SudokuPuzzleTest {
 
     @Test
-    fun `SudokuPuzzle Length_1_1 has 1 solutions`() {
+    fun SudokuPuzzle_Length_1_1_has_1_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_1_1.data)
         var found = 0
         puzzle.solve {
@@ -22,7 +22,7 @@ class SudokuPuzzleTest {
     }
 
     @Test
-    fun `SudokuPuzzle Length_4_0 has 0 solutions`() {
+    fun SudokuPuzzle_Length_4_0_has_0_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_0.data)
         var found = 0
         puzzle.solve {
@@ -34,7 +34,7 @@ class SudokuPuzzleTest {
     }
 
     @Test
-    fun `SudokuPuzzle Length_4_3 has 3 solutions`() {
+    fun SudokuPuzzle_Length_4_3_has_3_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_4_3.data)
         var found = 0
         puzzle.solve {
@@ -46,7 +46,7 @@ class SudokuPuzzleTest {
     }
 
     @Test
-    fun `SudokuPuzzle Length_9_0 has 0 solutions`() {
+    fun SudokuPuzzle_Length_9_0_has_0_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_0.data)
         var found = 0
         puzzle.solve {
@@ -58,7 +58,7 @@ class SudokuPuzzleTest {
     }
 
     @Test
-    fun `SudokuPuzzle Length_9_1 has 1 solutions`() {
+    fun SudokuPuzzle_Length_9_1_has_1_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_1.data)
         var found = 0
         puzzle.solve {
@@ -71,7 +71,7 @@ class SudokuPuzzleTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuPuzzle Length_9_2 has 2 solutions`() {
+    fun SudokuPuzzle_Length_9_2_has_2_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_2.data)
         var found = 0
         val elapsed: Duration = measureTime {
@@ -87,7 +87,7 @@ class SudokuPuzzleTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuPuzzle Length_9_188 has 188 solutions`() {
+    fun SudokuPuzzle_Length_9_188_has_188_solutions() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_188.data)
         var found = 0
         val elapsed: Duration = measureTime {
@@ -96,14 +96,14 @@ class SudokuPuzzleTest {
                 false
             }
         }
-        println("SudokuPuzzle Length_9_188 has 188 solutions - Measuring solve time: $elapsed")
+        println("SudokuPuzzle_Length_9_188_has_188 solutions - Measuring solve time: $elapsed")
         assertEquals(188, found)
         assertEquals(false, puzzle.hasUniqueSolution())
     }
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuPuzzle Length_9_188 has 188 solutions and solve for first found`() {
+    fun SudokuPuzzle_Length_9_188_has_188_solutions_and_solve_for_first_found() {
         val puzzle = SudokuPuzzle(SudokuTerminalTemplate.Length_9_188.data)
         var terminal: SudokuTerminal?
         val elapsed: Duration = measureTime {
@@ -115,7 +115,7 @@ class SudokuPuzzleTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
-    fun `SudokuPuzzle Length_9_188 has 188 solutions and solve many times without impact original terminal`() {
+    fun SudokuPuzzle_Length_9_188_has_188_solutions_and_solve_many_times_without_impact_original_terminal() {
         val terminal = SudokuTerminalTemplate.Length_9_188.data
         val puzzle = SudokuPuzzle(terminal)
         assertEquals(terminal, puzzle.terminal)

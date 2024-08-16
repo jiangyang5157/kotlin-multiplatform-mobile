@@ -8,7 +8,7 @@ import kotlin.test.assertNotSame
 class ElementTest {
 
     @Test
-    fun `sameValue sameKey equals`() {
+    fun sameValue_sameKey_equals() {
         assertEquals(
             "1".toElement(key = Key("1")),
             "1".toElement(key = Key("1")),
@@ -20,7 +20,7 @@ class ElementTest {
     }
 
     @Test
-    fun `sameValue diffKey not equals`() {
+    fun sameValue_diffKey_not_equals() {
         assertNotEquals(
             "1".toElement(key = Key("1")),
             "1".toElement(key = Key("2")),
@@ -32,7 +32,7 @@ class ElementTest {
     }
 
     @Test
-    fun `diffValue sameKey not equals`() {
+    fun diffValue_sameKey_not_equals() {
         assertNotEquals(
             "1".toElement(key = Key("1")),
             "2".toElement(key = Key("1")),
@@ -44,7 +44,7 @@ class ElementTest {
     }
 
     @Test
-    fun `sameValue randomKey not equals`() {
+    fun sameValue_randomKey_not_equals() {
         assertNotEquals(
             "1".toElement(),
             "1".toElement(),
@@ -56,7 +56,7 @@ class ElementTest {
     }
 
     @Test
-    fun `toElements use randomKeys not equals`() {
+    fun toElements_use_randomKeys_not_equals() {
         val stringElements = listOf("1", "1").toElements()
         val intElements = listOf(1, 1).toElements()
         assertNotEquals(
@@ -70,7 +70,7 @@ class ElementTest {
     }
 
     @Test
-    fun `copy equals but not same`() {
+    fun copy_equals_but_not_same() {
         val element = 1.toElement(key = Key("1"))
         val copy = element.copy()
         assertEquals(element, copy)
