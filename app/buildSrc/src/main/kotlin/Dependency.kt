@@ -27,7 +27,7 @@ object Version {
     const val JetbrainsCompose = "1.3.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val AndroidToolsBuild = "7.3.1"
+    const val AndroidToolsBuild = "7.4.2"
     const val AndroidSupport = "28.0.0"
 
     const val AndroidxAppcompat = "1.6.1"

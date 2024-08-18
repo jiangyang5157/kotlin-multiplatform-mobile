@@ -48,10 +48,10 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         abortOnError false
-        lintConfig rootProject.file('lint.xml')
         htmlReport true
+        lintConfig = rootProject.file('lint.xml')
     }
 }
 
