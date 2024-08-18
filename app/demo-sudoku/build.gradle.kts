@@ -13,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = Config.MinSdkVersion
-        targetSdk = Config.TargetSdkVersion
         applicationId = "com.gmail.jiangyang5157.demo_sudoku"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = Config.VersionCode
@@ -53,7 +52,7 @@ android {
         kotlinCompilerExtensionVersion = Config.KotlinCompilerExtVersion
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "META-INF/AL2.0"
             excludes += "META-INF/LGPL2.1"

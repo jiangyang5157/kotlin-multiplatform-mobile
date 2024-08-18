@@ -4,7 +4,6 @@ import java.util.*
 object Config {
 
     const val CompileSdkVersion = 33
-    const val TargetSdkVersion = 33
     const val MinSdkVersion = 24
 
     const val VersionCode = 1
@@ -12,7 +11,7 @@ object Config {
 
     val JavaTarget = JavaVersion.VERSION_1_8
     const val KotlinJvmTarget = "1.8"
-    const val KotlinCompilerExtVersion = "1.3.2"
+    const val KotlinCompilerExtVersion = "1.5.15"
 }
 
 object Version {
@@ -27,7 +26,7 @@ object Version {
     const val JetbrainsCompose = "1.3.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val AndroidToolsBuild = "7.4.2"
+    const val AndroidToolsBuild = "8.2"
     const val AndroidSupport = "28.0.0"
 
     const val AndroidxAppcompat = "1.6.1"

@@ -9,7 +9,6 @@ android {
 
     defaultConfig {
         minSdk = Config.MinSdkVersion
-        targetSdk = Config.TargetSdkVersion
         applicationId = "com.gmail.jiangyang5157.demo_adapter"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = Config.VersionCode

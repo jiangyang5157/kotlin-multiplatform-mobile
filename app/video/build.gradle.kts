@@ -34,7 +34,6 @@ android {
 
     defaultConfig {
         minSdk = Config.MinSdkVersion
-        targetSdk = Config.TargetSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }

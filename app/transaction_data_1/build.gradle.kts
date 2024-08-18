@@ -13,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = Config.MinSdkVersion
-        targetSdk = Config.TargetSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -43,7 +42,7 @@ android {
         jvmTarget = Config.KotlinJvmTarget
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "META-INF/AL2.0"
             excludes += "META-INF/LGPL2.1"
