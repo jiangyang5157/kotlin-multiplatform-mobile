@@ -22,8 +22,8 @@ publishing {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = Config.JavaTarget
+    targetCompatibility = Config.JavaTarget
 }
 
 dependencies {

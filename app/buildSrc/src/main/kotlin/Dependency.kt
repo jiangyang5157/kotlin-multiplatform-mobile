@@ -1,14 +1,16 @@
+import org.gradle.api.JavaVersion
 import java.util.*
 
 object Config {
 
-    const val CompileSdkVersion = 35
-    const val TargetSdkVersion = 35
+    const val CompileSdkVersion = 33
+    const val TargetSdkVersion = 33
     const val MinSdkVersion = 24
 
     const val VersionCode = 1
     const val VersionName = "1.0"
 
+    val JavaTarget = JavaVersion.VERSION_1_8
     const val KotlinJvmTarget = "1.8"
     const val KotlinCompilerExtVersion = "1.3.2"
 }
@@ -16,7 +18,7 @@ object Config {
 object Version {
 
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-    const val JetbrainsKotlin = "1.7.20"
+    const val JetbrainsKotlin = "1.9.10"
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-bom
     const val JetbrainsKotlinBom = "1.8.0"
     const val JetbrainsKotlinx = "1.6.4"

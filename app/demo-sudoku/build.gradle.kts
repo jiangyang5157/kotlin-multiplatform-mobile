@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("kotlin-android")
@@ -38,8 +37,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = Config.JavaTarget
+        targetCompatibility = Config.JavaTarget
     }
 
     kotlinOptions {
