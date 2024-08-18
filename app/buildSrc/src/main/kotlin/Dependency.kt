@@ -17,16 +17,15 @@ object Config {
 object Version {
 
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-    const val JetbrainsKotlin = "1.9.10"
+    const val JetbrainsKotlin = "1.9.25"
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-bom
-    const val JetbrainsKotlinBom = "1.8.0"
+    const val JetbrainsKotlinBom = "1.9.25"
     const val JetbrainsKotlinx = "1.6.4"
     const val JetbrainsKotlinxDateTime = "0.4.0"
     const val JetbrainsKotlinxSerializationJson = "1.5.1"
-    const val JetbrainsCompose = "1.3.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val AndroidToolsBuild = "8.2"
+    const val AndroidToolsBuild = "8.5.0"
     const val AndroidSupport = "28.0.0"
 
     const val AndroidxAppcompat = "1.6.1"
