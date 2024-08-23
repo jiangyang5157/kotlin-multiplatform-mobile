@@ -56,6 +56,15 @@ android {
         htmlReport = true
     }
 
+    compileOptions {
+        sourceCompatibility = Config.JavaTarget
+        targetCompatibility = Config.JavaTarget
+    }
+
+    kotlinOptions {
+        jvmTarget = Config.KotlinJvmTarget
+    }
+
     testOptions {
         managedDevices {
             devices {

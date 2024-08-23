@@ -154,12 +154,12 @@ data class SudokuTerminal(
 
                         fun swap(): Boolean {
                             // generate random aIndex and bIndex
-                            var aIndex = -1
+                            val aIndex: Int = Random.nextInt(terminalSize)
                             var bIndex = -1
 
-                            aIndex = Random.nextInt(terminalSize)
                             val aNeighbourIndexes = terminal.neighbourIndexes(aIndex)
                             aNeighbourIndexes.shuffled()
+
                             for (aNeighbourIndex in aNeighbourIndexes) {
                                 val aNeighbourCell = terminal.cells[aNeighbourIndex]
                                 if (aNeighbourCell.block != terminal.cells[aIndex].block) {
@@ -208,11 +208,11 @@ data class SudokuTerminal(
                             // Validate
                             var aValidation = 0
                             var bValidation = 0
-                            graph.dfs(aIndex) { node ->
+                            graph.dfs(aIndex) { _ ->
                                 bValidation++
                                 false
                             }
-                            graph.dfs(bIndex) { node ->
+                            graph.dfs(bIndex) { _ ->
                                 aValidation++
                                 false
                             }

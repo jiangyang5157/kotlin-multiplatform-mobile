@@ -52,6 +52,15 @@ android {
         htmlReport true
         lintConfig = rootProject.file('lint.xml')
     }
+
+    compileOptions {
+        sourceCompatibility = Config.JavaTarget
+        targetCompatibility = Config.JavaTarget
+    }
+
+    kotlinOptions {
+        jvmTarget = Config.KotlinJvmTarget
+    }
 }
 
 dependencies {
