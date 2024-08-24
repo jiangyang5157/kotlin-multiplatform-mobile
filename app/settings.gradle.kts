@@ -33,6 +33,10 @@ include(":widget")
 include(":demo-compose")
 include(":demo-compose-canvas")
 
+include(":shared-common") // kmm
+include(":shared-puzzle") // kmm
+include(":demo-sudoku")
+
 //include(":transaction_domain_base") // kotlin library
 //include(":transaction_domain_1")
 //include(":transaction_domain_2") // kotlin library
@@ -42,7 +46,3 @@ include(":demo-compose-canvas")
 //include(":transaction_presentation_1")
 //include(":transaction_presentation_2")
 //include(":demo-transaction")
-
-include(":shared-common") // kmm
-include(":shared-puzzle") // kmm
-include(":demo-sudoku")
