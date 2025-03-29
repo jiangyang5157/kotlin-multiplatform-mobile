@@ -67,8 +67,12 @@ dependencies {
     implementation(Dep.ComposeUiText)
     implementation(Dep.ComposeUiToolingPreview)
     implementation(Dep.ComposeUiTooling)
-
-//    debugImplementation(Dep.ComposeUiTestManifest)
+    implementation(Dep.BarcodeScanning)
+    implementation(Dep.CameraCore)
+    implementation(Dep.CameraView)
+    implementation(Dep.CameraLifecycle)
+    implementation(Dep.CameraVersion2)
+//    implementation("androidx.compose.foundation:foundation-layout-android:1.7.8")
 
     testImplementation(Dep.Junit)
 

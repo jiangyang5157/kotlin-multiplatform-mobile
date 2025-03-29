@@ -3,7 +3,7 @@ import java.util.*
 
 object Config {
 
-    const val CompileSdkVersion = 33
+    const val CompileSdkVersion = 34
     const val MinSdkVersion = 24
 
     const val VersionCode = 1
@@ -35,6 +35,7 @@ object Version {
     const val AndroidxRecycleview = "1.3.0"
     const val AndroidxHilt = "1.0.0"
     const val AndroidxNavigation = "2.5.2"
+    const val AndroidxCamera = "1.4.2"
     const val AndroidxRoom = "2.4.3"
     const val AndroidxCompose = "1.3.0"
     const val AndroidxComposeMaterial3 = "1.1.1"
@@ -48,6 +49,7 @@ object Version {
     const val GoogleGson = "2.10.1"
     const val GoogleMaterial = "1.9.0"
     const val GoogleDagger = "2.46.1"
+    const val GoogleMlKit = "17.3.0"
 
     const val SquareUpRetrofit2 = "2.9.0"
     const val SquareUpPicasso = "2.71828"
@@ -127,6 +129,11 @@ object Dep {
     const val NavigationCompose =
         "androidx.navigation:navigation-compose:${Version.AndroidxNavigation}"
 
+    const val CameraCore = "androidx.camera:camera-core:${Version.AndroidxCamera}"
+    const val CameraView = "androidx.camera:camera-view:${Version.AndroidxCamera}"
+    const val CameraLifecycle = "androidx.camera:camera-lifecycle:${Version.AndroidxCamera}"
+    const val CameraVersion2 = "androidx.camera:camera-camera2:${Version.AndroidxCamera}"
+
     const val Room = "androidx.room:room-runtime:${Version.AndroidxRoom}"
     const val RoomKtx = "androidx.room:room-ktx:${Version.AndroidxRoom}"
     const val RoomCompiler = "androidx.room:room-compiler:${Version.AndroidxRoom}"
@@ -160,6 +167,8 @@ object Dep {
     const val Material = "com.google.android.material:material:${Version.GoogleMaterial}"
 
     const val Gson = "com.google.code.gson:gson:${Version.GoogleGson}"
+
+    const val BarcodeScanning = "com.google.mlkit:barcode-scanning:${Version.GoogleMlKit}"
 
     const val Retrofit = "com.squareup.retrofit2:retrofit:${Version.SquareUpRetrofit2}"
     const val RetrofitGson = "com.squareup.retrofit2:converter-gson:${Version.SquareUpRetrofit2}"
