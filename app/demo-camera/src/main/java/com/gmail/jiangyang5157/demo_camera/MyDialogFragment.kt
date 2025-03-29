@@ -53,11 +53,14 @@ import java.util.concurrent.Executors
 import androidx.annotation.IntRange
 import android.graphics.Matrix
 import android.graphics.Outline
+import android.util.Size
 import android.view.ViewOutlineProvider
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 
@@ -101,11 +104,12 @@ fun PaymentQrCodeDialogScreen(
             .fillMaxWidth()
             .heightIn(max = configuration.screenHeightDp.dp * containerHeightFactor),
 //            .clip(RoundedCornerShape(16.dp)),
-        shape = RoundedCornerShape(16.dp),
         color = Color.LightGray,
+        shape = RoundedCornerShape(16.dp),
     ) {
         PaymentQrCodeDialogContent(
-            modifier = Modifier.padding(vertical = 12.dp),
+//            modifier = Modifier.padding(vertical = 12.dp),
+//            modifier = Modifier,
             lifecycleOwner = lifecycleOwner,
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
@@ -120,15 +124,18 @@ fun PaymentQrCodeDialogContent(
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-    lifecycleOwner?.let {
-        PaymentQrCodeBarcodeScannerView(
-            modifier = modifier,
-            lifecycleOwner = it,
-            onQrCodeDecrypted = onQrCodeDecrypted,
-            onError = onError,
-        )
-    }
+    Column(modifier = modifier) {
+//        Spacer(modifier = Modifier.height(16.dp))
+        lifecycleOwner?.let {
+            PaymentQrCodeBarcodeScannerView(
+//                modifier = Modifier.weight(1f),
+                modifier = Modifier,
+                lifecycleOwner = it,
+                onQrCodeDecrypted = onQrCodeDecrypted,
+                onError = onError,
+            )
+        }
+//        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -179,6 +186,13 @@ fun BarcodeScannerView(
     val cameraExecutor: ExecutorService = remember { Executors.newSingleThreadExecutor() }
     var previewBoundingBox by remember { mutableStateOf<RectF?>(null) }
 
+//    val currentOnPreviewSizeChanged by rememberUpdatedState(onPreviewSizeChanged)
+//    var previewSize by remember { mutableStateOf(Size(0, 0)) }
+//    val sizeChangedListener: (Size) -> Unit = { size ->
+//        previewSize = size // capture the size here.
+//        currentOnPreviewSizeChanged(size)
+//    }
+
     var hasCameraPermission by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -220,6 +234,9 @@ fun BarcodeScannerView(
                             .also {
                                 // Set surface provider first
                                 it.surfaceProvider = previewView.surfaceProvider
+//                                it.resolutionInfo?.resolution?.let { resolution ->
+//                                    Log.d("####", "resolution=$resolution")
+//                                }
                             }
 
                     // Set after preview created
@@ -284,7 +301,7 @@ fun BarcodeScannerView(
                                         imageAnalysis
                                     )
                                 } catch (exc: Exception) {
-                                    Log.e("BarcodeScanner", "Camera provider binding failed", exc)
+                                    Log.e("####", "Camera provider binding failed", exc)
                                     onError(exc)
                                 }
                             }
