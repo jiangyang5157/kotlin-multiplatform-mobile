@@ -19,6 +19,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.common.InputImage
 
 import android.Manifest
+import android.content.Context
 import android.graphics.RectF
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -53,15 +54,12 @@ import java.util.concurrent.Executors
 import androidx.annotation.IntRange
 import android.graphics.Matrix
 import android.graphics.Outline
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
 import android.util.Size
 import android.view.ViewOutlineProvider
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 
 class MyDialogFragment : DialogFragment() {
@@ -83,7 +81,6 @@ class MyDialogFragment : DialogFragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-//                    Text("Hello Android!")
                     PaymentQrCodeDialogScreen(lifecycleOwner = this@MyDialogFragment)
                 }
             }
@@ -98,7 +95,7 @@ fun PaymentQrCodeDialogScreen(
     onError: () -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
-    val containerHeightFactor = 0.7f
+    val containerHeightFactor = 1f
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -108,8 +105,8 @@ fun PaymentQrCodeDialogScreen(
         shape = RoundedCornerShape(16.dp),
     ) {
         PaymentQrCodeDialogContent(
-//            modifier = Modifier.padding(vertical = 12.dp),
 //            modifier = Modifier,
+            modifier = Modifier.padding(vertical = 12.dp),
             lifecycleOwner = lifecycleOwner,
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
@@ -125,17 +122,14 @@ fun PaymentQrCodeDialogContent(
     onError: () -> Unit = {},
 ) {
     Column(modifier = modifier) {
-//        Spacer(modifier = Modifier.height(16.dp))
         lifecycleOwner?.let {
             PaymentQrCodeBarcodeScannerView(
-//                modifier = Modifier.weight(1f),
-                modifier = Modifier,
+//                modifier = Modifier,
                 lifecycleOwner = it,
                 onQrCodeDecrypted = onQrCodeDecrypted,
                 onError = onError,
             )
         }
-//        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -186,12 +180,23 @@ fun BarcodeScannerView(
     val cameraExecutor: ExecutorService = remember { Executors.newSingleThreadExecutor() }
     var previewBoundingBox by remember { mutableStateOf<RectF?>(null) }
 
-//    val currentOnPreviewSizeChanged by rememberUpdatedState(onPreviewSizeChanged)
-//    var previewSize by remember { mutableStateOf(Size(0, 0)) }
-//    val sizeChangedListener: (Size) -> Unit = { size ->
-//        previewSize = size // capture the size here.
-//        currentOnPreviewSizeChanged(size)
-//    }
+    val supportedSizes = remember { mutableStateListOf<Size>() }
+    LaunchedEffect(Unit) {
+        val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            val cameraId = cameraManager.cameraIdList.firstOrNull() ?: return@LaunchedEffect
+            val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+            val streamConfigMap =
+                characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+                    ?: return@LaunchedEffect
+            val outputSizes =
+                streamConfigMap.getOutputSizes(PreviewView::class.java) ?: emptyArray()
+            supportedSizes.addAll(outputSizes)
+        } catch (e: Exception) {
+            Log.e("####", "Error getting camera resolutions", e)
+            // Handle the error appropriately (e.g., show an error message)
+        }
+    }
 
     var hasCameraPermission by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(
@@ -223,20 +228,50 @@ fun BarcodeScannerView(
                 }
             }
             AndroidView(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 factory = { _ ->
+                    Log.d("####", "supportedSizes.size=${supportedSizes.size}")
+//                    supportedSizes.forEach {
+//                        Log.d("####", "supportedSize=$it")
+//                    }
+
                     val resolutionSelector = ResolutionSelector.Builder()
                         .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
                         .build()
+//                    val resolutionSelector = if (supportedSizes.isNotEmpty()) {
+//                        // Find a resolution that matches (or closely matches) the target aspect ratio
+//                        val bestSize = supportedSizes.minByOrNull {
+//                            val sizeRatio = it.width.toFloat() / it.height.toFloat()
+//                            Math.abs(sizeRatio - 4f / 3f)
+//                        }
+//                        Log.d("####", "bestSize=${bestSize}")
+//                        bestSize?.let { size ->
+//                            ResolutionSelector.Builder()
+//                                .setResolutionStrategy(
+//                                    ResolutionStrategy(
+//                                        size,
+//                                        ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
+//                                    )
+//                                )
+//                                .build()
+//                        } ?: ResolutionSelector.Builder()
+//                            .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+//                            .build()
+//                    } else {
+//                        ResolutionSelector.Builder()
+//                            .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+//                            .build()
+//                    }
 
                     val preview =
                         Preview.Builder().setResolutionSelector(resolutionSelector).build()
                             .also {
                                 // Set surface provider first
                                 it.surfaceProvider = previewView.surfaceProvider
-//                                it.resolutionInfo?.resolution?.let { resolution ->
-//                                    Log.d("####", "resolution=$resolution")
-//                                }
+                                it.resolutionInfo?.resolution?.let { resolution ->
+                                    Log.d("####", "resolutionInfo?.resolution=$resolution")
+                                }
                             }
 
                     // Set after preview created
@@ -256,7 +291,6 @@ fun BarcodeScannerView(
                                 val cameraProvider = cameraProviderFuture.get()
                                 val barcodeScanner = BarcodeScanning.getClient(options)
                                 val imageAnalysis = ImageAnalysis.Builder()
-                                    .setResolutionSelector(resolutionSelector)
                                     .setResolutionSelector(resolutionSelector)
                                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                     .build()
