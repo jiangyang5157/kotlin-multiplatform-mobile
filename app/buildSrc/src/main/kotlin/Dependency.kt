@@ -36,7 +36,7 @@ object Version {
     const val AndroidxHilt = "1.0.0"
     const val AndroidxNavigation = "2.5.2"
     const val AndroidxCamera = "1.4.2"
-    const val AndroidxRoom = "2.4.3"
+    const val AndroidxRoom = "2.6.1"
     const val AndroidxCompose = "1.3.0"
     const val AndroidxComposeMaterial3 = "1.1.1"
     const val AndroidxArchCore = "2.2.0"

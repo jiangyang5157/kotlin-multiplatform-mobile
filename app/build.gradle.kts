@@ -7,7 +7,8 @@ buildscript {
 
     dependencies {
         classpath(BuildPlugin.Kotlin)
-        classpath(BuildPlugin.Android)
+//        classpath(BuildPlugin.Android)
+        classpath("com.android.tools.build:gradle:8.9.1")
         classpath(BuildPlugin.Versions)
         classpath(BuildPlugin.Hilt)
         classpath(BuildPlugin.NavigationArgs)
