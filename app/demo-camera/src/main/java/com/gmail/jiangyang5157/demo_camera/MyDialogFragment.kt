@@ -52,13 +52,22 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.annotation.IntRange
 import android.graphics.Matrix
+import android.graphics.Outline
+import android.view.ViewOutlineProvider
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
 
 class MyDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
             setOnShowListener {
-//                window?.setBackgroundDrawableResource(android.R.color.transparent)
+                window?.setBackgroundDrawableResource(android.R.color.transparent)
+//                window?.setBackgroundDrawableResource(android.R.color.holo_red_light)
             }
         }
     }
@@ -87,16 +96,16 @@ fun PaymentQrCodeDialogScreen(
 ) {
     val configuration = LocalConfiguration.current
     val containerHeightFactor = 0.7f
-    val cornerRadius = 16.dp
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(max = configuration.screenHeightDp.dp * containerHeightFactor)
-            .clip(RoundedCornerShape(cornerRadius)),
-//        shape = RoundedCornerShape(cornerRadius),
+            .heightIn(max = configuration.screenHeightDp.dp * containerHeightFactor),
+//            .clip(RoundedCornerShape(16.dp)),
+        shape = RoundedCornerShape(16.dp),
+        color = Color.LightGray,
     ) {
         PaymentQrCodeDialogContent(
-            modifier = Modifier,
+            modifier = Modifier.padding(vertical = 12.dp),
             lifecycleOwner = lifecycleOwner,
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
@@ -111,18 +120,16 @@ fun PaymentQrCodeDialogContent(
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
-//    Column(modifier = modifier.fillMaxWidth()) {
-//        Box(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
     lifecycleOwner?.let {
         PaymentQrCodeBarcodeScannerView(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
             lifecycleOwner = it,
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
         )
     }
-//        }
-//    }
+    }
 }
 
 @Composable
@@ -192,14 +199,17 @@ fun BarcodeScannerView(
     }
 
     if (hasCameraPermission) {
-        Box {
+        Box(
+            modifier = modifier
+//                .clip(RoundedCornerShape(16.dp))
+        ) {
             val previewView = remember {
                 PreviewView(context).apply {
                     scaleType = PreviewView.ScaleType.FILL_START
                 }
             }
             AndroidView(
-                modifier = modifier,
+                modifier = Modifier.fillMaxSize(),
                 factory = { _ ->
                     val resolutionSelector = ResolutionSelector.Builder()
                         .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
@@ -214,6 +224,9 @@ fun BarcodeScannerView(
 
                     // Set after preview created
                     previewView.implementationMode = PreviewView.ImplementationMode.PERFORMANCE
+//                    previewView.outlineProvider = previewViewOutlineProvider
+//                    previewView.clipToOutline = true
+//                    previewView.setBackgroundResource(android.R.color.holo_blue_bright)
 
                     cameraProviderFuture.addListener(
                         {
@@ -282,6 +295,12 @@ fun BarcodeScannerView(
                 },
             )
         }
+    }
+}
+
+val previewViewOutlineProvider = object : ViewOutlineProvider() {
+    override fun getOutline(view: View, outline: Outline) {
+        outline.setRoundRect(0, 0, view.width, view.height, 200f)
     }
 }
 
