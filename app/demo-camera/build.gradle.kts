@@ -72,7 +72,6 @@ dependencies {
     implementation(Dep.CameraView)
     implementation(Dep.CameraLifecycle)
     implementation(Dep.CameraVersion2)
-//    implementation("androidx.compose.foundation:foundation-layout-android:1.7.8")
 
     testImplementation(Dep.Junit)
 
