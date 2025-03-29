@@ -358,13 +358,13 @@ fun BarcodeScannerView(
                                         preview,
                                         imageAnalysis
                                     )
-
-                                    preview.resolutionInfo?.resolution?.let{ resolution ->
-                                        onResolutionChanged(resolution)
-                                    }
                                 } catch (exc: Exception) {
                                     Log.e("####", "Camera provider binding failed", exc)
                                     onError(exc)
+                                }
+
+                                preview.resolutionInfo?.resolution?.let{ resolution ->
+                                    onResolutionChanged(resolution)
                                 }
                             }
                         },
