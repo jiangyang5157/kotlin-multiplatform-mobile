@@ -33,6 +33,8 @@ include(":widget")
 include(":demo-compose")
 include(":demo-compose-canvas")
 
+include(":demo-camera")
+
 include(":shared-common") // kmm
 include(":shared-puzzle") // kmm
 include(":demo-sudoku")
