@@ -57,11 +57,20 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.util.Size
 import android.view.ViewOutlineProvider
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.camera.core.resolutionselector.ResolutionStrategy
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.max
 
 class MyDialogFragment : DialogFragment() {
 
@@ -95,45 +104,18 @@ fun PaymentQrCodeDialogScreen(
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
-//    var surfaceWidth by remember { mutableStateOf<Int>(0) }
-//    var previewSize by remember { mutableStateOf<Size?>(null) }
-//
-//    val modifier = if (previewSize == null || previewSize?.width == 0 || previewSize?.height == 0) {
-//        Modifier
-//            .fillMaxWidth()
-////            .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 1f),
-//            .onSizeChanged { intSize ->
-//                surfaceWidth = intSize.width
-//                Log.d("####", "surface1 intSize=$intSize")
-//            }
-//    } else {
-//        val maxHeightDp = if(surfaceWidth > 0) {
-//            (surfaceWidth.toFloat() * previewSize!!.height / previewSize!!.width).toInt().dp
-//        } else {
-//            0.dp
-//        }
-//        Log.d("####", "maxHeightDp=$maxHeightDp")
-//        Modifier
-//            .fillMaxWidth()
-//            .heightIn(max = maxHeightDp)
-//            .onSizeChanged { intSize ->
-//                surfaceWidth = intSize.width
-//                Log.d("####", "surface2 intSize=$intSize")
-//            }
-//    }
     Surface(
-        modifier = Modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.5f),
         color = Color.LightGray,
         shape = RoundedCornerShape(16.dp),
     ) {
         PaymentQrCodeDialogContent(
-//            modifier = Modifier,
-//            modifier = Modifier.padding(vertical = 12.dp),
+            modifier = Modifier
+                .background(Color.Red)
+                .padding(vertical = 12.dp),
             lifecycleOwner = lifecycleOwner,
-            onResolutionChanged = {
-//                previewSize = it
-                Log.d("####", "previewSize=$it")
-            },
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
         )
@@ -144,29 +126,108 @@ fun PaymentQrCodeDialogScreen(
 fun PaymentQrCodeDialogContent(
     modifier: Modifier = Modifier,
     lifecycleOwner: LifecycleOwner? = null,
-    onResolutionChanged: (Size) -> Unit = {},
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
-    Column(modifier = modifier) {
+    var layoutWidth by remember { mutableStateOf<Int>(0) }
+    var previewSize by remember { mutableStateOf<Size?>(null) }
+    var previewRotations by remember { mutableStateOf<Int>(0) }
+
+    Column(
+        modifier = modifier.onSizeChanged { intSize ->
+            layoutWidth = intSize.width
+            Log.d("####", "layoutWidth=$intSize")
+        }
+    ) {
+//        val viewModifier = previewSize.let { previewSize ->
+//            if (previewSize == null || previewSize.width == 0 || previewSize.height == 0) {
+//                Modifier
+//            } else {
+//                if (previewRotations == 90) {
+//                    val maxHeight = if (layoutWidth > 0) {
+//                        (layoutWidth.toFloat() * previewSize.height / previewSize.width).toInt()
+//                    } else {
+//                        0
+//                    }
+//
+//                    Log.d("####", "maxHeight=$maxHeight")
+//                    Modifier
+//                        .width(layoutWidth.dp / 10)
+//                        .height(maxHeight.dp / 10)
+//                } else {
+//                    val maxHeight = if (layoutWidth > 0) {
+//                        (layoutWidth.toFloat() * previewSize.height / previewSize.width).toInt()
+//                    } else {
+//                        0
+//                    }
+//                    Log.d("####", "maxHeight=$maxHeight")
+//
+//                    Modifier
+//                        .width(layoutWidth.dp / 10)
+//                        .height(maxHeight.dp / 10)
+//                }
+//            }
+//        }
+
         lifecycleOwner?.let {
             PaymentQrCodeBarcodeScannerView(
                 modifier = Modifier
-                    .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.9f),
+                    .height(200.dp),
+//                    .weight(1f),
                 lifecycleOwner = it,
-                onResolutionChanged = onResolutionChanged,
+                onResolutionChanged = { resolution, rotationDegrees ->
+                    previewSize = resolution
+                    previewRotations = rotationDegrees
+                    Log.d("####", "previewSize=$resolution previewRotations=$rotationDegrees")
+                },
                 onQrCodeDecrypted = onQrCodeDecrypted,
                 onError = onError,
             )
+            Text(
+                modifier = Modifier.background(Color.Blue),
+                text = "asd",
+            )
         }
     }
+
+//    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
+//        val (preview, description) = createRefs()
+//
+//        lifecycleOwner?.let {
+//            PaymentQrCodeBarcodeScannerView(
+//                modifier = Modifier
+//                    .constrainAs(preview) {
+//                        top.linkTo(parent.top)
+//                        start.linkTo(parent.start)
+//                        end.linkTo(parent.end)
+//                        width = Dimension.matchParent
+//                        height = Dimension.ratio("3:4")  // Example: maintain 3:4 aspect ratio
+//                    },
+//                lifecycleOwner = it,
+//                onQrCodeDecrypted = onQrCodeDecrypted,
+//                onError = onError
+//            )
+//
+//            Text(
+//                modifier = Modifier
+//                    .constrainAs(description) {
+//                        top.linkTo(preview.bottom)
+//                        start.linkTo(parent.start)
+//                        end.linkTo(parent.end)
+//                        width = Dimension.matchParent
+//                    },
+//                text = "Some description or instructions",
+//                color = Color.Black,
+//            )
+//        }
+//    }
 }
 
 @Composable
 fun PaymentQrCodeBarcodeScannerView(
     modifier: Modifier = Modifier,
     lifecycleOwner: LifecycleOwner,
-    onResolutionChanged: (Size) -> Unit = {},
+    onResolutionChanged: (Size, Int) -> Unit = { _, _ -> },
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
@@ -202,7 +263,7 @@ fun BarcodeScannerView(
     modifier: Modifier = Modifier,
     lifecycleOwner: LifecycleOwner,
     acceptTypes: List<BarcodeValueType> = listOf(BarcodeValueType.TEXT),
-    onResolutionChanged: (Size) -> Unit = {},
+    onResolutionChanged: (Size, Int) -> Unit = { _, _ -> },
     onResult: ((String?) -> Boolean),
     onError: ((Exception) -> Unit),
 ) {
@@ -280,6 +341,10 @@ fun BarcodeScannerView(
         val previewView = remember {
             PreviewView(context).apply {
                 scaleType = PreviewView.ScaleType.FILL_START
+//                layoutParams = FrameLayout.LayoutParams(
+//                    50,
+//                    50,
+//                )
             }
         }
 
@@ -287,8 +352,7 @@ fun BarcodeScannerView(
             modifier = modifier
         ) {
             AndroidView(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxWidth(),
                 factory = { _ ->
                     val preview = Preview.Builder()
                         .setResolutionSelector(resolutionSelector)
@@ -363,14 +427,16 @@ fun BarcodeScannerView(
                                     onError(exc)
                                 }
 
-                                preview.resolutionInfo?.resolution?.let{ resolution ->
-                                    onResolutionChanged(resolution)
+                                preview.resolutionInfo?.let { info ->
+                                    onResolutionChanged(info.resolution, info.rotationDegrees)
                                 }
                             }
                         },
                         ContextCompat.getMainExecutor(context),
                     )
                     previewView
+
+//                    TextView(context).apply { text = "hello textview" }
                 },
             )
         }
