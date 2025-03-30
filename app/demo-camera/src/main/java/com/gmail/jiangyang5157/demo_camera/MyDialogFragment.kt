@@ -95,44 +95,44 @@ fun PaymentQrCodeDialogScreen(
     onQrCodeDecrypted: (String) -> Unit = {},
     onError: () -> Unit = {},
 ) {
-    var surfaceWidth by remember { mutableStateOf<Int>(0) }
-    var previewSize by remember { mutableStateOf<Size?>(null) }
-
-    val modifier = if (previewSize == null || previewSize?.width == 0 || previewSize?.height == 0) {
-        Modifier
-            .fillMaxWidth()
-//            .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 1f),
-            .onSizeChanged { intSize ->
-                surfaceWidth = intSize.width
-                Log.d("####", "surface1 intSize=$intSize")
-            }
-    } else {
-        val maxHeightDp = if(surfaceWidth > 0) {
-            (surfaceWidth.toFloat() * previewSize!!.height / previewSize!!.width).toInt().dp
-        } else {
-            0.dp
-        }
-
-        Modifier
-            .fillMaxWidth()
-            .heightIn(max = maxHeightDp)
-            .onSizeChanged { intSize ->
-                surfaceWidth = intSize.width
-                Log.d("####", "surface2 intSize=$intSize")
-            }
-    }
+//    var surfaceWidth by remember { mutableStateOf<Int>(0) }
+//    var previewSize by remember { mutableStateOf<Size?>(null) }
+//
+//    val modifier = if (previewSize == null || previewSize?.width == 0 || previewSize?.height == 0) {
+//        Modifier
+//            .fillMaxWidth()
+////            .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 1f),
+//            .onSizeChanged { intSize ->
+//                surfaceWidth = intSize.width
+//                Log.d("####", "surface1 intSize=$intSize")
+//            }
+//    } else {
+//        val maxHeightDp = if(surfaceWidth > 0) {
+//            (surfaceWidth.toFloat() * previewSize!!.height / previewSize!!.width).toInt().dp
+//        } else {
+//            0.dp
+//        }
+//        Log.d("####", "maxHeightDp=$maxHeightDp")
+//        Modifier
+//            .fillMaxWidth()
+//            .heightIn(max = maxHeightDp)
+//            .onSizeChanged { intSize ->
+//                surfaceWidth = intSize.width
+//                Log.d("####", "surface2 intSize=$intSize")
+//            }
+//    }
     Surface(
-        modifier = modifier,
+        modifier = Modifier,
         color = Color.LightGray,
         shape = RoundedCornerShape(16.dp),
     ) {
         PaymentQrCodeDialogContent(
 //            modifier = Modifier,
-            modifier = Modifier.padding(vertical = 12.dp),
+//            modifier = Modifier.padding(vertical = 12.dp),
             lifecycleOwner = lifecycleOwner,
             onResolutionChanged = {
-                previewSize = it
-                Log.d("####", "resolution=$it")
+//                previewSize = it
+                Log.d("####", "previewSize=$it")
             },
             onQrCodeDecrypted = onQrCodeDecrypted,
             onError = onError,
