@@ -61,7 +61,7 @@ android {
 
     testOptions {
         managedDevices {
-            devices {
+            allDevices {
                 val googleApi31Pixel4 by creating(ManagedVirtualDevice::class) {
                     device = "Pixel 4"
                     apiLevel = 31
